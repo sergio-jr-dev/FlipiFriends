@@ -295,11 +295,11 @@ button {
   box-shadow: var(--shadow);
   padding: clamp(14px, 2.6vh, 22px);
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 1rem;
   height: auto;
   max-height: min(92dvh, 720px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 .welcome-brand {
@@ -321,7 +321,11 @@ button {
 
 .character-selector {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 0.5rem;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .character-selector h2 {
@@ -338,6 +342,60 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.character-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.character-scroll-hint.is-hidden {
+  opacity: 0;
+}
+
+.scroll-chevron {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(91, 85, 102, 0.75);
+  border-bottom: 2px solid rgba(91, 85, 102, 0.75);
+  transform: rotate(45deg);
+  animation: scroll-chevron-drop 1.4s ease-in-out infinite;
+}
+
+.scroll-chevron:last-child {
+  margin-top: -6px;
+  animation-delay: 0.18s;
+}
+
+@keyframes scroll-chevron-drop {
+  0% {
+    transform: translateY(-2px) rotate(45deg);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(5px) rotate(45deg);
+    opacity: 0;
+  }
 }
 
 .character-item {
@@ -555,6 +613,11 @@ button {
   .card.is-shaking {
     animation: none;
   }
+
+  .scroll-chevron {
+    animation: none;
+    opacity: 0.85;
+  }
 }
 
 @media (max-width: 860px) {
@@ -582,6 +645,10 @@ button {
 
   .character-selector {
     gap: 0.45rem;
+  }
+
+  .character-scroll-hint {
+    bottom: 4px;
   }
 
   .character-list {

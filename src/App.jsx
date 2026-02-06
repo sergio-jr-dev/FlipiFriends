@@ -162,10 +162,12 @@ function App() {
   const [completionMessage, setCompletionMessage] = useState(LEVEL_MESSAGES[0]);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [boardArea, setBoardArea] = useState({ width: 1024, height: 720 });
+  const [showCharacterScrollHint, setShowCharacterScrollHint] = useState(false);
 
   const levelStartRef = useRef(0);
   const boardAreaRef = useRef(null);
   const dialogRef = useRef(null);
+  const characterListRef = useRef(null);
 
   const activeGroup = useMemo(
     () => characterGroupsById.get(selectedGroupId) ?? characterGroups[0],
@@ -247,6 +249,39 @@ function App() {
 
     return () => observer.disconnect();
   }, [isWelcomeOpen]);
+
+  useEffect(() => {
+    if (!isWelcomeOpen || !characterListRef.current) {
+      setShowCharacterScrollHint(false);
+      return undefined;
+    }
+
+    const node = characterListRef.current;
+    const updateScrollHint = () => {
+      const canScroll = node.scrollHeight - node.clientHeight > 2;
+      const reachedBottom = node.scrollTop + node.clientHeight >= node.scrollHeight - 2;
+      setShowCharacterScrollHint(canScroll && !reachedBottom);
+    };
+
+    updateScrollHint();
+    node.addEventListener('scroll', updateScrollHint, { passive: true });
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateScrollHint);
+      return () => {
+        node.removeEventListener('scroll', updateScrollHint);
+        window.removeEventListener('resize', updateScrollHint);
+      };
+    }
+
+    const observer = new ResizeObserver(updateScrollHint);
+    observer.observe(node);
+
+    return () => {
+      node.removeEventListener('scroll', updateScrollHint);
+      observer.disconnect();
+    };
+  }, [isWelcomeOpen, sortedCharacterGroups.length]);
 
   useEffect(() => {
     if (isWelcomeOpen || isComplete) return undefined;
@@ -493,7 +528,7 @@ function App() {
 
             <section className="character-selector" aria-label="Seleccion de personajes">
               <h2>Elige con que amigos quieres jugar</h2>
-              <ul className="character-list">
+              <ul className="character-list" ref={characterListRef}>
                 {sortedCharacterGroups.map((group) => (
                   <li key={group.id} className="character-item">
                     <label className="character-option">
@@ -526,6 +561,13 @@ function App() {
                   </li>
                 ))}
               </ul>
+              <div
+                className={`character-scroll-hint ${showCharacterScrollHint ? '' : 'is-hidden'}`}
+                aria-hidden="true"
+              >
+                <span className="scroll-chevron" />
+                <span className="scroll-chevron" />
+              </div>
             </section>
 
             <button className="primary start-button" type="button" onClick={handleStartGame}>
