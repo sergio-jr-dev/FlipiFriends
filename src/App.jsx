@@ -372,12 +372,6 @@ function App() {
     setIsWelcomeOpen(false);
   }, [activeGroup.characters, resetForLevel]);
 
-  const handleReset = useCallback(() => {
-    setLevelIndex(0);
-    resetForLevel(0);
-    dialogRef.current?.close();
-  }, [resetForLevel]);
-
   const handleGoToWelcome = useCallback(() => {
     setLevelIndex(0);
     resetForLevel(0);
@@ -532,7 +526,7 @@ function App() {
         isLastLevel={isLastLevel}
         dialogRef={dialogRef}
         handleNextLevel={handleNextLevel}
-        handleReset={handleReset}
+        handleGoToWelcome={handleGoToWelcome}
         level={levelIndex + 1}
         totalLevels={LEVELS.length}
         pairs={pairsCount}

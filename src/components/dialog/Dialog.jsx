@@ -4,7 +4,7 @@ export const Dialog = ({
   isLastLevel,
   dialogRef,
   handleNextLevel,
-  handleReset,
+  handleGoToWelcome,
   level,
   totalLevels,
   pairs,
@@ -49,10 +49,11 @@ export const Dialog = ({
           <button className="primary" onClick={handleNextLevel} type="button">
             Siguiente nivel
           </button>
-        ) : null}
-        <button className="secondary" onClick={handleReset} type="button">
-          Jugar otra vez
-        </button>
+        ) : (
+          <button className="secondary" onClick={handleGoToWelcome} type="button">
+            Empezar de nuevo
+          </button>
+        )}
       </div>
     </dialog>
   );

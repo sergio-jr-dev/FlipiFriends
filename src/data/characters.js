@@ -217,6 +217,77 @@ const gabbyDollhouseCharacters = [
   },
 ];
 
+const pokemonColorPalette = [
+  '#fff3b8',
+  '#d7f5d7',
+  '#ffd9c2',
+  '#d7ebff',
+  '#ffe2bf',
+  '#cfe1ff',
+  '#d6f0d6',
+  '#ffdff0',
+  '#ffe0b5',
+  '#ffe6d6',
+];
+
+const pokemonFileNames = [
+  'Arbok',
+  'Beedrill',
+  'Blastoide',
+  'Bulbasaur',
+  'Butterfree',
+  'Caterpie',
+  'Charizard',
+  'Charmander',
+  'Charmeleon',
+  'Ekans',
+  'Fearow',
+  'Jigglypuff',
+  'Kakuna',
+  'MEtapod',
+  'Nidoqueen',
+  'Nidoran',
+  'Nidorina',
+  'Pidgeot',
+  'Pidgeotto',
+  'Pidgey',
+  'Pikachu',
+  'Raichu',
+  'Raticate',
+  'Rattata',
+  'Sandshrew',
+  'Sandslash',
+  'Spearow',
+  'Squirtle',
+  'Venusaur',
+  'Vulpix',
+  'Wartortle',
+  'Weedle',
+  'Yvysaur',
+];
+
+const pokemonDisplayNames = {
+  MEtapod: 'Metapod',
+  Yvysaur: 'Ivysaur',
+};
+
+const toCharacterId = (value) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const pokemonCharacters = pokemonFileNames.map((fileName, index) => {
+  const displayName = pokemonDisplayNames[fileName] ?? fileName;
+  return {
+    id: `pokemon-${toCharacterId(displayName)}`,
+    name: displayName,
+    short: displayName.slice(0, 2),
+    color: pokemonColorPalette[index % pokemonColorPalette.length],
+    image: `/characters/Pokemon/${fileName}.png`,
+  };
+});
+
 export const characterGroups = [
   {
     id: 'bluey',
@@ -235,6 +306,12 @@ export const characterGroups = [
     label: 'La Casa de Muñecas de Gabby',
     description: 'Personajes de La Casa de Muñecas de Gabby.',
     characters: gabbyDollhouseCharacters,
+  },
+  {
+    id: 'pokemon',
+    label: 'Pokemon',
+    description: 'Personajes de Pokemon.',
+    characters: pokemonCharacters,
   },
 ];
 
