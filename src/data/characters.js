@@ -288,6 +288,13 @@ const pokemonCharacters = pokemonFileNames.map((fileName, index) => {
   };
 });
 
+const mixedCharacters = [
+  ...blueyCharacters,
+  ...pawPatrolCharacters,
+  ...gabbyDollhouseCharacters,
+  ...pokemonCharacters,
+];
+
 export const characterGroups = [
   {
     id: 'bluey',
@@ -312,6 +319,12 @@ export const characterGroups = [
     label: 'Pokemon',
     description: 'Personajes de Pokemon.',
     characters: pokemonCharacters,
+  },
+  {
+    id: 'mixed',
+    label: 'Mezcla de todos los personajes',
+    description: 'Una mezcla con todos los personajes disponibles.',
+    characters: mixedCharacters,
   },
 ];
 

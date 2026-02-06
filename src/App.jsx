@@ -14,7 +14,7 @@ import { SoundOffIcon } from './components/icons/SoundOffIcon.jsx';
 import { SoundOnIcon } from './components/icons/SoundOnIcon.jsx';
 import { TimeIcon } from './components/icons/TimeIcon.jsx';
 
-const LEVELS = [2, 3, 4, 6, 8, 10];
+const LEVELS = [2, 3, 4, 6, 8, 10, 12];
 const CARD_RATIO = 1.25;
 const CARD_FLIP_MS = 500;
 const MISMATCH_SHAKE_MS = 340;
@@ -51,23 +51,36 @@ const shuffle = (items) => {
   return array;
 };
 
+const pickRandomItems = (items, count) =>
+  shuffle(items).slice(0, Math.min(count, items.length));
+
 const buildDeck = (pairsCount, availableCharacters) => {
-  const maxPairs = Math.min(pairsCount, availableCharacters.length);
-  const chosen = shuffle(availableCharacters).slice(0, maxPairs);
-  const duplicated = chosen.flatMap((character) => [
-    {
-      id: `${character.id}-a`,
-      character,
-      flipped: false,
-      matched: false,
-    },
-    {
-      id: `${character.id}-b`,
-      character,
-      flipped: false,
-      matched: false,
-    },
-  ]);
+  if (pairsCount <= 0 || availableCharacters.length === 0) return [];
+
+  const chosen = [];
+  while (chosen.length < pairsCount) {
+    chosen.push(...shuffle(availableCharacters));
+  }
+
+  const duplicated = chosen.slice(0, pairsCount).flatMap((character, pairIndex) => {
+    const pairId = `pair-${pairIndex}`;
+    return [
+      {
+        id: `${character.id}-${pairIndex}-a`,
+        pairId,
+        character,
+        flipped: false,
+        matched: false,
+      },
+      {
+        id: `${character.id}-${pairIndex}-b`,
+        pairId,
+        character,
+        flipped: false,
+        matched: false,
+      },
+    ];
+  });
 
   return shuffle(duplicated);
 };
@@ -158,6 +171,20 @@ function App() {
     () => characterGroupsById.get(selectedGroupId) ?? characterGroups[0],
     [selectedGroupId],
   );
+  const sortedCharacterGroups = useMemo(
+    () =>
+      [...characterGroups].sort((groupA, groupB) =>
+        groupA.label.localeCompare(groupB.label, 'es', { sensitivity: 'base' }),
+      ),
+    [],
+  );
+  const groupPreviews = useMemo(
+    () =>
+      new Map(
+        characterGroups.map((group) => [group.id, pickRandomItems(group.characters, 4)]),
+      ),
+    [isWelcomeOpen],
+  );
   const cardsById = useMemo(
     () => new Map(deck.map((card) => [card.id, card])),
     [deck],
@@ -168,7 +195,7 @@ function App() {
     [mismatchCardIds],
   );
 
-  const pairsCount = Math.min(LEVELS[levelIndex], activeGroup.characters.length);
+  const pairsCount = LEVELS[levelIndex];
   const totalCards = pairsCount * 2;
   const isComplete = matches === pairsCount;
   const isLastLevel = levelIndex === LEVELS.length - 1;
@@ -183,7 +210,7 @@ function App() {
 
   const resetForLevel = useCallback(
     (nextLevelIndex, characterPool = activeGroup.characters) => {
-      const nextPairs = Math.min(LEVELS[nextLevelIndex], characterPool.length);
+      const nextPairs = LEVELS[nextLevelIndex];
       setDeck(buildDeck(nextPairs, characterPool));
       setSelected([]);
       setMismatchCardIds([]);
@@ -244,7 +271,7 @@ function App() {
 
     if (!firstCard || !secondCard) return undefined;
 
-    if (firstCard.character.id === secondCard.character.id) {
+    if (firstCard.pairId === secondCard.pairId) {
       setMismatchCardIds([]);
       setDeck((prev) =>
         prev.map((card) =>
@@ -467,7 +494,7 @@ function App() {
             <section className="character-selector" aria-label="Seleccion de personajes">
               <h2>Elige con que amigos quieres jugar</h2>
               <ul className="character-list">
-                {characterGroups.map((group) => (
+                {sortedCharacterGroups.map((group) => (
                   <li key={group.id} className="character-item">
                     <label className="character-option">
                       <div className="character-option-head">
@@ -481,7 +508,7 @@ function App() {
                         <h3>{group.label}</h3>
                       </div>
                       <div className="character-preview" aria-hidden="true">
-                        {group.characters.slice(0, 4).map((character) => (
+                        {(groupPreviews.get(group.id) ?? []).map((character) => (
                           <img
                             key={character.id}
                             src={character.image}
