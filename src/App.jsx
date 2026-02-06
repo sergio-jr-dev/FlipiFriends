@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { characterGroups, defaultCharacterGroupId } from './data/characters.js';
 import Board from './components/Board.jsx';
 import { Dialog } from './components/dialog/Dialog.jsx';
-import { BrandIcon } from './components/icons/BrandIcon.jsx';
 import { LevelIcon } from './components/icons/LevelIcon.jsx';
 import { MovesIcon } from './components/icons/MovesIcon.jsx';
 import { PairsIcon } from './components/icons/PairsIcon.jsx';
@@ -484,7 +483,7 @@ function App() {
         <header className="top">
           <div className="brand">
             <span className="logo-badge" aria-hidden="true">
-              <BrandIcon className="logo-icon" />
+              <img className="logo-image" src="/brand/logo.png" alt="" />
             </span>
             <div className="title">
               <h1>FlipiFriends</h1>
@@ -518,7 +517,7 @@ function App() {
           <section className="welcome">
             <header className="welcome-brand">
               <span className="logo-badge is-large" aria-hidden="true">
-                <BrandIcon className="logo-icon" />
+                <img className="logo-image" src="/brand/logo.png" alt="" />
               </span>
               <div>
                 <h1>Bienvenido a FlipiFriends</h1>
