@@ -441,6 +441,93 @@ const doraemonCharacters = [
   },
 ];
 
+const zootropolisCharacters = [
+  {
+    id: 'zootropolis-judy-hopps',
+    name: 'Judy Hopps',
+    short: 'Ju',
+    color: '#d9ecff',
+    image: '/characters/Zootropolis/Judy-Hopps.webp',
+  },
+  {
+    id: 'zootropolis-nick-wilde',
+    name: 'Nick Wilde',
+    short: 'Ni',
+    color: '#ffe6c7',
+    image: '/characters/Zootropolis/Nick-Wilde.webp',
+  },
+  {
+    id: 'zootropolis-jefe-bogo',
+    name: 'Jefe Bogo',
+    short: 'JB',
+    color: '#d9f7e0',
+    image: '/characters/Zootropolis/Jefe-Bogo.webp',
+  },
+  {
+    id: 'zootropolis-mr-big',
+    name: 'Mr Big',
+    short: 'MB',
+    color: '#f0e2ff',
+    image: '/characters/Zootropolis/Mr-Big.webp',
+  },
+  {
+    id: 'zootropolis-gazelle',
+    name: 'Gazelle',
+    short: 'Ga',
+    color: '#ffe0f1',
+    image: '/characters/Zootropolis/Gazelle.webp',
+  },
+  {
+    id: 'zootropolis-gary',
+    name: 'Gary',
+    short: 'Gy',
+    color: '#e5f4ff',
+    image: '/characters/Zootropolis/Gary.webp',
+  },
+  {
+    id: 'zootropolis-fru-fru',
+    name: 'Fru Fru',
+    short: 'FF',
+    color: '#fff1d6',
+    image: '/characters/Zootropolis/Fru-Fru.webp',
+  },
+  {
+    id: 'zootropolis-benjamin-clawhauser',
+    name: 'Benjamin Clawhauser',
+    short: 'BC',
+    color: '#fff0c9',
+    image: '/characters/Zootropolis/Benjamin-Clawhauser.webp',
+  },
+  {
+    id: 'zootropolis-yax',
+    name: 'Yax',
+    short: 'Ya',
+    color: '#def7ef',
+    image: '/characters/Zootropolis/Yax.webp',
+  },
+  {
+    id: 'zootropolis-duke-comadriguez',
+    name: 'Duke Comadriguez',
+    short: 'DC',
+    color: '#e9e1ff',
+    image: '/characters/Zootropolis/Duke-Comadriguez.webp',
+  },
+  {
+    id: 'zootropolis-teniente-de-alcalde-ovina',
+    name: 'Teniente de Alcalde Ovina',
+    short: 'TO',
+    color: '#e6f0ff',
+    image: '/characters/Zootropolis/Teniende-de-Alcalde-Ovina.webp',
+  },
+  {
+    id: 'zootropolis-finnick',
+    name: 'Finnick',
+    short: 'Fi',
+    color: '#ffe4d8',
+    image: '/characters/Zootropolis/Finnick.webp',
+  },
+];
+
 const mixedCharacters = [
   ...blueyCharacters,
   ...pawPatrolCharacters,
@@ -448,6 +535,7 @@ const mixedCharacters = [
   ...pokemonCharacters,
   ...kpopWarriorsCharacters,
   ...doraemonCharacters,
+  ...zootropolisCharacters,
 ];
 
 export const characterGroups = [
@@ -486,6 +574,12 @@ export const characterGroups = [
     label: 'Doraemon',
     description: 'Personajes de Doraemon.',
     characters: doraemonCharacters,
+  },
+  {
+    id: 'zootropolis',
+    label: 'Zootropolis',
+    description: 'Personajes de Zootropolis.',
+    characters: zootropolisCharacters,
   },
   {
     id: 'mixed',
