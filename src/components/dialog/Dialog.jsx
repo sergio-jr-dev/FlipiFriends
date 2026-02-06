@@ -1,5 +1,3 @@
-import { Activity } from 'react';
-
 import './dialog.css';
 
 export const Dialog = ({
@@ -7,22 +5,47 @@ export const Dialog = ({
   dialogRef,
   handleNextLevel,
   handleReset,
+  level,
+  totalLevels,
+  pairs,
+  timeLabel,
+  moves,
 }) => {
   return (
     <dialog ref={dialogRef} aria-live="polite" closedby="none">
       <h2>{isLastLevel ? 'Juego completado' : 'Nivel completado'}</h2>
       <p>
         {isLastLevel
-          ? 'Has encontrado todas las parejas.'
-          : 'Pasemos al siguiente nivel.'}
+          ? 'Has terminado todos los niveles.'
+          : 'Buen trabajo, puedes continuar al siguiente nivel.'}
       </p>
+
+      <section className="dialog-stats" aria-label="Resumen del nivel">
+        <div className="dialog-stat">
+          <span>Nivel</span>
+          <strong>
+            {level}/{totalLevels}
+          </strong>
+        </div>
+        <div className="dialog-stat">
+          <span>Parejas</span>
+          <strong>{pairs}</strong>
+        </div>
+        <div className="dialog-stat">
+          <span>Tiempo</span>
+          <strong>{timeLabel}</strong>
+        </div>
+        <div className="dialog-stat">
+          <span>Movimientos</span>
+          <strong>{moves}</strong>
+        </div>
+      </section>
+
       <div className="actions">
-        <Activity mode={!isLastLevel ? 'visible' : 'hidden'}>
-          <button className="primary" onClick={handleNextLevel}>
-            Siguiente nivel
-          </button>
-        </Activity>
-        <button className="secondary" onClick={handleReset}>
+        <button className="primary" onClick={handleNextLevel} type="button">
+          {isLastLevel ? 'Celebrar' : 'Siguiente nivel'}
+        </button>
+        <button className="secondary" onClick={handleReset} type="button">
           Jugar otra vez
         </button>
       </div>

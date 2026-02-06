@@ -1,11 +1,15 @@
-import Card from './Card.jsx'
+import Card from './Card.jsx';
 
-function Board({ deck, onCardClick, isLocked, columns }) {
+function Board({ deck, onCardClick, isLocked, columns, cardSize, gap }) {
   return (
     <section
       className="board"
       aria-live="polite"
-      style={{ '--columns': columns }}
+      style={{
+        '--columns': columns,
+        '--card-size': `${cardSize}px`,
+        '--board-gap': `${gap}px`,
+      }}
     >
       {deck.map((card) => (
         <Card
@@ -16,7 +20,7 @@ function Board({ deck, onCardClick, isLocked, columns }) {
         />
       ))}
     </section>
-  )
+  );
 }
 
-export default Board
+export default Board;

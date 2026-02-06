@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useRef, useState, Activity } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 
-import { characters } from './data/characters.js';
+import { characterGroups, defaultCharacterGroupId } from './data/characters.js';
 import Board from './components/Board.jsx';
 import { Dialog } from './components/dialog/Dialog.jsx';
 import { SoundOffIcon } from './components/icons/SoundOffIcon.jsx';
 import { SoundOnIcon } from './components/icons/SoundOnIcon.jsx';
 
 const LEVELS = [2, 3, 4, 6, 8, 10];
+const CARD_RATIO = 1.25;
 
 const shuffle = (items) => {
   const array = [...items];
@@ -18,8 +19,9 @@ const shuffle = (items) => {
   return array;
 };
 
-const buildDeck = (pairsCount) => {
-  const chosen = shuffle(characters).slice(0, pairsCount);
+const buildDeck = (pairsCount, availableCharacters) => {
+  const maxPairs = Math.min(pairsCount, availableCharacters.length);
+  const chosen = shuffle(availableCharacters).slice(0, maxPairs);
   const duplicated = chosen.flatMap((character) => [
     {
       id: `${character.id}-a`,
@@ -38,50 +40,146 @@ const buildDeck = (pairsCount) => {
   return shuffle(duplicated);
 };
 
+const formatElapsed = (milliseconds) => {
+  const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+  const seconds = String(totalSeconds % 60).padStart(2, '0');
+  return `${minutes}:${seconds}`;
+};
+
+const resolveBoardLayout = (totalCards, width, height) => {
+  const safeWidth = Math.max(260, width);
+  const safeHeight = Math.max(220, height);
+  const gap = safeWidth < 720 ? 8 : 12;
+  const maxColumns = Math.max(2, Math.min(totalCards, 10));
+
+  let best = {
+    columns: Math.min(4, maxColumns),
+    cardSize: 64,
+    gap,
+  };
+
+  for (let columns = 2; columns <= maxColumns; columns += 1) {
+    const rows = Math.ceil(totalCards / columns);
+    const freeWidth = safeWidth - gap * (columns - 1);
+    const freeHeight = safeHeight - gap * (rows - 1);
+
+    if (freeWidth <= 0 || freeHeight <= 0) continue;
+
+    const byWidth = freeWidth / columns;
+    const byHeight = freeHeight / rows / CARD_RATIO;
+    const cardSize = Math.floor(Math.min(byWidth, byHeight, 148));
+
+    if (cardSize > best.cardSize) {
+      best = {
+        columns,
+        cardSize,
+        gap,
+      };
+    }
+  }
+
+  return {
+    columns: best.columns,
+    cardSize: Math.max(40, best.cardSize),
+    gap: best.gap,
+  };
+};
+
 function App() {
+  const selectedGroup = useMemo(
+    () =>
+      characterGroups.find((group) => group.id === defaultCharacterGroupId) ??
+      characterGroups[0],
+    [],
+  );
+
+  const [selectedGroupId, setSelectedGroupId] = useState(selectedGroup.id);
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
-  const [deck, setDeck] = useState(() => buildDeck(LEVELS[0]));
+  const [deck, setDeck] = useState(() =>
+    buildDeck(LEVELS[0], selectedGroup.characters),
+  );
   const [selected, setSelected] = useState([]);
   const [isLocked, setIsLocked] = useState(false);
   const [matches, setMatches] = useState(0);
+  const [moves, setMoves] = useState(0);
+  const [elapsedMs, setElapsedMs] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [viewportWidth, setViewportWidth] = useState(
-    typeof window === 'undefined' ? 1200 : window.innerWidth,
-  );
+  const [boardArea, setBoardArea] = useState({ width: 1024, height: 720 });
 
+  const levelStartRef = useRef(0);
+  const boardAreaRef = useRef(null);
   const dialogRef = useRef(null);
 
-  const pairsCount = LEVELS[levelIndex];
+  const activeGroup = useMemo(
+    () =>
+      characterGroups.find((group) => group.id === selectedGroupId) ??
+      characterGroups[0],
+    [selectedGroupId],
+  );
+
+  const pairsCount = Math.min(LEVELS[levelIndex], activeGroup.characters.length);
   const totalCards = pairsCount * 2;
   const isComplete = matches === pairsCount;
   const isLastLevel = levelIndex === LEVELS.length - 1;
 
-  const columns = useMemo(() => {
-    const cardSize = 136;
-    const gap = 14;
-    const maxBoardWidth = 1100;
-    const boardWidth = Math.min(viewportWidth, maxBoardWidth) - 64;
-    const maxColumnsByWidth = Math.max(
-      2,
-      Math.floor((boardWidth + gap) / (cardSize + gap)),
-    );
-    const targetColumns = Math.ceil(totalCards / 2);
-    return Math.max(2, Math.min(maxColumnsByWidth, targetColumns));
-  }, [totalCards, viewportWidth]);
+  const boardLayout = useMemo(
+    () => resolveBoardLayout(totalCards, boardArea.width, boardArea.height),
+    [totalCards, boardArea.width, boardArea.height],
+  );
 
-  const resetForLevel = (nextLevelIndex) => {
-    const nextPairs = LEVELS[nextLevelIndex];
-    setDeck(buildDeck(nextPairs));
+  const elapsedLabel = formatElapsed(elapsedMs);
+
+  const resetForLevel = (nextLevelIndex, characterPool = activeGroup.characters) => {
+    const nextPairs = Math.min(LEVELS[nextLevelIndex], characterPool.length);
+    setDeck(buildDeck(nextPairs, characterPool));
     setSelected([]);
     setMatches(0);
+    setMoves(0);
+    setElapsedMs(0);
     setIsLocked(false);
+    levelStartRef.current = Date.now();
   };
 
   useEffect(() => {
-    const handleResize = () => setViewportWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    if (!boardAreaRef.current || isWelcomeOpen) return undefined;
+
+    const node = boardAreaRef.current;
+
+    const updateSize = () => {
+      setBoardArea({
+        width: node.clientWidth,
+        height: node.clientHeight,
+      });
+    };
+
+    updateSize();
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateSize);
+      return () => window.removeEventListener('resize', updateSize);
+    }
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [isWelcomeOpen]);
+
+  useEffect(() => {
+    if (isWelcomeOpen || isComplete) return undefined;
+
+    if (!levelStartRef.current) {
+      levelStartRef.current = Date.now();
+    }
+
+    const interval = setInterval(() => {
+      setElapsedMs(Date.now() - levelStartRef.current);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, [isWelcomeOpen, isComplete, levelIndex]);
 
   useEffect(() => {
     if (selected.length !== 2) return undefined;
@@ -121,62 +219,22 @@ function App() {
     return () => clearTimeout(timeout);
   }, [selected, deck]);
 
-  const handleCardClick = (id) => {
-    if (isLocked) return;
-
-    const card = deck.find((item) => item.id === id);
-    if (!card || card.flipped || card.matched) return;
-
-    setDeck((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, flipped: true } : item)),
-    );
-
-    if (selected.length === 1) {
-      setIsLocked(true);
-      setSelected((prev) => [...prev, id]);
-    } else {
-      setSelected([id]);
-    }
-  };
-
-  const handleReset = () => {
-    resetForLevel(0);
-    setLevelIndex(0);
-    dialogRef.current.close();
-  };
-
-  const handleNextLevel = () => {
-    if (isLastLevel) {
-      return confetti({
-        particleCount: 60,
-        spread: 80,
-        origin: { x: 0.5, y: 0.45 },
-        colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
-        startVelocity: 32,
-        gravity: 0.85,
-        ticks: 300,
-      });
-    }
-
-    setLevelIndex((current) => {
-      const nextLevel = Math.min(current + 1, LEVELS.length - 1);
-      resetForLevel(nextLevel);
-      return nextLevel;
-    });
-
-    dialogRef.current.close();
-  };
-
   useEffect(() => {
-    if (!isComplete) return;
+    if (!isComplete) return undefined;
 
-    setTimeout(() => {
-      dialogRef.current.showModal();
+    if (levelStartRef.current) {
+      setElapsedMs(Date.now() - levelStartRef.current);
+    }
+
+    const timeout = setTimeout(() => {
+      dialogRef.current?.showModal();
     }, 200);
+
+    return () => clearTimeout(timeout);
   }, [isComplete]);
 
   useEffect(() => {
-    if (!isComplete || !soundEnabled) return;
+    if (!isComplete || !soundEnabled) return undefined;
 
     let audioContext;
 
@@ -211,57 +269,201 @@ function App() {
     };
   }, [isComplete, soundEnabled]);
 
+  const handleCardClick = (id) => {
+    if (isLocked || isWelcomeOpen || isComplete) return;
+
+    const card = deck.find((item) => item.id === id);
+    if (!card || card.flipped || card.matched) return;
+
+    setMoves((current) => current + 1);
+
+    setDeck((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, flipped: true } : item)),
+    );
+
+    if (selected.length === 1) {
+      setIsLocked(true);
+      setSelected((prev) => [...prev, id]);
+    } else {
+      setSelected([id]);
+    }
+  };
+
+  const handleStartGame = () => {
+    setLevelIndex(0);
+    resetForLevel(0, activeGroup.characters);
+    dialogRef.current?.close();
+    setIsWelcomeOpen(false);
+  };
+
+  const handleReset = () => {
+    setLevelIndex(0);
+    resetForLevel(0);
+    dialogRef.current?.close();
+  };
+
+  const handleNextLevel = () => {
+    if (isLastLevel) {
+      confetti({
+        particleCount: 60,
+        spread: 80,
+        origin: { x: 0.5, y: 0.45 },
+        colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
+        startVelocity: 32,
+        gravity: 0.85,
+        ticks: 300,
+      });
+      return;
+    }
+
+    setLevelIndex((current) => {
+      const nextLevel = Math.min(current + 1, LEVELS.length - 1);
+      resetForLevel(nextLevel);
+      return nextLevel;
+    });
+
+    dialogRef.current?.close();
+  };
+
   return (
     <div className="app">
-      <header className="top">
-        <div className="title">
-          <h1>FlipiFriends</h1>
-          <p className="subtitle">Voltea, recuerda y gana.</p>
-        </div>
-        <div className="controls">
-          <button
-            className={`sound-toggle ${soundEnabled ? 'is-on' : 'is-off'}`}
-            type="button"
-            onClick={() => setSoundEnabled((prev) => !prev)}
-            aria-pressed={soundEnabled}
-            aria-label={soundEnabled ? 'Sonido activado' : 'Sonido desactivado'}
-          >
-            {soundEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
-          </button>
-        </div>
-      </header>
+      {!isWelcomeOpen ? (
+        <header className="top">
+          <div className="brand">
+            <span className="logo-badge" aria-hidden="true">
+              <img src="/brand/simple-logo.svg" alt="" />
+            </span>
+            <div className="title">
+              <h1>FlipiFriends</h1>
+              <p className="subtitle">{`Coleccion activa: ${activeGroup.label}`}</p>
+            </div>
+          </div>
+          <div className="controls">
+            <button
+              className={`sound-toggle ${soundEnabled ? 'is-on' : 'is-off'}`}
+              type="button"
+              onClick={() => setSoundEnabled((prev) => !prev)}
+              aria-pressed={soundEnabled}
+              aria-label={soundEnabled ? 'Sonido activado' : 'Sonido desactivado'}
+            >
+              {soundEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+            </button>
+          </div>
+        </header>
+      ) : null}
 
-      <section className="status">
-        <div className="status-card">
-          <span>Nivel</span>
-          <strong>
-            {levelIndex + 1}/{LEVELS.length}
-          </strong>
-        </div>
-        <div className="status-card">
-          <span>Parejas</span>
-          <strong>
-            {matches}/{pairsCount}
-          </strong>
-        </div>
-      </section>
+      <main className="main-content">
+        {isWelcomeOpen ? (
+          <section className="welcome" role="dialog" aria-modal="true">
+            <div className="welcome-brand">
+              <span className="logo-badge is-large" aria-hidden="true">
+                <img src="/brand/simple-logo.svg" alt="" />
+              </span>
+              <div>
+                <h2>Bienvenido a FlipiFriends</h2>
+                <p>Un juego para descubrir parejas y divertirse aprendiendo.</p>
+              </div>
+            </div>
+            <div className="welcome-friends" aria-hidden="true">
+              {activeGroup.characters.slice(0, 5).map((character) => (
+                <img
+                  key={character.id}
+                  src={character.image}
+                  alt=""
+                  className="friend-avatar"
+                />
+              ))}
+            </div>
+            <div className="welcome-rules">
+              <p>Busca dos cartas iguales para hacer una pareja.</p>
+              <p>Si aciertas, avanzas. Si no, vuelve a intentarlo.</p>
+              <p>Completa todos los niveles para ganar la partida.</p>
+            </div>
 
-      <Board
-        key={`level-${levelIndex}`}
-        deck={deck}
-        onCardClick={handleCardClick}
-        isLocked={isLocked}
-        columns={columns}
+            <fieldset className="character-selector">
+              <legend>Elige con que amigos quieres jugar</legend>
+              {characterGroups.map((group) => (
+                <label key={group.id} className="character-option">
+                  <div className="character-option-head">
+                    <input
+                      type="radio"
+                      name="character-group"
+                      value={group.id}
+                      checked={selectedGroupId === group.id}
+                      onChange={() => setSelectedGroupId(group.id)}
+                    />
+                    <span>{group.label}</span>
+                  </div>
+                  <small>{group.description}</small>
+                  <div className="character-preview" aria-hidden="true">
+                    {group.characters.slice(0, 4).map((character) => (
+                      <img
+                        key={character.id}
+                        src={character.image}
+                        alt=""
+                        className="preview-avatar"
+                      />
+                    ))}
+                  </div>
+                </label>
+              ))}
+            </fieldset>
+
+            <button className="primary" type="button" onClick={handleStartGame}>
+              Empezar a jugar
+            </button>
+          </section>
+        ) : (
+          <section className="board-wrap" ref={boardAreaRef}>
+            <Board
+              key={`level-${levelIndex}-${selectedGroupId}`}
+              deck={deck}
+              onCardClick={handleCardClick}
+              isLocked={isLocked}
+              columns={boardLayout.columns}
+              cardSize={boardLayout.cardSize}
+              gap={boardLayout.gap}
+            />
+          </section>
+        )}
+      </main>
+
+      {!isWelcomeOpen ? (
+        <section className="status-dock" aria-live="polite">
+          <div className="status-item level">
+            <span>Nivel</span>
+            <strong>
+              {levelIndex + 1}/{LEVELS.length}
+            </strong>
+          </div>
+          <div className="status-item pairs">
+            <span>Parejas</span>
+            <strong>
+              {matches}/{pairsCount}
+            </strong>
+          </div>
+          <div className="status-item time">
+            <span>Tiempo</span>
+            <strong>{elapsedLabel}</strong>
+          </div>
+          <div className="status-item moves">
+            <span>Movimientos</span>
+            <strong>{moves}</strong>
+          </div>
+        </section>
+      ) : null}
+
+      <Dialog
+        isLastLevel={isLastLevel}
+        dialogRef={dialogRef}
+        handleNextLevel={handleNextLevel}
+        handleReset={handleReset}
+        level={levelIndex + 1}
+        totalLevels={LEVELS.length}
+        pairs={pairsCount}
+        timeLabel={elapsedLabel}
+        moves={moves}
       />
-
-      <Activity mode={isComplete ? 'visible' : 'hidden'}>
-        <Dialog
-          isLastLevel={isLastLevel}
-          dialogRef={dialogRef}
-          handleNextLevel={handleNextLevel}
-          handleReset={handleReset}
-        />
-      </Activity>
     </div>
   );
 }
