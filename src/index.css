@@ -365,7 +365,7 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 4px;
-  padding-bottom: 20px;
+  padding-bottom: 58px;
   -webkit-overflow-scrolling: touch;
   width: 100%;
 }
@@ -373,47 +373,58 @@ button {
 .character-scroll-hint {
   position: absolute;
   left: 50%;
-  bottom: 6px;
-  transform: translateX(-50%);
+  bottom: 8px;
+  transform: translate(-50%, 0);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(97, 91, 110, 0.2);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 18px rgba(64, 44, 110, 0.18);
+  backdrop-filter: blur(2px);
   display: grid;
+  align-content: center;
   justify-items: center;
-  gap: 1px;
+  gap: 2px;
   pointer-events: none;
   z-index: 2;
   opacity: 1;
-  transition: opacity 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .character-scroll-hint.is-hidden {
   opacity: 0;
+  transform: translate(-50%, 6px) scale(0.92);
 }
 
 .scroll-chevron {
-  width: 10px;
-  height: 10px;
-  border-right: 2px solid rgba(91, 85, 102, 0.75);
-  border-bottom: 2px solid rgba(91, 85, 102, 0.75);
+  width: 12px;
+  height: 12px;
+  border-right: 3px solid rgba(73, 67, 89, 0.9);
+  border-bottom: 3px solid rgba(73, 67, 89, 0.9);
   transform: rotate(45deg);
-  animation: scroll-chevron-drop 1.4s ease-in-out infinite;
+  animation: scroll-chevron-drop 1.15s ease-in-out infinite;
 }
 
 .scroll-chevron:last-child {
-  margin-top: -6px;
-  animation-delay: 0.18s;
+  margin-top: -8px;
+  animation-delay: 0.14s;
 }
 
 @keyframes scroll-chevron-drop {
   0% {
-    transform: translateY(-2px) rotate(45deg);
+    transform: translateY(-4px) rotate(45deg);
     opacity: 0;
   }
 
   30% {
-    opacity: 0.9;
+    opacity: 1;
   }
 
   100% {
-    transform: translateY(5px) rotate(45deg);
+    transform: translateY(7px) rotate(45deg);
     opacity: 0;
   }
 }
@@ -668,7 +679,9 @@ button {
   }
 
   .character-scroll-hint {
-    bottom: 4px;
+    bottom: 6px;
+    width: 40px;
+    height: 40px;
   }
 
   .character-list {
