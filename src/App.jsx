@@ -332,6 +332,13 @@ function App() {
     dialogRef.current?.close();
   };
 
+  const handleGoToWelcome = () => {
+    setLevelIndex(0);
+    resetForLevel(0);
+    setIsWelcomeOpen(true);
+    dialogRef.current?.close();
+  };
+
   const handleNextLevel = () => {
     setLevelIndex((current) => {
       const nextLevel = Math.min(current + 1, LEVELS.length - 1);
@@ -359,8 +366,8 @@ function App() {
             <button
               className="sound-toggle"
               type="button"
-              onClick={handleReset}
-              aria-label="Reiniciar partida"
+              onClick={handleGoToWelcome}
+              aria-label="Volver a inicio"
             >
               <span className="material-symbols-rounded" aria-hidden="true">
                 restart_alt
@@ -379,9 +386,9 @@ function App() {
         </header>
       ) : null}
 
-      <main className="main-content">
+      <main className={`main-content ${isWelcomeOpen ? 'is-welcome' : 'is-game'}`}>
         {isWelcomeOpen ? (
-          <section className="welcome" role="dialog" aria-modal="true">
+          <section className="welcome">
             <div className="welcome-brand">
               <span className="logo-badge is-large" aria-hidden="true">
                 <img src="/brand/simple-logo.svg" alt="" />
@@ -420,8 +427,11 @@ function App() {
               ))}
             </fieldset>
 
-            <button className="primary" type="button" onClick={handleStartGame}>
-              Empezar a jugar
+            <button className="primary start-button" type="button" onClick={handleStartGame}>
+              <span className="material-symbols-rounded button-icon" aria-hidden="true">
+                play_arrow
+              </span>
+              <span>Empezar a jugar</span>
             </button>
           </section>
         ) : (

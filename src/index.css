@@ -84,6 +84,17 @@ button {
   box-shadow: 0 14px 20px rgba(90, 102, 207, 0.24);
 }
 
+.start-button {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.button-icon {
+  font-size: 20px;
+}
+
 .secondary {
   border: 2px solid rgba(47, 43, 58, 0.15);
   border-radius: 16px;
@@ -283,16 +294,26 @@ button {
   overflow: hidden;
 }
 
+.main-content.is-welcome {
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content.is-game {
+  background: transparent;
+}
+
 .welcome {
   width: min(100%, 860px);
-  margin: auto;
+  margin: 0 auto;
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.9);
   box-shadow: var(--shadow);
   padding: clamp(14px, 2.6vh, 22px);
   display: grid;
   gap: clamp(8px, 1.1vh, 12px);
-  max-height: 100%;
+  height: auto;
+  max-height: min(92dvh, 720px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -312,60 +333,6 @@ button {
   margin: 0;
   color: var(--soft-ink);
   font-size: 1rem;
-}
-
-.welcome-steps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.welcome-step {
-  border-radius: 16px;
-  border: 2px solid rgba(47, 43, 58, 0.1);
-  background: rgba(191, 228, 255, 0.25);
-  padding: 10px;
-  display: grid;
-  gap: 8px;
-}
-
-.step-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.step-badge {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background: linear-gradient(145deg, #5f7ef5, #4d5ac9);
-  color: #ffffff;
-  display: grid;
-  place-items: center;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.welcome-step h3 {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--ink);
-}
-
-.welcome-step p {
-  font-size: 1rem;
-}
-
-.step-visual {
-  border-radius: 12px;
-  border: 2px dashed rgba(47, 43, 58, 0.15);
-  background: rgba(255, 255, 255, 0.85);
-  min-height: 56px;
-  display: grid;
-  place-items: center;
-  font-size: 1rem;
-  color: var(--soft-ink);
 }
 
 .character-selector {
@@ -438,6 +405,7 @@ button {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: transparent;
 }
 
 .board {
@@ -452,6 +420,7 @@ button {
   width: max-content;
   max-width: 100%;
   max-height: 100%;
+  background: transparent;
 }
 
 .card {
@@ -563,9 +532,6 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .welcome-steps {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 560px) {
@@ -630,15 +596,10 @@ button {
     height: 40px;
   }
 
-  .primary,
-  .secondary {
-    width: 100%;
-  }
-
   .welcome {
-    margin: 0;
+    margin: 0 auto;
     border-radius: 18px;
-    max-height: 100%;
+    max-height: min(92dvh, 680px);
     padding: 12px;
   }
 }
