@@ -144,6 +144,79 @@ const pawPatrolCharacters = [
   },
 ];
 
+const gabbyDollhouseCharacters = [
+  {
+    id: 'gabby',
+    name: 'Gabby',
+    short: 'Ga',
+    color: '#ffd9ee',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gabby.png',
+  },
+  {
+    id: 'pandy-patas',
+    name: 'Pandy Patas',
+    short: 'PP',
+    color: '#d6ebff',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Pandy-Patas.png',
+  },
+  {
+    id: 'gato-almohada',
+    name: 'Gato Almohada',
+    short: 'GA',
+    color: '#f7dcff',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gato-Almohada.png',
+  },
+  {
+    id: 'gatirena',
+    name: 'Gatirena',
+    short: 'Gt',
+    color: '#cfeeff',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gatirena.png',
+  },
+  {
+    id: 'escurrigato',
+    name: 'Escurrigato',
+    short: 'Es',
+    color: '#d7ffe5',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Escurrigato.png',
+  },
+  {
+    id: 'bebe-caja',
+    name: 'Bebe Caja',
+    short: 'BC',
+    color: '#ffe6d1',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Bebe-Caja.png',
+  },
+  {
+    id: 'hada-gatina',
+    name: 'Hada Gatina',
+    short: 'HG',
+    color: '#f9f2c8',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Hada-Gatina.png',
+  },
+  {
+    id: 'dj-musicat',
+    name: 'DJ Musicat',
+    short: 'DJ',
+    color: '#ffd8c2',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/DJ-Musicat.png',
+  },
+  {
+    id: 'pastelillo',
+    name: 'Pastelillo',
+    short: 'Pa',
+    color: '#fff0c8',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Pastelillo.png',
+  },
+  {
+    id: 'carlita',
+    name: 'Carlita',
+    short: 'Ca',
+    color: '#e3dbff',
+    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Carlita.png',
+  },
+];
+
 export const characterGroups = [
   {
     id: 'bluey',
@@ -156,6 +229,12 @@ export const characterGroups = [
     label: 'Patrulla Canina',
     description: 'Personajes de la Patrulla Canina en todos los niveles.',
     characters: pawPatrolCharacters,
+  },
+  {
+    id: 'gabby-dollhouse',
+    label: 'La Casa de Muñecas de Gabby',
+    description: 'Personajes de La Casa de Muñecas de Gabby.',
+    characters: gabbyDollhouseCharacters,
   },
 ];
 
