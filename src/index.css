@@ -67,7 +67,7 @@ button {
   border: 2px solid rgba(47, 43, 58, 0.15);
   border-radius: 16px;
   padding: 10px 18px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   background: rgba(255, 255, 255, 0.82);
   color: var(--ink);
   cursor: pointer;
@@ -151,8 +151,8 @@ button {
 .subtitle {
   margin: 2px 0 0;
   color: var(--soft-ink);
-  font-size: clamp(0.72rem, 1.4vw, 0.9rem);
-  white-space: nowrap;
+  font-size: clamp(1rem, 1.4vw, 1.05rem);
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -239,14 +239,14 @@ button {
 }
 
 .status-item span {
-  font-size: clamp(0.62rem, 1.3vw, 0.78rem);
-  white-space: nowrap;
+  font-size: 1rem;
+  white-space: normal;
 }
 
 .status-item strong {
   color: var(--ink);
-  font-size: clamp(0.8rem, 1.8vw, 1rem);
-  white-space: nowrap;
+  font-size: 1rem;
+  white-space: normal;
 }
 
 .main-content {
@@ -281,31 +281,61 @@ button {
 .welcome p {
   margin: 0;
   color: var(--soft-ink);
-  font-size: clamp(0.8rem, 1.35vw, 0.96rem);
+  font-size: 1rem;
 }
 
-.welcome-friends {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.friend-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 2px solid rgba(47, 43, 58, 0.1);
-  padding: 4px;
-  object-fit: contain;
-}
-
-.welcome-rules {
+.welcome-steps {
   display: grid;
-  gap: 4px;
-  padding: 8px 10px;
-  border-radius: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.welcome-step {
+  border-radius: 16px;
+  border: 2px solid rgba(47, 43, 58, 0.1);
   background: rgba(191, 228, 255, 0.25);
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #5f7ef5, #4d5ac9);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.welcome-step h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.welcome-step p {
+  font-size: 1rem;
+}
+
+.step-visual {
+  border-radius: 12px;
+  border: 2px dashed rgba(47, 43, 58, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  color: var(--soft-ink);
 }
 
 .character-selector {
@@ -319,7 +349,7 @@ button {
 
 .character-selector legend {
   margin-bottom: 4px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--soft-ink);
   font-weight: 600;
 }
@@ -352,12 +382,7 @@ button {
 
 .character-option-head span {
   font-weight: 700;
-  font-size: 0.92rem;
-}
-
-.character-option small {
-  color: var(--soft-ink);
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .character-preview {
@@ -467,10 +492,14 @@ button {
 }
 
 .name {
-  font-size: clamp(0.64rem, 1.2vw, 0.86rem);
+  font-size: 1rem;
   font-weight: 600;
   color: var(--ink);
   line-height: 1.1;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card.is-matched .card-back {
@@ -484,11 +513,11 @@ button {
   }
 
   .title h1 {
-    font-size: clamp(0.95rem, 4.5vw, 1.2rem);
+    font-size: clamp(1rem, 4.5vw, 1.2rem);
   }
 
   .subtitle {
-    font-size: 0.72rem;
+    font-size: 1rem;
   }
 
   .status-dock {
@@ -501,6 +530,10 @@ button {
   }
 
   .character-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-steps {
     grid-template-columns: 1fr;
   }
 }
@@ -541,23 +574,6 @@ button {
   .sound-toggle svg {
     width: 18px;
     height: 18px;
-  }
-
-  .status-item span {
-    font-size: 0.6rem;
-  }
-
-  .status-item strong {
-    font-size: 0.74rem;
-  }
-
-  .welcome-rules {
-    padding: 6px 8px;
-  }
-
-  .friend-avatar {
-    width: 40px;
-    height: 40px;
   }
 
   .preview-avatar {

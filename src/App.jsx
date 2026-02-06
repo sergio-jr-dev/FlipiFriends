@@ -364,21 +364,32 @@ function App() {
                 <p>Un juego para descubrir parejas y divertirse aprendiendo.</p>
               </div>
             </div>
-            <div className="welcome-friends" aria-hidden="true">
-              {activeGroup.characters.slice(0, 5).map((character) => (
-                <img
-                  key={character.id}
-                  src={character.image}
-                  alt=""
-                  className="friend-avatar"
-                />
-              ))}
-            </div>
-            <div className="welcome-rules">
-              <p>Busca dos cartas iguales para hacer una pareja.</p>
-              <p>Si aciertas, avanzas. Si no, vuelve a intentarlo.</p>
-              <p>Completa todos los niveles para ganar la partida.</p>
-            </div>
+            <section className="welcome-steps" aria-label="Como jugar">
+              <article className="welcome-step">
+                <div className="step-head">
+                  <span className="step-badge">1</span>
+                  <h3>Voltea cartas</h3>
+                </div>
+                <p>Toca dos cartas para descubrir si son iguales.</p>
+                <div className="step-visual">Espacio para imagen</div>
+              </article>
+              <article className="welcome-step">
+                <div className="step-head">
+                  <span className="step-badge">2</span>
+                  <h3>Haz parejas</h3>
+                </div>
+                <p>Si aciertas, la pareja se queda descubierta.</p>
+                <div className="step-visual">Espacio para imagen</div>
+              </article>
+              <article className="welcome-step">
+                <div className="step-head">
+                  <span className="step-badge">3</span>
+                  <h3>Gana niveles</h3>
+                </div>
+                <p>Completa todos los niveles para ganar.</p>
+                <div className="step-visual">Espacio para imagen</div>
+              </article>
+            </section>
 
             <fieldset className="character-selector">
               <legend>Elige con que amigos quieres jugar</legend>
@@ -394,7 +405,6 @@ function App() {
                     />
                     <span>{group.label}</span>
                   </div>
-                  <small>{group.description}</small>
                   <div className="character-preview" aria-hidden="true">
                     {group.characters.slice(0, 4).map((character) => (
                       <img

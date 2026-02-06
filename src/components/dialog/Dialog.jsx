@@ -21,21 +21,21 @@ export const Dialog = ({
       </p>
 
       <section className="dialog-stats" aria-label="Resumen del nivel">
-        <div className="dialog-stat">
+        <div className="dialog-stat level">
           <span>Nivel</span>
           <strong>
             {level}/{totalLevels}
           </strong>
         </div>
-        <div className="dialog-stat">
+        <div className="dialog-stat pairs">
           <span>Parejas</span>
           <strong>{pairs}</strong>
         </div>
-        <div className="dialog-stat">
+        <div className="dialog-stat time">
           <span>Tiempo</span>
           <strong>{timeLabel}</strong>
         </div>
-        <div className="dialog-stat">
+        <div className="dialog-stat moves">
           <span>Movimientos</span>
           <strong>{moves}</strong>
         </div>

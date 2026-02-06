@@ -36,12 +36,12 @@ dialog::backdrop {
 
 dialog h2 {
   margin: 0;
-  font-size: clamp(1.25rem, 4vw, 1.8rem);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
 }
 
 dialog p {
   margin: 0;
-  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+  font-size: 1rem;
   color: var(--soft-ink);
 }
 
@@ -53,19 +53,35 @@ dialog p {
 
 .dialog-stat {
   border-radius: 14px;
-  padding: 0.5rem 0.45rem;
-  background: rgba(233, 245, 255, 0.7);
+  padding: 0.55rem 0.45rem;
   color: var(--soft-ink);
   display: grid;
-  gap: 0.15rem;
+  gap: 0.2rem;
+  border: 1px solid rgba(47, 43, 58, 0.07);
+}
+
+.dialog-stat.level {
+  background: linear-gradient(145deg, #e5f2ff, #cfe7ff);
+}
+
+.dialog-stat.pairs {
+  background: linear-gradient(145deg, #e9f8e7, #d9f2d2);
+}
+
+.dialog-stat.time {
+  background: linear-gradient(145deg, #fff0d9, #ffe4bf);
+}
+
+.dialog-stat.moves {
+  background: linear-gradient(145deg, #f0e8ff, #e5d9ff);
 }
 
 .dialog-stat span {
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 .dialog-stat strong {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--ink);
 }
 
@@ -80,10 +96,6 @@ dialog p {
   dialog[open] {
     padding: 1rem;
     gap: 0.8rem;
-  }
-
-  .dialog-stat strong {
-    font-size: 0.95rem;
   }
 
   .actions {
