@@ -1,4 +1,4 @@
-export const SoundOnIcon = ({ className = '' }) => {
+export const PairsIcon = ({ className = '' }) => {
   return (
     <svg
       className={className}
@@ -10,9 +10,7 @@ export const SoundOnIcon = ({ className = '' }) => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M15 8a5 5 0 0 1 0 8" />
-      <path d="M17.7 5a9 9 0 0 1 0 14" />
-      <path d="M6 15H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3l5-4v14l-5-4" />
+      <path d="M19.5 12.57l-7.5 7.43l-7.5 -7.43a5 5 0 1 1 7.5 -6.57a5 5 0 1 1 7.5 6.57" />
     </svg>
   );
 };

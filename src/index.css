@@ -44,27 +44,6 @@ button {
   font-family: inherit;
 }
 
-.material-symbols-rounded {
-  font-family: 'Material Symbols Rounded';
-  font-weight: 400;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 500,
-    'GRAD' 0,
-    'opsz' 24;
-}
-
 .primary {
   border: none;
   border-radius: 16px;
@@ -92,7 +71,8 @@ button {
 }
 
 .button-icon {
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .secondary {
@@ -149,26 +129,27 @@ button {
   height: 40px;
   border-radius: 14px;
   background: linear-gradient(145deg, #5f7ef5, #4d5ac9);
+  color: #ffffff;
   display: grid;
   place-items: center;
   box-shadow: 0 8px 14px rgba(64, 44, 110, 0.24);
   flex-shrink: 0;
 }
 
-.logo-badge img {
-  width: 22px;
-  height: 22px;
+.logo-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .logo-badge.is-large {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 18px;
 }
 
-.logo-badge.is-large img {
-  width: 32px;
-  height: 32px;
+.logo-badge.is-large .logo-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .title {
@@ -279,6 +260,9 @@ button {
 .status-icon {
   display: none;
   color: var(--ink);
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
 }
 
 .status-item strong {
@@ -311,7 +295,7 @@ button {
   box-shadow: var(--shadow);
   padding: clamp(14px, 2.6vh, 22px);
   display: grid;
-  gap: clamp(8px, 1.1vh, 12px);
+  gap: 1rem;
   height: auto;
   max-height: min(92dvh, 720px);
   overflow-y: auto;
@@ -324,9 +308,9 @@ button {
   gap: 12px;
 }
 
-.welcome h2 {
+.welcome h1 {
   margin: 0;
-  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  font-size: clamp(1.25rem, 2.9vw, 2rem);
 }
 
 .welcome p {
@@ -336,19 +320,29 @@ button {
 }
 
 .character-selector {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.character-selector h2 {
   margin: 0;
-  border: none;
+  font-size: 1.2rem;
+  color: var(--soft-ink);
+  font-weight: 600;
+}
+
+.character-list {
+  list-style: none;
+  margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.character-selector legend {
-  margin-bottom: 4px;
-  font-size: 1rem;
-  color: var(--soft-ink);
-  font-weight: 600;
+.character-item {
+  margin: 0;
+  padding: 0;
 }
 
 .character-option {
@@ -377,9 +371,10 @@ button {
   margin: 0;
 }
 
-.character-option-head span {
+.character-option-head h3 {
+  margin: 0;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .character-preview {
@@ -388,8 +383,8 @@ button {
 }
 
 .preview-avatar {
-  width: 46px;
-  height: 46px;
+  width: 56px;
+  height: 56px;
   border-radius: 10px;
   border: 1px solid rgba(47, 43, 58, 0.15);
   background: rgba(255, 255, 255, 0.88);
@@ -529,6 +524,10 @@ button {
   }
 
   .character-selector {
+    gap: 0.45rem;
+  }
+
+  .character-list {
     grid-template-columns: 1fr;
   }
 
@@ -545,7 +544,10 @@ button {
   }
 
   .status-item {
-    gap: 4px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     padding: 8px 4px;
   }
 
@@ -554,8 +556,14 @@ button {
   }
 
   .status-icon {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 20px;
+  }
+
+  .status-item strong {
+    line-height: 1;
   }
 
   .logo-badge {
@@ -564,20 +572,20 @@ button {
     border-radius: 12px;
   }
 
-  .logo-badge img {
-    width: 18px;
-    height: 18px;
+  .logo-icon {
+    width: 28px;
+    height: 28px;
   }
 
   .logo-badge.is-large {
-    width: 46px;
-    height: 46px;
+    width: 52px;
+    height: 52px;
     border-radius: 15px;
   }
 
-  .logo-badge.is-large img {
-    width: 26px;
-    height: 26px;
+  .logo-badge.is-large .logo-icon {
+    width: 28px;
+    height: 28px;
   }
 
   .sound-toggle {
@@ -587,13 +595,13 @@ button {
   }
 
   .sound-toggle svg {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
   }
 
   .preview-avatar {
-    width: 40px;
-    height: 40px;
+    width: 46px;
+    height: 46px;
   }
 
   .welcome {
@@ -601,5 +609,15 @@ button {
     border-radius: 18px;
     max-height: min(92dvh, 680px);
     padding: 12px;
+  }
+
+  .main-content.is-game,
+  .board-wrap,
+  .board {
+    background: transparent !important;
+  }
+
+  .card-face {
+    box-shadow: none;
   }
 }

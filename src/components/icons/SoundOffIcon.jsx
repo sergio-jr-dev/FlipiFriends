@@ -1,6 +1,7 @@
-export const SoundOffIcon = () => {
+export const SoundOffIcon = ({ className = '' }) => {
   return (
     <svg
+      className={className}
       aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"

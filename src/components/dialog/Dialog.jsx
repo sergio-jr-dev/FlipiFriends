@@ -18,8 +18,10 @@ export const Dialog = ({
 
   return (
     <dialog ref={dialogRef} aria-live="polite" closedby="none">
-      <h2 className="dialog-title">{title}</h2>
-      <p className="dialog-message">{message}</p>
+      <header className="dialog-header">
+        <h2 className="dialog-title">{title}</h2>
+        <p className="dialog-message">{message}</p>
+      </header>
 
       <section className="dialog-stats" aria-label="Resumen del nivel">
         <div className="dialog-stat level">

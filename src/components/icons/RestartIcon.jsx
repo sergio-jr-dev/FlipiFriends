@@ -1,4 +1,4 @@
-export const SoundOnIcon = ({ className = '' }) => {
+export const RestartIcon = ({ className = '' }) => {
   return (
     <svg
       className={className}
@@ -10,9 +10,8 @@ export const SoundOnIcon = ({ className = '' }) => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M15 8a5 5 0 0 1 0 8" />
-      <path d="M17.7 5a9 9 0 0 1 0 14" />
-      <path d="M6 15H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3l5-4v14l-5-4" />
+      <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+      <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
     </svg>
   );
 };

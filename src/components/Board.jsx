@@ -1,6 +1,15 @@
+import { memo } from 'react';
+
 import Card from './Card.jsx';
 
-function Board({ deck, onCardClick, isLocked, columns, cardSize, gap }) {
+function Board({
+  deck,
+  onCardClick,
+  isInteractionDisabled,
+  columns,
+  cardSize,
+  gap,
+}) {
   return (
     <section
       className="board"
@@ -15,12 +24,12 @@ function Board({ deck, onCardClick, isLocked, columns, cardSize, gap }) {
         <Card
           key={card.id}
           card={card}
-          onClick={() => onCardClick(card.id)}
-          disabled={isLocked}
+          onCardClick={onCardClick}
+          disabled={isInteractionDisabled}
         />
       ))}
     </section>
   );
 }
 
-export default Board;
+export default memo(Board);

@@ -1,11 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import confetti from 'canvas-confetti';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { characterGroups, defaultCharacterGroupId } from './data/characters.js';
 import Board from './components/Board.jsx';
 import { Dialog } from './components/dialog/Dialog.jsx';
+import { BrandIcon } from './components/icons/BrandIcon.jsx';
+import { LevelIcon } from './components/icons/LevelIcon.jsx';
+import { MovesIcon } from './components/icons/MovesIcon.jsx';
+import { PairsIcon } from './components/icons/PairsIcon.jsx';
+import { PlayIcon } from './components/icons/PlayIcon.jsx';
+import { RestartIcon } from './components/icons/RestartIcon.jsx';
 import { SoundOffIcon } from './components/icons/SoundOffIcon.jsx';
 import { SoundOnIcon } from './components/icons/SoundOnIcon.jsx';
+import { TimeIcon } from './components/icons/TimeIcon.jsx';
 
 const LEVELS = [2, 3, 4, 6, 8, 10];
 const CARD_RATIO = 1.25;
@@ -14,12 +20,24 @@ const LEVEL_MESSAGES = [
   'Lo has hecho genial. Vamos a por el siguiente.',
   'Increible memoria. Listo para continuar.',
   'Gran nivel. Sigue asi.',
+  'Fantastico. Estas mejorando mucho.',
+  'Muy bien hecho. A por el siguiente reto.',
+  'Que buen nivel. Continua jugando.',
+  'Lo estas haciendo de maravilla.',
 ];
 const FINAL_MESSAGES = [
   'Eres un campeon de FlipiFriends.',
   'Partida completa. Has encontrado todas las parejas.',
   'Mision cumplida. Juego terminado con exito.',
+  'Has terminado todos los niveles. Super logro.',
+  'Increible final. Te has salido.',
+  'Juego completo. Memoria de experto.',
+  'Enhorabuena. Nivel final superado.',
+  'Gran victoria. Has ganado la partida.',
 ];
+const characterGroupsById = new Map(
+  characterGroups.map((group) => [group.id, group]),
+);
 
 const shuffle = (items) => {
   const array = [...items];
@@ -97,19 +115,27 @@ const resolveBoardLayout = (totalCards, width, height) => {
   };
 };
 
-function App() {
-  const selectedGroup = useMemo(
-    () =>
-      characterGroups.find((group) => group.id === defaultCharacterGroupId) ??
-      characterGroups[0],
-    [],
-  );
+const pickNextMessage = (pool, previousMessage) => {
+  if (pool.length === 0) return '';
+  if (pool.length === 1) return pool[0];
 
-  const [selectedGroupId, setSelectedGroupId] = useState(selectedGroup.id);
+  let nextMessage = pool[Math.floor(Math.random() * pool.length)];
+  while (nextMessage === previousMessage) {
+    nextMessage = pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  return nextMessage;
+};
+
+function App() {
+  const initialGroup =
+    characterGroupsById.get(defaultCharacterGroupId) ?? characterGroups[0];
+
+  const [selectedGroupId, setSelectedGroupId] = useState(initialGroup.id);
   const [isWelcomeOpen, setIsWelcomeOpen] = useState(true);
   const [levelIndex, setLevelIndex] = useState(0);
   const [deck, setDeck] = useState(() =>
-    buildDeck(LEVELS[0], selectedGroup.characters),
+    buildDeck(LEVELS[0], initialGroup.characters),
   );
   const [selected, setSelected] = useState([]);
   const [isLocked, setIsLocked] = useState(false);
@@ -125,16 +151,19 @@ function App() {
   const dialogRef = useRef(null);
 
   const activeGroup = useMemo(
-    () =>
-      characterGroups.find((group) => group.id === selectedGroupId) ??
-      characterGroups[0],
+    () => characterGroupsById.get(selectedGroupId) ?? characterGroups[0],
     [selectedGroupId],
+  );
+  const cardsById = useMemo(
+    () => new Map(deck.map((card) => [card.id, card])),
+    [deck],
   );
 
   const pairsCount = Math.min(LEVELS[levelIndex], activeGroup.characters.length);
   const totalCards = pairsCount * 2;
   const isComplete = matches === pairsCount;
   const isLastLevel = levelIndex === LEVELS.length - 1;
+  const isInteractionDisabled = isLocked || isWelcomeOpen || isComplete;
 
   const boardLayout = useMemo(
     () => resolveBoardLayout(totalCards, boardArea.width, boardArea.height),
@@ -143,16 +172,19 @@ function App() {
 
   const elapsedLabel = formatElapsed(elapsedMs);
 
-  const resetForLevel = (nextLevelIndex, characterPool = activeGroup.characters) => {
-    const nextPairs = Math.min(LEVELS[nextLevelIndex], characterPool.length);
-    setDeck(buildDeck(nextPairs, characterPool));
-    setSelected([]);
-    setMatches(0);
-    setMoves(0);
-    setElapsedMs(0);
-    setIsLocked(false);
-    levelStartRef.current = Date.now();
-  };
+  const resetForLevel = useCallback(
+    (nextLevelIndex, characterPool = activeGroup.characters) => {
+      const nextPairs = Math.min(LEVELS[nextLevelIndex], characterPool.length);
+      setDeck(buildDeck(nextPairs, characterPool));
+      setSelected([]);
+      setMatches(0);
+      setMoves(0);
+      setElapsedMs(0);
+      setIsLocked(false);
+      levelStartRef.current = Date.now();
+    },
+    [activeGroup.characters],
+  );
 
   useEffect(() => {
     if (!boardAreaRef.current || isWelcomeOpen) return undefined;
@@ -197,8 +229,8 @@ function App() {
     if (selected.length !== 2) return undefined;
 
     const [firstId, secondId] = selected;
-    const firstCard = deck.find((card) => card.id === firstId);
-    const secondCard = deck.find((card) => card.id === secondId);
+    const firstCard = cardsById.get(firstId);
+    const secondCard = cardsById.get(secondId);
 
     if (!firstCard || !secondCard) return undefined;
 
@@ -229,7 +261,7 @@ function App() {
     }, 900);
 
     return () => clearTimeout(timeout);
-  }, [selected, deck]);
+  }, [selected, cardsById]);
 
   useEffect(() => {
     if (!isComplete) return undefined;
@@ -239,8 +271,9 @@ function App() {
     }
 
     const nextMessagePool = isLastLevel ? FINAL_MESSAGES : LEVEL_MESSAGES;
-    const randomIndex = Math.floor(Math.random() * nextMessagePool.length);
-    setCompletionMessage(nextMessagePool[randomIndex]);
+    setCompletionMessage((currentMessage) =>
+      pickNextMessage(nextMessagePool, currentMessage),
+    );
 
     const timeout = setTimeout(() => {
       dialogRef.current?.showModal();
@@ -252,15 +285,28 @@ function App() {
   useEffect(() => {
     if (!isComplete || !isLastLevel) return;
 
-    confetti({
-      particleCount: 90,
-      spread: 90,
-      origin: { x: 0.5, y: 0.45 },
-      colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
-      startVelocity: 34,
-      gravity: 0.85,
-      ticks: 320,
-    });
+    let isCancelled = false;
+
+    const launchConfetti = async () => {
+      const { default: confetti } = await import('canvas-confetti');
+      if (isCancelled) return;
+
+      confetti({
+        particleCount: 90,
+        spread: 90,
+        origin: { x: 0.5, y: 0.45 },
+        colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
+        startVelocity: 34,
+        gravity: 0.85,
+        ticks: 320,
+      });
+    };
+
+    launchConfetti();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [isComplete, isLastLevel]);
 
   useEffect(() => {
@@ -299,10 +345,10 @@ function App() {
     };
   }, [isComplete, soundEnabled]);
 
-  const handleCardClick = (id) => {
-    if (isLocked || isWelcomeOpen || isComplete) return;
+  const handleCardClick = useCallback((id) => {
+    if (isInteractionDisabled) return;
 
-    const card = deck.find((item) => item.id === id);
+    const card = cardsById.get(id);
     if (!card || card.flipped || card.matched) return;
 
     setMoves((current) => current + 1);
@@ -317,29 +363,29 @@ function App() {
     } else {
       setSelected([id]);
     }
-  };
+  }, [cardsById, isInteractionDisabled, selected.length]);
 
-  const handleStartGame = () => {
+  const handleStartGame = useCallback(() => {
     setLevelIndex(0);
     resetForLevel(0, activeGroup.characters);
     dialogRef.current?.close();
     setIsWelcomeOpen(false);
-  };
+  }, [activeGroup.characters, resetForLevel]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setLevelIndex(0);
     resetForLevel(0);
     dialogRef.current?.close();
-  };
+  }, [resetForLevel]);
 
-  const handleGoToWelcome = () => {
+  const handleGoToWelcome = useCallback(() => {
     setLevelIndex(0);
     resetForLevel(0);
     setIsWelcomeOpen(true);
     dialogRef.current?.close();
-  };
+  }, [resetForLevel]);
 
-  const handleNextLevel = () => {
+  const handleNextLevel = useCallback(() => {
     setLevelIndex((current) => {
       const nextLevel = Math.min(current + 1, LEVELS.length - 1);
       resetForLevel(nextLevel);
@@ -347,7 +393,11 @@ function App() {
     });
 
     dialogRef.current?.close();
-  };
+  }, [resetForLevel]);
+
+  const handleToggleSound = useCallback(() => {
+    setSoundEnabled((prev) => !prev);
+  }, []);
 
   return (
     <div className="app">
@@ -355,7 +405,7 @@ function App() {
         <header className="top">
           <div className="brand">
             <span className="logo-badge" aria-hidden="true">
-              <img src="/brand/simple-logo.svg" alt="" />
+              <BrandIcon className="logo-icon" />
             </span>
             <div className="title">
               <h1>FlipiFriends</h1>
@@ -369,14 +419,12 @@ function App() {
               onClick={handleGoToWelcome}
               aria-label="Volver a inicio"
             >
-              <span className="material-symbols-rounded" aria-hidden="true">
-                restart_alt
-              </span>
+              <RestartIcon />
             </button>
             <button
               className={`sound-toggle ${soundEnabled ? 'is-on' : 'is-off'}`}
               type="button"
-              onClick={() => setSoundEnabled((prev) => !prev)}
+              onClick={handleToggleSound}
               aria-pressed={soundEnabled}
               aria-label={soundEnabled ? 'Sonido activado' : 'Sonido desactivado'}
             >
@@ -389,48 +437,50 @@ function App() {
       <main className={`main-content ${isWelcomeOpen ? 'is-welcome' : 'is-game'}`}>
         {isWelcomeOpen ? (
           <section className="welcome">
-            <div className="welcome-brand">
+            <header className="welcome-brand">
               <span className="logo-badge is-large" aria-hidden="true">
-                <img src="/brand/simple-logo.svg" alt="" />
+                <BrandIcon className="logo-icon" />
               </span>
               <div>
-                <h2>Bienvenido a FlipiFriends</h2>
+                <h1>Bienvenido a FlipiFriends</h1>
                 <p>Un juego para descubrir parejas y divertirse aprendiendo.</p>
               </div>
-            </div>
+            </header>
 
-            <fieldset className="character-selector">
-              <legend>Elige con que amigos quieres jugar</legend>
-              {characterGroups.map((group) => (
-                <label key={group.id} className="character-option">
-                  <div className="character-option-head">
-                    <input
-                      type="radio"
-                      name="character-group"
-                      value={group.id}
-                      checked={selectedGroupId === group.id}
-                      onChange={() => setSelectedGroupId(group.id)}
-                    />
-                    <span>{group.label}</span>
-                  </div>
-                  <div className="character-preview" aria-hidden="true">
-                    {group.characters.slice(0, 4).map((character) => (
-                      <img
-                        key={character.id}
-                        src={character.image}
-                        alt=""
-                        className="preview-avatar"
-                      />
-                    ))}
-                  </div>
-                </label>
-              ))}
-            </fieldset>
+            <section className="character-selector" aria-label="Seleccion de personajes">
+              <h2>Elige con que amigos quieres jugar</h2>
+              <ul className="character-list">
+                {characterGroups.map((group) => (
+                  <li key={group.id} className="character-item">
+                    <label className="character-option">
+                      <div className="character-option-head">
+                        <input
+                          type="radio"
+                          name="character-group"
+                          value={group.id}
+                          checked={selectedGroupId === group.id}
+                          onChange={() => setSelectedGroupId(group.id)}
+                        />
+                        <h3>{group.label}</h3>
+                      </div>
+                      <div className="character-preview" aria-hidden="true">
+                        {group.characters.slice(0, 4).map((character) => (
+                          <img
+                            key={character.id}
+                            src={character.image}
+                            alt=""
+                            className="preview-avatar"
+                          />
+                        ))}
+                      </div>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
             <button className="primary start-button" type="button" onClick={handleStartGame}>
-              <span className="material-symbols-rounded button-icon" aria-hidden="true">
-                play_arrow
-              </span>
+              <PlayIcon className="button-icon" />
               <span>Empezar a jugar</span>
             </button>
           </section>
@@ -440,7 +490,7 @@ function App() {
               key={`level-${levelIndex}-${selectedGroupId}`}
               deck={deck}
               onCardClick={handleCardClick}
-              isLocked={isLocked}
+              isInteractionDisabled={isInteractionDisabled}
               columns={boardLayout.columns}
               cardSize={boardLayout.cardSize}
               gap={boardLayout.gap}
@@ -453,34 +503,26 @@ function App() {
         <section className="status-dock" aria-live="polite">
           <div className="status-item level">
             <span className="status-label">Nivel</span>
-            <span className="material-symbols-rounded status-icon" aria-hidden="true">
-              emoji_events
-            </span>
+            <LevelIcon className="status-icon" />
             <strong>
               {levelIndex + 1}/{LEVELS.length}
             </strong>
           </div>
           <div className="status-item pairs">
             <span className="status-label">Parejas</span>
-            <span className="material-symbols-rounded status-icon" aria-hidden="true">
-              favorite
-            </span>
+            <PairsIcon className="status-icon" />
             <strong>
               {matches}/{pairsCount}
             </strong>
           </div>
           <div className="status-item time">
             <span className="status-label">Tiempo</span>
-            <span className="material-symbols-rounded status-icon" aria-hidden="true">
-              timer
-            </span>
+            <TimeIcon className="status-icon" />
             <strong>{elapsedLabel}</strong>
           </div>
           <div className="status-item moves">
             <span className="status-label">Movimientos</span>
-            <span className="material-symbols-rounded status-icon" aria-hidden="true">
-              swipe
-            </span>
+            <MovesIcon className="status-icon" />
             <strong>{moves}</strong>
           </div>
         </section>

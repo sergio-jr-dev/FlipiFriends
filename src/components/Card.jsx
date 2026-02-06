@@ -1,5 +1,11 @@
-function Card({ card, onClick, disabled }) {
-  const isRevealed = card.flipped || card.matched
+import { memo, useCallback } from 'react';
+
+function Card({ card, onCardClick, disabled }) {
+  const isRevealed = card.flipped || card.matched;
+
+  const handleClick = useCallback(() => {
+    onCardClick(card.id);
+  }, [onCardClick, card.id]);
 
   return (
     <button
@@ -7,7 +13,7 @@ function Card({ card, onClick, disabled }) {
         card.matched ? 'is-matched' : ''
       }`}
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled || isRevealed}
       aria-label={`Carta ${card.character.name}`}
     >
@@ -24,12 +30,13 @@ function Card({ card, onClick, disabled }) {
             src={card.character.image}
             alt={card.character.name}
             loading="lazy"
+            decoding="async"
           />
           <span className="name">{card.character.name}</span>
         </span>
       </span>
     </button>
-  )
+  );
 }
 
-export default Card
+export default memo(Card);
