@@ -352,10 +352,20 @@ function App() {
             </span>
             <div className="title">
               <h1>FlipiFriends</h1>
-              <p className="subtitle">{`Coleccion activa: ${activeGroup.label}`}</p>
+              <p className="subtitle">{activeGroup.label}</p>
             </div>
           </div>
           <div className="controls">
+            <button
+              className="sound-toggle"
+              type="button"
+              onClick={handleReset}
+              aria-label="Reiniciar partida"
+            >
+              <span className="material-symbols-rounded" aria-hidden="true">
+                restart_alt
+              </span>
+            </button>
             <button
               className={`sound-toggle ${soundEnabled ? 'is-on' : 'is-off'}`}
               type="button"
@@ -381,32 +391,6 @@ function App() {
                 <p>Un juego para descubrir parejas y divertirse aprendiendo.</p>
               </div>
             </div>
-            <section className="welcome-steps" aria-label="Como jugar">
-              <article className="welcome-step">
-                <div className="step-head">
-                  <span className="step-badge">1</span>
-                  <h3>Voltea cartas</h3>
-                </div>
-                <p>Toca dos cartas para descubrir si son iguales.</p>
-                <div className="step-visual">Espacio para imagen</div>
-              </article>
-              <article className="welcome-step">
-                <div className="step-head">
-                  <span className="step-badge">2</span>
-                  <h3>Haz parejas</h3>
-                </div>
-                <p>Si aciertas, la pareja se queda descubierta.</p>
-                <div className="step-visual">Espacio para imagen</div>
-              </article>
-              <article className="welcome-step">
-                <div className="step-head">
-                  <span className="step-badge">3</span>
-                  <h3>Gana niveles</h3>
-                </div>
-                <p>Completa todos los niveles para ganar.</p>
-                <div className="step-visual">Espacio para imagen</div>
-              </article>
-            </section>
 
             <fieldset className="character-selector">
               <legend>Elige con que amigos quieres jugar</legend>
