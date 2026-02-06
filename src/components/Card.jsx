@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 
-function Card({ card, onCardClick, disabled }) {
+function Card({ card, onCardClick, disabled, isSelected, isMismatched }) {
   const isRevealed = card.flipped || card.matched;
 
   const handleClick = useCallback(() => {
@@ -11,7 +11,7 @@ function Card({ card, onCardClick, disabled }) {
     <button
       className={`card ${isRevealed ? 'is-flipped' : ''} ${
         card.matched ? 'is-matched' : ''
-      }`}
+      } ${isSelected ? 'is-selected' : ''} ${isMismatched ? 'is-shaking' : ''}`}
       type="button"
       onClick={handleClick}
       disabled={disabled || isRevealed}

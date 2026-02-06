@@ -45,12 +45,12 @@ dialog::backdrop {
 
 .dialog-title {
   margin: 0;
-  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-size: clamp(1.4rem, 4.2vw, 1.95rem);
 }
 
 .dialog-message {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.06rem;
   color: var(--soft-ink);
 }
 
@@ -92,11 +92,11 @@ dialog::backdrop {
 }
 
 .dialog-stat span {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .dialog-stat strong {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--ink);
 }
 

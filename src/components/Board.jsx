@@ -6,6 +6,8 @@ function Board({
   deck,
   onCardClick,
   isInteractionDisabled,
+  selectedIds,
+  mismatchIds,
   columns,
   cardSize,
   gap,
@@ -26,6 +28,8 @@ function Board({
           card={card}
           onCardClick={onCardClick}
           disabled={isInteractionDisabled}
+          isSelected={selectedIds.has(card.id)}
+          isMismatched={mismatchIds.has(card.id)}
         />
       ))}
     </section>

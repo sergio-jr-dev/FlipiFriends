@@ -8,6 +8,7 @@ import { LevelIcon } from './components/icons/LevelIcon.jsx';
 import { MovesIcon } from './components/icons/MovesIcon.jsx';
 import { PairsIcon } from './components/icons/PairsIcon.jsx';
 import { PlayIcon } from './components/icons/PlayIcon.jsx';
+import { PlusIcon } from './components/icons/PlusIcon.jsx';
 import { RestartIcon } from './components/icons/RestartIcon.jsx';
 import { SoundOffIcon } from './components/icons/SoundOffIcon.jsx';
 import { SoundOnIcon } from './components/icons/SoundOnIcon.jsx';
@@ -15,6 +16,8 @@ import { TimeIcon } from './components/icons/TimeIcon.jsx';
 
 const LEVELS = [2, 3, 4, 6, 8, 10];
 const CARD_RATIO = 1.25;
+const CARD_FLIP_MS = 500;
+const MISMATCH_SHAKE_MS = 340;
 const LEVEL_MESSAGES = [
   'Buen trabajo, puedes continuar al siguiente nivel.',
   'Lo has hecho genial. Vamos a por el siguiente.',
@@ -138,6 +141,7 @@ function App() {
     buildDeck(LEVELS[0], initialGroup.characters),
   );
   const [selected, setSelected] = useState([]);
+  const [mismatchCardIds, setMismatchCardIds] = useState([]);
   const [isLocked, setIsLocked] = useState(false);
   const [matches, setMatches] = useState(0);
   const [moves, setMoves] = useState(0);
@@ -158,6 +162,11 @@ function App() {
     () => new Map(deck.map((card) => [card.id, card])),
     [deck],
   );
+  const selectedIds = useMemo(() => new Set(selected), [selected]);
+  const mismatchIds = useMemo(
+    () => new Set(mismatchCardIds),
+    [mismatchCardIds],
+  );
 
   const pairsCount = Math.min(LEVELS[levelIndex], activeGroup.characters.length);
   const totalCards = pairsCount * 2;
@@ -177,6 +186,7 @@ function App() {
       const nextPairs = Math.min(LEVELS[nextLevelIndex], characterPool.length);
       setDeck(buildDeck(nextPairs, characterPool));
       setSelected([]);
+      setMismatchCardIds([]);
       setMatches(0);
       setMoves(0);
       setElapsedMs(0);
@@ -235,6 +245,7 @@ function App() {
     if (!firstCard || !secondCard) return undefined;
 
     if (firstCard.character.id === secondCard.character.id) {
+      setMismatchCardIds([]);
       setDeck((prev) =>
         prev.map((card) =>
           card.id === firstId || card.id === secondId
@@ -248,6 +259,13 @@ function App() {
       return undefined;
     }
 
+    setMismatchCardIds([]);
+
+    const mismatchIdsNext = [firstId, secondId];
+    const startShakeTimeout = setTimeout(() => {
+      setMismatchCardIds(mismatchIdsNext);
+    }, CARD_FLIP_MS);
+
     const timeout = setTimeout(() => {
       setDeck((prev) =>
         prev.map((card) =>
@@ -257,10 +275,14 @@ function App() {
         ),
       );
       setSelected([]);
+      setMismatchCardIds([]);
       setIsLocked(false);
-    }, 900);
+    }, CARD_FLIP_MS + MISMATCH_SHAKE_MS + 60);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(startShakeTimeout);
+      clearTimeout(timeout);
+    };
   }, [selected, cardsById]);
 
   useEffect(() => {
@@ -352,6 +374,7 @@ function App() {
     if (!card || card.flipped || card.matched) return;
 
     setMoves((current) => current + 1);
+    setMismatchCardIds([]);
 
     setDeck((prev) =>
       prev.map((item) => (item.id === id ? { ...item, flipped: true } : item)),
@@ -466,6 +489,11 @@ function App() {
                             className="preview-avatar"
                           />
                         ))}
+                        {group.characters.length > 4 ? (
+                          <span className="preview-avatar preview-more">
+                            <PlusIcon className="preview-more-icon" />
+                          </span>
+                        ) : null}
                       </div>
                     </label>
                   </li>
@@ -485,6 +513,8 @@ function App() {
               deck={deck}
               onCardClick={handleCardClick}
               isInteractionDisabled={isInteractionDisabled}
+              selectedIds={selectedIds}
+              mismatchIds={mismatchIds}
               columns={boardLayout.columns}
               cardSize={boardLayout.cardSize}
               gap={boardLayout.gap}
