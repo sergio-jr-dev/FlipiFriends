@@ -347,12 +347,107 @@ const kpopWarriorsCharacters = [
   },
 ];
 
+const doraemonCharacters = [
+  {
+    id: 'doraemon-doraemon',
+    name: 'Doraemon',
+    short: 'Do',
+    color: '#d7efff',
+    image: '/characters/Doraemon/doraemon.webp',
+  },
+  {
+    id: 'doraemon-nobita',
+    name: 'Nobita',
+    short: 'No',
+    color: '#ffe7bf',
+    image: '/characters/Doraemon/nobita.webp',
+  },
+  {
+    id: 'doraemon-shizuka',
+    name: 'Shizuka',
+    short: 'Sh',
+    color: '#ffe0f2',
+    image: '/characters/Doraemon/shizuka.webp',
+  },
+  {
+    id: 'doraemon-suneo',
+    name: 'Suneo',
+    short: 'Su',
+    color: '#dff7d0',
+    image: '/characters/Doraemon/suneo.webp',
+  },
+  {
+    id: 'doraemon-gigante',
+    name: 'Gigante',
+    short: 'Gi',
+    color: '#e5dcff',
+    image: '/characters/Doraemon/gigante.webp',
+  },
+  {
+    id: 'doraemon-dorami',
+    name: 'Dorami',
+    short: 'Dr',
+    color: '#fff0bf',
+    image: '/characters/Doraemon/dorami.webp',
+  },
+  {
+    id: 'doraemon-gorrocoptero',
+    name: 'Gorrocoptero',
+    short: 'Go',
+    color: '#d6f5ff',
+    image: '/characters/Doraemon/gorrocoptero.webp',
+  },
+  {
+    id: 'doraemon-puerta-magica',
+    name: 'Puerta Magica',
+    short: 'PM',
+    color: '#f1deff',
+    image: '/characters/Doraemon/puerta-magica.webp',
+  },
+  {
+    id: 'doraemon-maquina-del-tiempo',
+    name: 'Maquina del Tiempo',
+    short: 'MT',
+    color: '#d8ecff',
+    image: '/characters/Doraemon/maquina-del-tiempo.webp',
+  },
+  {
+    id: 'doraemon-television-del-tiempo',
+    name: 'Television del Tiempo',
+    short: 'TT',
+    color: '#e2f6ff',
+    image: '/characters/Doraemon/television-del-tiempo.webp',
+  },
+  {
+    id: 'doraemon-flecha-de-cupido',
+    name: 'Flecha de Cupido',
+    short: 'FC',
+    color: '#ffe1ec',
+    image: '/characters/Doraemon/flecha-de-cupido.webp',
+  },
+  {
+    id: 'doraemon-linterna-minimizadora',
+    name: 'Linterna Minimizadora',
+    short: 'LM',
+    color: '#e8fff0',
+    image: '/characters/Doraemon/linterna-minimizadora.webp',
+  },
+  {
+    id: 'doraemon-linterna-maximizadora',
+    name: 'Linterna Maximizadora',
+    short: 'LX',
+    color: '#fff3db',
+    image: '/characters/Doraemon/linterna-maximizadora.webp',
+  },
+];
+
 const mixedCharacters = [
   ...blueyCharacters,
   ...pawPatrolCharacters,
   ...gabbyDollhouseCharacters,
   ...pokemonCharacters,
   ...kpopWarriorsCharacters,
+  ...doraemonCharacters,
 ];
 
 export const characterGroups = [
@@ -385,6 +480,12 @@ export const characterGroups = [
     label: 'Las Guerreras K-pop',
     description: 'Personajes de Las Guerreras K-pop.',
     characters: kpopWarriorsCharacters,
+  },
+  {
+    id: 'doraemon',
+    label: 'Doraemon',
+    description: 'Personajes de Doraemon.',
+    characters: doraemonCharacters,
   },
   {
     id: 'mixed',
