@@ -288,11 +288,71 @@ const pokemonCharacters = pokemonFileNames.map((fileName, index) => {
   };
 });
 
+const kpopWarriorsCharacters = [
+  {
+    id: 'kpop-rumi',
+    name: 'Rumi',
+    short: 'Ru',
+    color: '#ffd6eb',
+    image: '/characters/Las-Guerreras-K-pop/Rumi.jpg',
+  },
+  {
+    id: 'kpop-mira',
+    name: 'Mira',
+    short: 'Mi',
+    color: '#d6e9ff',
+    image: '/characters/Las-Guerreras-K-pop/Mira.webp',
+  },
+  {
+    id: 'kpop-zoey',
+    name: 'Zoey',
+    short: 'Zo',
+    color: '#e5ddff',
+    image: '/characters/Las-Guerreras-K-pop/Zoey.jpg',
+  },
+  {
+    id: 'kpop-jinu',
+    name: 'Jinu',
+    short: 'Ji',
+    color: '#ffe4c7',
+    image: '/characters/Las-Guerreras-K-pop/Jinu.webp',
+  },
+  {
+    id: 'kpop-abby-saja',
+    name: 'Abby Saja',
+    short: 'AS',
+    color: '#d7fff0',
+    image: '/characters/Las-Guerreras-K-pop/Abby-Saja.webp',
+  },
+  {
+    id: 'kpop-baby-saja',
+    name: 'Baby Saja',
+    short: 'BS',
+    color: '#fff0cc',
+    image: '/characters/Las-Guerreras-K-pop/Baby-Saja.webp',
+  },
+  {
+    id: 'kpop-mystery-saja',
+    name: 'Mystery Saja',
+    short: 'MS',
+    color: '#f2dcff',
+    image: '/characters/Las-Guerreras-K-pop/Mistery-Saja.webp',
+  },
+  {
+    id: 'kpop-romance-saja',
+    name: 'Romance Saja',
+    short: 'RS',
+    color: '#ffdbe0',
+    image: '/characters/Las-Guerreras-K-pop/Romance-Saja.webp',
+  },
+];
+
 const mixedCharacters = [
   ...blueyCharacters,
   ...pawPatrolCharacters,
   ...gabbyDollhouseCharacters,
   ...pokemonCharacters,
+  ...kpopWarriorsCharacters,
 ];
 
 export const characterGroups = [
@@ -319,6 +379,12 @@ export const characterGroups = [
     label: 'Pokemon',
     description: 'Personajes de Pokemon.',
     characters: pokemonCharacters,
+  },
+  {
+    id: 'kpop-warriors',
+    label: 'Las Guerreras K-pop',
+    description: 'Personajes de Las Guerreras K-pop.',
+    characters: kpopWarriorsCharacters,
   },
   {
     id: 'mixed',
