@@ -10,15 +10,16 @@ export const Dialog = ({
   pairs,
   timeLabel,
   moves,
+  message,
 }) => {
+  const title = isLastLevel
+    ? `Juego completado (Nivel ${level})`
+    : `Nivel ${level} completado`;
+
   return (
     <dialog ref={dialogRef} aria-live="polite" closedby="none">
-      <h2>{isLastLevel ? 'Juego completado' : 'Nivel completado'}</h2>
-      <p>
-        {isLastLevel
-          ? 'Has terminado todos los niveles.'
-          : 'Buen trabajo, puedes continuar al siguiente nivel.'}
-      </p>
+      <h2 className="dialog-title">{title}</h2>
+      <p className="dialog-message">{message}</p>
 
       <section className="dialog-stats" aria-label="Resumen del nivel">
         <div className="dialog-stat level">
@@ -42,9 +43,11 @@ export const Dialog = ({
       </section>
 
       <div className="actions">
-        <button className="primary" onClick={handleNextLevel} type="button">
-          {isLastLevel ? 'Celebrar' : 'Siguiente nivel'}
-        </button>
+        {!isLastLevel ? (
+          <button className="primary" onClick={handleNextLevel} type="button">
+            Siguiente nivel
+          </button>
+        ) : null}
         <button className="secondary" onClick={handleReset} type="button">
           Jugar otra vez
         </button>

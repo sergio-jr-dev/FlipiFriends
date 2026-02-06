@@ -9,6 +9,17 @@ import { SoundOnIcon } from './components/icons/SoundOnIcon.jsx';
 
 const LEVELS = [2, 3, 4, 6, 8, 10];
 const CARD_RATIO = 1.25;
+const LEVEL_MESSAGES = [
+  'Buen trabajo, puedes continuar al siguiente nivel.',
+  'Lo has hecho genial. Vamos a por el siguiente.',
+  'Increible memoria. Listo para continuar.',
+  'Gran nivel. Sigue asi.',
+];
+const FINAL_MESSAGES = [
+  'Eres un campeon de FlipiFriends.',
+  'Partida completa. Has encontrado todas las parejas.',
+  'Mision cumplida. Juego terminado con exito.',
+];
 
 const shuffle = (items) => {
   const array = [...items];
@@ -105,6 +116,7 @@ function App() {
   const [matches, setMatches] = useState(0);
   const [moves, setMoves] = useState(0);
   const [elapsedMs, setElapsedMs] = useState(0);
+  const [completionMessage, setCompletionMessage] = useState(LEVEL_MESSAGES[0]);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [boardArea, setBoardArea] = useState({ width: 1024, height: 720 });
 
@@ -226,12 +238,30 @@ function App() {
       setElapsedMs(Date.now() - levelStartRef.current);
     }
 
+    const nextMessagePool = isLastLevel ? FINAL_MESSAGES : LEVEL_MESSAGES;
+    const randomIndex = Math.floor(Math.random() * nextMessagePool.length);
+    setCompletionMessage(nextMessagePool[randomIndex]);
+
     const timeout = setTimeout(() => {
       dialogRef.current?.showModal();
     }, 200);
 
     return () => clearTimeout(timeout);
-  }, [isComplete]);
+  }, [isComplete, isLastLevel]);
+
+  useEffect(() => {
+    if (!isComplete || !isLastLevel) return;
+
+    confetti({
+      particleCount: 90,
+      spread: 90,
+      origin: { x: 0.5, y: 0.45 },
+      colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
+      startVelocity: 34,
+      gravity: 0.85,
+      ticks: 320,
+    });
+  }, [isComplete, isLastLevel]);
 
   useEffect(() => {
     if (!isComplete || !soundEnabled) return undefined;
@@ -303,19 +333,6 @@ function App() {
   };
 
   const handleNextLevel = () => {
-    if (isLastLevel) {
-      confetti({
-        particleCount: 60,
-        spread: 80,
-        origin: { x: 0.5, y: 0.45 },
-        colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
-        startVelocity: 32,
-        gravity: 0.85,
-        ticks: 300,
-      });
-      return;
-    }
-
     setLevelIndex((current) => {
       const nextLevel = Math.min(current + 1, LEVELS.length - 1);
       resetForLevel(nextLevel);
@@ -441,23 +458,35 @@ function App() {
       {!isWelcomeOpen ? (
         <section className="status-dock" aria-live="polite">
           <div className="status-item level">
-            <span>Nivel</span>
+            <span className="status-label">Nivel</span>
+            <span className="material-symbols-rounded status-icon" aria-hidden="true">
+              emoji_events
+            </span>
             <strong>
               {levelIndex + 1}/{LEVELS.length}
             </strong>
           </div>
           <div className="status-item pairs">
-            <span>Parejas</span>
+            <span className="status-label">Parejas</span>
+            <span className="material-symbols-rounded status-icon" aria-hidden="true">
+              favorite
+            </span>
             <strong>
               {matches}/{pairsCount}
             </strong>
           </div>
           <div className="status-item time">
-            <span>Tiempo</span>
+            <span className="status-label">Tiempo</span>
+            <span className="material-symbols-rounded status-icon" aria-hidden="true">
+              timer
+            </span>
             <strong>{elapsedLabel}</strong>
           </div>
           <div className="status-item moves">
-            <span>Movimientos</span>
+            <span className="status-label">Movimientos</span>
+            <span className="material-symbols-rounded status-icon" aria-hidden="true">
+              swipe
+            </span>
             <strong>{moves}</strong>
           </div>
         </section>
@@ -473,6 +502,7 @@ function App() {
         pairs={pairsCount}
         timeLabel={elapsedLabel}
         moves={moves}
+        message={completionMessage}
       />
     </div>
   );

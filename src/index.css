@@ -44,6 +44,27 @@ button {
   font-family: inherit;
 }
 
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
 .primary {
   border: none;
   border-radius: 16px;
@@ -241,6 +262,11 @@ button {
 .status-item span {
   font-size: 1rem;
   white-space: normal;
+}
+
+.status-icon {
+  display: none;
+  color: var(--ink);
 }
 
 .status-item strong {
@@ -544,6 +570,25 @@ button {
 @media (max-width: 560px) {
   .top {
     padding: 8px 10px;
+  }
+
+  .status-dock {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .status-item {
+    gap: 4px;
+    padding: 8px 4px;
+  }
+
+  .status-label {
+    display: none;
+  }
+
+  .status-icon {
+    display: inline-block;
+    font-size: 20px;
   }
 
   .logo-badge {

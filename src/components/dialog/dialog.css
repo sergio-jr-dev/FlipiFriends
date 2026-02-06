@@ -10,7 +10,7 @@ dialog[open] {
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   display: grid;
-  gap: 1rem;
+  gap: 0.7rem;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
@@ -34,12 +34,12 @@ dialog::backdrop {
   }
 }
 
-dialog h2 {
+.dialog-title {
   margin: 0;
   font-size: clamp(1.3rem, 4vw, 1.8rem);
 }
 
-dialog p {
+.dialog-message {
   margin: 0;
   font-size: 1rem;
   color: var(--soft-ink);
@@ -95,7 +95,7 @@ dialog p {
 @media (max-width: 560px) {
   dialog[open] {
     padding: 1rem;
-    gap: 0.8rem;
+    gap: 0.65rem;
   }
 
   .actions {
