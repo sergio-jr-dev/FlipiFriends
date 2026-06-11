@@ -10,6 +10,9 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'sw.js',
+      injectManifest: {
+        rollupFormat: 'iife',
+      },
       registerType: 'autoUpdate',
       includeAssets: [
         'apple-touch-icon-kids.png',
