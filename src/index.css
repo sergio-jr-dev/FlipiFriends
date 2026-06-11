@@ -7,22 +7,51 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --sky: #bfe4ff;
-  --lavender: #e7d9ff;
-  --peach: #ffd7c2;
-  --mint: #d8f5e7;
   --ink: #2f2b3a;
   --soft-ink: #5b5566;
 
-  --bg-gradient:
-    radial-gradient(circle at top left, var(--sky), transparent 60%),
-    radial-gradient(circle at top right, var(--peach), transparent 55%),
-    radial-gradient(circle at bottom left, var(--mint), transparent 52%),
-    radial-gradient(circle at bottom right, var(--lavender), transparent 60%),
-    #f7f3ff;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.93);
+  --surface-soft: rgba(255, 255, 255, 0.66);
+  --surface-tint: rgba(247, 243, 255, 0.86);
+  --border-soft: rgba(47, 43, 58, 0.1);
+  --border-medium: rgba(47, 43, 58, 0.16);
+  --border-play: rgba(113, 113, 231, 0.46);
+  --border-on-light: rgba(255, 255, 255, 0.72);
+  --mark-muted: rgba(47, 43, 58, 0.5);
+  --backdrop-scrim: rgba(47, 43, 58, 0.18);
+
+  --bg-gradient: linear-gradient(135deg, #dff4ff 0%, #fff8df 34%, #f4edff 68%, #e2f8ec 100%);
 
   --shadow: 0 12px 30px rgba(64, 44, 110, 0.12);
-  --border-radius: 16px;
+  --shadow-soft: 0 10px 24px rgba(64, 44, 110, 0.1);
+  --shadow-lift: 0 16px 26px rgba(64, 44, 110, 0.16);
+  --shadow-control: 0 8px 14px rgba(64, 44, 110, 0.12);
+  --shadow-primary: 0 10px 18px rgba(90, 102, 207, 0.2);
+  --shadow-primary-hover: 0 14px 20px rgba(90, 102, 207, 0.24);
+  --shadow-avatar: 0 5px 10px rgba(64, 44, 110, 0.08);
+  --shadow-selected: 0 0 18px rgba(124, 124, 239, 0.22);
+  --shadow-match: 0 10px 18px rgba(66, 168, 120, 0.16);
+  --focus-ring: 0 0 0 4px rgba(255, 212, 105, 0.66);
+  --selected-ring: 0 0 0 3px rgba(255, 234, 167, 0.7);
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999rem;
+  --border-radius: var(--radius-md);
+
+  --gradient-primary: linear-gradient(135deg, #77d8ff, #bda5ff 52%, #ffcae0);
+  --gradient-primary-hover: linear-gradient(135deg, #8fe0ff, #c8b5ff 52%, #ffd4e8);
+  --logo-text-gradient: linear-gradient(90deg, #279ee8 0%, #f4bf2f 48%, #ef5f77 100%);
+  --gradient-card-front:
+    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.95) 0 12%, transparent 13%),
+    radial-gradient(circle at 72% 72%, rgba(255, 234, 167, 0.8) 0 14%, transparent 15%),
+    linear-gradient(145deg, #ffffff, #e9f7ff);
+  --gradient-level: linear-gradient(145deg, #e5f2ff, #cfe7ff);
+  --gradient-pairs: linear-gradient(145deg, #e9f8e7, #d9f2d2);
+  --gradient-time: linear-gradient(145deg, #fff0d9, #ffe4bf);
+  --gradient-moves: linear-gradient(145deg, #f0e8ff, #e5d9ff);
 }
 
 * {
@@ -31,6 +60,7 @@
 
 body {
   background: var(--bg-gradient);
+  min-block-size: 100dvh;
 }
 
 :where(body, h1, h2, h3, h4, h5, h6, p, ul) {
@@ -61,38 +91,52 @@ body {
 
 .primary {
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-pill);
   padding: 0.75rem 1.25rem;
   font-size: 1.05rem;
-  background: linear-gradient(135deg, var(--sky), var(--lavender));
+  font-weight: 700;
+  background: var(--gradient-primary);
   color: #1f1c2b;
-  box-shadow: 0 10px 18px rgba(90, 102, 207, 0.2);
+  box-shadow: var(--shadow-primary);
   cursor: pointer;
   transition:
-    transform 0.2s ease,
+    background 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 14px 20px rgba(90, 102, 207, 0.24);
+    background: var(--gradient-primary-hover);
+    box-shadow: var(--shadow-primary-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring), var(--shadow-primary-hover);
   }
 }
 
 .secondary {
-  border: 2px solid rgba(47, 43, 58, 0.15);
-  border-radius: var(--border-radius);
+  border: 2px solid var(--border-medium);
+  border-radius: var(--radius-pill);
   padding: 0.625rem 1.125rem;
   font-size: 1.05rem;
-  background: rgba(255, 255, 255, 0.82);
+  font-weight: 700;
+  background: var(--surface-strong);
   color: var(--ink);
   cursor: pointer;
   transition:
-    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
-  box-shadow: 0 8px 14px rgba(64, 44, 110, 0.1);
+  box-shadow: var(--shadow-control);
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 16px rgba(64, 44, 110, 0.14);
+    border-color: var(--border-play);
+    background: var(--surface-tint);
+    box-shadow: var(--shadow-lift);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring), var(--shadow-lift);
   }
 }

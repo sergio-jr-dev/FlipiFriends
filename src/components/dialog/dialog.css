@@ -1,17 +1,16 @@
 dialog[open] {
   margin: auto;
   border: none;
-  border-radius: var(--border-radius);
-  background: #ffffff;
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+  backdrop-filter: blur(8px);
   padding: 1rem;
   text-align: center;
   inline-size: min(calc(100% - 1rem), 28rem);
   block-size: fit-content;
   max-block-size: none;
   overflow: visible;
-  box-shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  box-shadow: var(--shadow-lift);
   display: grid;
   grid-auto-rows: min-content;
   align-content: start;
@@ -36,6 +35,7 @@ dialog[open] {
   }
 
   &::backdrop {
+    background: var(--backdrop-scrim);
     backdrop-filter: blur(8px);
     opacity: 0.85;
     transition:
@@ -76,23 +76,23 @@ dialog[open] {
       color: var(--soft-ink);
       display: grid;
       gap: 0.2rem;
-      border: 1px solid rgba(47, 43, 58, 0.07);
+      border: 1px solid var(--border-soft);
     }
 
     .level {
-      background: linear-gradient(145deg, #e5f2ff, #cfe7ff);
+      background: var(--gradient-level);
     }
 
     .pairs {
-      background: linear-gradient(145deg, #e9f8e7, #d9f2d2);
+      background: var(--gradient-pairs);
     }
 
     .time {
-      background: linear-gradient(145deg, #fff0d9, #ffe4bf);
+      background: var(--gradient-time);
     }
 
     .moves {
-      background: linear-gradient(145deg, #f0e8ff, #e5d9ff);
+      background: var(--gradient-moves);
     }
 
     span {

@@ -4,9 +4,10 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.625rem 0.875rem;
-  border-radius: var(--border-radius);
-  background: rgba(255, 255, 255, 0.62);
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-strong);
+  background: var(--surface-soft);
+  box-shadow: var(--shadow-soft);
   backdrop-filter: blur(6px);
 
   @media (width <= 35rem) {
@@ -41,6 +42,11 @@
 
   h1 {
     font-size: clamp(1.08rem, 2.2vw, 1.65rem);
+    letter-spacing: 0;
+    color: var(--ink);
+    background: var(--logo-text-gradient);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .subtitle {
@@ -61,17 +67,17 @@
   .sound-toggle {
     inline-size: 2.625rem;
     block-size: 2.625rem;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-sm);
     border: 2px solid transparent;
     display: grid;
     place-items: center;
     cursor: pointer;
     transition:
-      transform 0.2s ease,
+      background 0.2s ease,
       box-shadow 0.2s ease,
       border-color 0.2s ease;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 8px 14px rgba(64, 44, 110, 0.12);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow-control);
 
     @media (width <= 35rem) {
       inline-size: 2.375rem;
@@ -94,8 +100,13 @@
     }
 
     &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 18px rgba(64, 44, 110, 0.16);
+      background: var(--surface-tint);
+      box-shadow: var(--shadow-control);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring), var(--shadow-control);
     }
   }
 }
