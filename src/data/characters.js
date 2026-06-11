@@ -1,592 +1,72 @@
-const blueyCharacters = [
-  {
-    id: 'bluey',
-    name: 'Bluey',
-    short: 'B',
-    color: '#A8D8FF',
-    image: '/characters/Bluey/bluey.webp',
-  },
-  {
-    id: 'bingo',
-    name: 'Bingo',
-    short: 'Bi',
-    color: '#FFE4A8',
-    image: '/characters/Bluey/bingo.webp',
-  },
-  {
-    id: 'chilli',
-    name: 'Chilli',
-    short: 'C',
-    color: '#FFD1DC',
-    image: '/characters/Bluey/chilli.webp',
-  },
-  {
-    id: 'bandit',
-    name: 'Bandit',
-    short: 'Ba',
-    color: '#BFE6E1',
-    image: '/characters/Bluey/bandit.webp',
-  },
-  {
-    id: 'muffin',
-    name: 'Muffin',
-    short: 'M',
-    color: '#F7C6F3',
-    image: '/characters/Bluey/muffin.webp',
-  },
-  {
-    id: 'socks',
-    name: 'Socks',
-    short: 'S',
-    color: '#CDE6FF',
-    image: '/characters/Bluey/socks.webp',
-  },
-  {
-    id: 'coco',
-    name: 'Coco',
-    short: 'Co',
-    color: '#FFE0F0',
-    image: '/characters/Bluey/coco.webp',
-  },
-  {
-    id: 'lucky',
-    name: 'Lucky',
-    short: 'L',
-    color: '#D7F5C9',
-    image: '/characters/Bluey/lucky.webp',
-  },
-  {
-    id: 'honey',
-    name: 'Honey',
-    short: 'H',
-    color: '#FFF2B3',
-    image: '/characters/Bluey/honey.webp',
-  },
-  {
-    id: 'chloe',
-    name: 'Chloe',
-    short: 'Ch',
-    color: '#E3D1FF',
-    image: '/characters/Bluey/chloe.webp',
-  },
-];
+import {
+  createCharacterGroup,
+  validateCharacterGroups,
+} from './character-groups/catalog.js';
+import { blueyCharacters } from './character-groups/bluey.js';
+import { doraemonCharacters } from './character-groups/doraemon.js';
+import { gabbyDollhouseCharacters } from './character-groups/gabbyDollhouse.js';
+import { kpopWarriorsCharacters } from './character-groups/kpopWarriors.js';
+import { pawPatrolCharacters } from './character-groups/pawPatrol.js';
+import { pokemonCharacters } from './character-groups/pokemon.js';
+import { zootropolisCharacters } from './character-groups/zootropolis.js';
 
-const pawPatrolCharacters = [
-  {
-    id: 'chase',
-    name: 'Chase',
-    short: 'Ch',
-    color: '#B8DCFF',
-    image: '/characters/PAW-Patrol/Chase.webp',
-  },
-  {
-    id: 'marshall',
-    name: 'Marshall',
-    short: 'M',
-    color: '#FFD0D0',
-    image: '/characters/PAW-Patrol/Marshall.webp',
-  },
-  {
-    id: 'skye',
-    name: 'Skye',
-    short: 'S',
-    color: '#FFD8F2',
-    image: '/characters/PAW-Patrol/Skye.webp',
-  },
-  {
-    id: 'rubble',
-    name: 'Rubble',
-    short: 'R',
-    color: '#FFE6AE',
-    image: '/characters/PAW-Patrol/Rubble.webp',
-  },
-  {
-    id: 'zuma',
-    name: 'Zuma',
-    short: 'Z',
-    color: '#FFD8B8',
-    image: '/characters/PAW-Patrol/Zuma.webp',
-  },
-  {
-    id: 'rocky',
-    name: 'Rocky',
-    short: 'Ro',
-    color: '#D7F4C2',
-    image: '/characters/PAW-Patrol/Rocky.webp',
-  },
-  {
-    id: 'everest',
-    name: 'Everest',
-    short: 'E',
-    color: '#D7EEFF',
-    image: '/characters/PAW-Patrol/Everest.webp',
-  },
-  {
-    id: 'ryder',
-    name: 'Ryder',
-    short: 'Ry',
-    color: '#E4D7FF',
-    image: '/characters/PAW-Patrol/Ryder.webp',
-  },
-  {
-    id: 'capitan-turbot',
-    name: 'Capitan Turbot',
-    short: 'CT',
-    color: '#FFF1BE',
-    image: '/characters/PAW-Patrol/Capitan-Turbot.webp',
-  },
-  {
-    id: 'perrobot',
-    name: 'Perrobot',
-    short: 'P',
-    color: '#F3D8FF',
-    image: '/characters/PAW-Patrol/Perrobot.webp',
-  },
-];
-
-const gabbyDollhouseCharacters = [
-  {
-    id: 'gabby',
-    name: 'Gabby',
-    short: 'Ga',
-    color: '#ffd9ee',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gabby.webp',
-  },
-  {
-    id: 'pandy-patas',
-    name: 'Pandy Patas',
-    short: 'PP',
-    color: '#d6ebff',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Pandy-Patas.webp',
-  },
-  {
-    id: 'gato-almohada',
-    name: 'Gato Almohada',
-    short: 'GA',
-    color: '#f7dcff',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gato-Almohada.webp',
-  },
-  {
-    id: 'gatirena',
-    name: 'Gatirena',
-    short: 'Gt',
-    color: '#cfeeff',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Gatirena.webp',
-  },
-  {
-    id: 'escurrigato',
-    name: 'Escurrigato',
-    short: 'Es',
-    color: '#d7ffe5',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Escurrigato.webp',
-  },
-  {
-    id: 'bebe-caja',
-    name: 'Bebe Caja',
-    short: 'BC',
-    color: '#ffe6d1',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Bebe-Caja.webp',
-  },
-  {
-    id: 'hada-gatina',
-    name: 'Hada Gatina',
-    short: 'HG',
-    color: '#f9f2c8',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Hada-Gatina.webp',
-  },
-  {
-    id: 'dj-musicat',
-    name: 'DJ Musicat',
-    short: 'DJ',
-    color: '#ffd8c2',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/DJ-Musicat.webp',
-  },
-  {
-    id: 'pastelillo',
-    name: 'Pastelillo',
-    short: 'Pa',
-    color: '#fff0c8',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Pastelillo.webp',
-  },
-  {
-    id: 'carlita',
-    name: 'Carlita',
-    short: 'Ca',
-    color: '#e3dbff',
-    image: '/characters/La-Casa-de-Muñecas-de-Gaby/Carlita.webp',
-  },
-];
-
-const pokemonColorPalette = [
-  '#fff3b8',
-  '#d7f5d7',
-  '#ffd9c2',
-  '#d7ebff',
-  '#ffe2bf',
-  '#cfe1ff',
-  '#d6f0d6',
-  '#ffdff0',
-  '#ffe0b5',
-  '#ffe6d6',
-];
-
-const pokemonFileNames = [
-  'Arbok',
-  'Beedrill',
-  'Blastoide',
-  'Bulbasaur',
-  'Butterfree',
-  'Caterpie',
-  'Charizard',
-  'Charmander',
-  'Charmeleon',
-  'Ekans',
-  'Fearow',
-  'Jigglypuff',
-  'Kakuna',
-  'MEtapod',
-  'Nidoqueen',
-  'Nidoran',
-  'Nidorina',
-  'Pidgeot',
-  'Pidgeotto',
-  'Pidgey',
-  'Pikachu',
-  'Raichu',
-  'Raticate',
-  'Rattata',
-  'Sandshrew',
-  'Sandslash',
-  'Spearow',
-  'Squirtle',
-  'Venusaur',
-  'Vulpix',
-  'Wartortle',
-  'Weedle',
-  'Yvysaur',
-];
-
-const pokemonDisplayNames = {
-  MEtapod: 'Metapod',
-  Yvysaur: 'Ivysaur',
-};
-
-const toCharacterId = (value) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-const pokemonCharacters = pokemonFileNames.map((fileName, index) => {
-  const displayName = pokemonDisplayNames[fileName] ?? fileName;
-  return {
-    id: `pokemon-${toCharacterId(displayName)}`,
-    name: displayName,
-    short: displayName.slice(0, 2),
-    color: pokemonColorPalette[index % pokemonColorPalette.length],
-    image: `/characters/Pokemon/${fileName}.webp`,
-  };
-});
-
-const kpopWarriorsCharacters = [
-  {
-    id: 'kpop-rumi',
-    name: 'Rumi',
-    short: 'Ru',
-    color: '#ffd6eb',
-    image: '/characters/Las-Guerreras-K-pop/Rumi.webp',
-  },
-  {
-    id: 'kpop-mira',
-    name: 'Mira',
-    short: 'Mi',
-    color: '#d6e9ff',
-    image: '/characters/Las-Guerreras-K-pop/Mira.webp',
-  },
-  {
-    id: 'kpop-zoey',
-    name: 'Zoey',
-    short: 'Zo',
-    color: '#e5ddff',
-    image: '/characters/Las-Guerreras-K-pop/Zoey.webp',
-  },
-  {
-    id: 'kpop-jinu',
-    name: 'Jinu',
-    short: 'Ji',
-    color: '#ffe4c7',
-    image: '/characters/Las-Guerreras-K-pop/Jinu.webp',
-  },
-  {
-    id: 'kpop-abby-saja',
-    name: 'Abby Saja',
-    short: 'AS',
-    color: '#d7fff0',
-    image: '/characters/Las-Guerreras-K-pop/Abby-Saja.webp',
-  },
-  {
-    id: 'kpop-baby-saja',
-    name: 'Baby Saja',
-    short: 'BS',
-    color: '#fff0cc',
-    image: '/characters/Las-Guerreras-K-pop/Baby-Saja.webp',
-  },
-  {
-    id: 'kpop-mystery-saja',
-    name: 'Mystery Saja',
-    short: 'MS',
-    color: '#f2dcff',
-    image: '/characters/Las-Guerreras-K-pop/Mistery-Saja.webp',
-  },
-  {
-    id: 'kpop-romance-saja',
-    name: 'Romance Saja',
-    short: 'RS',
-    color: '#ffdbe0',
-    image: '/characters/Las-Guerreras-K-pop/Romance-Saja.webp',
-  },
-];
-
-const doraemonCharacters = [
-  {
-    id: 'doraemon-doraemon',
-    name: 'Doraemon',
-    short: 'Do',
-    color: '#d7efff',
-    image: '/characters/Doraemon/doraemon.webp',
-  },
-  {
-    id: 'doraemon-nobita',
-    name: 'Nobita',
-    short: 'No',
-    color: '#ffe7bf',
-    image: '/characters/Doraemon/nobita.webp',
-  },
-  {
-    id: 'doraemon-shizuka',
-    name: 'Shizuka',
-    short: 'Sh',
-    color: '#ffe0f2',
-    image: '/characters/Doraemon/shizuka.webp',
-  },
-  {
-    id: 'doraemon-suneo',
-    name: 'Suneo',
-    short: 'Su',
-    color: '#dff7d0',
-    image: '/characters/Doraemon/suneo.webp',
-  },
-  {
-    id: 'doraemon-gigante',
-    name: 'Gigante',
-    short: 'Gi',
-    color: '#e5dcff',
-    image: '/characters/Doraemon/gigante.webp',
-  },
-  {
-    id: 'doraemon-dorami',
-    name: 'Dorami',
-    short: 'Dr',
-    color: '#fff0bf',
-    image: '/characters/Doraemon/dorami.webp',
-  },
-  {
-    id: 'doraemon-gorrocoptero',
-    name: 'Gorrocoptero',
-    short: 'Go',
-    color: '#d6f5ff',
-    image: '/characters/Doraemon/gorrocoptero.webp',
-  },
-  {
-    id: 'doraemon-puerta-magica',
-    name: 'Puerta Magica',
-    short: 'PM',
-    color: '#f1deff',
-    image: '/characters/Doraemon/puerta-magica.webp',
-  },
-  {
-    id: 'doraemon-maquina-del-tiempo',
-    name: 'Maquina del Tiempo',
-    short: 'MT',
-    color: '#d8ecff',
-    image: '/characters/Doraemon/maquina-del-tiempo.webp',
-  },
-  {
-    id: 'doraemon-television-del-tiempo',
-    name: 'Television del Tiempo',
-    short: 'TT',
-    color: '#e2f6ff',
-    image: '/characters/Doraemon/television-del-tiempo.webp',
-  },
-  {
-    id: 'doraemon-flecha-de-cupido',
-    name: 'Flecha de Cupido',
-    short: 'FC',
-    color: '#ffe1ec',
-    image: '/characters/Doraemon/flecha-de-cupido.webp',
-  },
-  {
-    id: 'doraemon-linterna-minimizadora',
-    name: 'Linterna Minimizadora',
-    short: 'LM',
-    color: '#e8fff0',
-    image: '/characters/Doraemon/linterna-minimizadora.webp',
-  },
-  {
-    id: 'doraemon-linterna-maximizadora',
-    name: 'Linterna Maximizadora',
-    short: 'LX',
-    color: '#fff3db',
-    image: '/characters/Doraemon/linterna-maximizadora.webp',
-  },
-];
-
-const zootropolisCharacters = [
-  {
-    id: 'zootropolis-judy-hopps',
-    name: 'Judy Hopps',
-    short: 'Ju',
-    color: '#d9ecff',
-    image: '/characters/Zootropolis/Judy-Hopps.webp',
-  },
-  {
-    id: 'zootropolis-nick-wilde',
-    name: 'Nick Wilde',
-    short: 'Ni',
-    color: '#ffe6c7',
-    image: '/characters/Zootropolis/Nick-Wilde.webp',
-  },
-  {
-    id: 'zootropolis-jefe-bogo',
-    name: 'Jefe Bogo',
-    short: 'JB',
-    color: '#d9f7e0',
-    image: '/characters/Zootropolis/Jefe-Bogo.webp',
-  },
-  {
-    id: 'zootropolis-mr-big',
-    name: 'Mr Big',
-    short: 'MB',
-    color: '#f0e2ff',
-    image: '/characters/Zootropolis/Mr-Big.webp',
-  },
-  {
-    id: 'zootropolis-gazelle',
-    name: 'Gazelle',
-    short: 'Ga',
-    color: '#ffe0f1',
-    image: '/characters/Zootropolis/Gazelle.webp',
-  },
-  {
-    id: 'zootropolis-gary',
-    name: 'Gary',
-    short: 'Gy',
-    color: '#e5f4ff',
-    image: '/characters/Zootropolis/Gary.webp',
-  },
-  {
-    id: 'zootropolis-fru-fru',
-    name: 'Fru Fru',
-    short: 'FF',
-    color: '#fff1d6',
-    image: '/characters/Zootropolis/Fru-Fru.webp',
-  },
-  {
-    id: 'zootropolis-benjamin-clawhauser',
-    name: 'Benjamin Clawhauser',
-    short: 'BC',
-    color: '#fff0c9',
-    image: '/characters/Zootropolis/Benjamin-Clawhauser.webp',
-  },
-  {
-    id: 'zootropolis-yax',
-    name: 'Yax',
-    short: 'Ya',
-    color: '#def7ef',
-    image: '/characters/Zootropolis/Yax.webp',
-  },
-  {
-    id: 'zootropolis-duke-comadriguez',
-    name: 'Duke Comadriguez',
-    short: 'DC',
-    color: '#e9e1ff',
-    image: '/characters/Zootropolis/Duke-Comadriguez.webp',
-  },
-  {
-    id: 'zootropolis-teniente-de-alcalde-ovina',
-    name: 'Teniente de Alcalde Ovina',
-    short: 'TO',
-    color: '#e6f0ff',
-    image: '/characters/Zootropolis/Teniende-de-Alcalde-Ovina.webp',
-  },
-  {
-    id: 'zootropolis-finnick',
-    name: 'Finnick',
-    short: 'Fi',
-    color: '#ffe4d8',
-    image: '/characters/Zootropolis/Finnick.webp',
-  },
-];
-
-const mixedCharacters = [
-  ...blueyCharacters,
-  ...pawPatrolCharacters,
-  ...gabbyDollhouseCharacters,
-  ...pokemonCharacters,
-  ...kpopWarriorsCharacters,
-  ...doraemonCharacters,
-  ...zootropolisCharacters,
-];
-
-export const characterGroups = [
-  {
+const baseCharacterGroups = [
+  createCharacterGroup({
     id: 'bluey',
     label: 'Bluey',
     description: 'Personajes de Bluey para peques desde el nivel 1.',
     characters: blueyCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'paw-patrol',
     label: 'Patrulla Canina',
     description: 'Personajes de la Patrulla Canina en todos los niveles.',
     characters: pawPatrolCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'gabby-dollhouse',
     label: 'La Casa de Muñecas de Gabby',
     description: 'Personajes de La Casa de Muñecas de Gabby.',
     characters: gabbyDollhouseCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'pokemon',
     label: 'Pokemon',
     description: 'Personajes de Pokemon.',
     characters: pokemonCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'kpop-warriors',
     label: 'Las Guerreras K-pop',
     description: 'Personajes de Las Guerreras K-pop.',
     characters: kpopWarriorsCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'doraemon',
     label: 'Doraemon',
     description: 'Personajes de Doraemon.',
     characters: doraemonCharacters,
-  },
-  {
+  }),
+  createCharacterGroup({
     id: 'zootropolis',
     label: 'Zootropolis',
     description: 'Personajes de Zootropolis.',
     characters: zootropolisCharacters,
-  },
-  {
+  }),
+];
+
+const mixedCharacters = Object.freeze(
+  baseCharacterGroups.flatMap((group) => group.characters),
+);
+
+export const characterGroups = validateCharacterGroups([
+  ...baseCharacterGroups,
+  createCharacterGroup({
     id: 'mixed',
     label: 'Mezcla de todos los personajes',
     description: 'Una mezcla con todos los personajes disponibles.',
     characters: mixedCharacters,
-  },
-];
+  }),
+]);
 
 export const defaultCharacterGroupId = characterGroups[0].id;

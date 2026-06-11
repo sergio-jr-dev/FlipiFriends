@@ -1,0 +1,88 @@
+import { createCharacters } from './catalog.js';
+
+export const zootropolisCharacters = createCharacters('Zootropolis', [
+  {
+    id: 'zootropolis-judy-hopps',
+    name: 'Judy Hopps',
+    short: 'Ju',
+    color: '#d9ecff',
+    fileName: 'Judy-Hopps',
+  },
+  {
+    id: 'zootropolis-nick-wilde',
+    name: 'Nick Wilde',
+    short: 'Ni',
+    color: '#ffe6c7',
+    fileName: 'Nick-Wilde',
+  },
+  {
+    id: 'zootropolis-jefe-bogo',
+    name: 'Jefe Bogo',
+    short: 'JB',
+    color: '#d9f7e0',
+    fileName: 'Jefe-Bogo',
+  },
+  {
+    id: 'zootropolis-mr-big',
+    name: 'Mr Big',
+    short: 'MB',
+    color: '#f0e2ff',
+    fileName: 'Mr-Big',
+  },
+  {
+    id: 'zootropolis-gazelle',
+    name: 'Gazelle',
+    short: 'Ga',
+    color: '#ffe0f1',
+    fileName: 'Gazelle',
+  },
+  {
+    id: 'zootropolis-gary',
+    name: 'Gary',
+    short: 'Gy',
+    color: '#e5f4ff',
+    fileName: 'Gary',
+  },
+  {
+    id: 'zootropolis-fru-fru',
+    name: 'Fru Fru',
+    short: 'FF',
+    color: '#fff1d6',
+    fileName: 'Fru-Fru',
+  },
+  {
+    id: 'zootropolis-benjamin-clawhauser',
+    name: 'Benjamin Clawhauser',
+    short: 'BC',
+    color: '#fff0c9',
+    fileName: 'Benjamin-Clawhauser',
+  },
+  {
+    id: 'zootropolis-yax',
+    name: 'Yax',
+    short: 'Ya',
+    color: '#def7ef',
+    fileName: 'Yax',
+  },
+  {
+    id: 'zootropolis-duke-comadriguez',
+    name: 'Duke Comadriguez',
+    short: 'DC',
+    color: '#e9e1ff',
+    fileName: 'Duke-Comadriguez',
+  },
+  {
+    id: 'zootropolis-teniente-de-alcalde-ovina',
+    name: 'Teniente de Alcalde Ovina',
+    short: 'TO',
+    color: '#e6f0ff',
+    fileName: 'Teniende-de-Alcalde-Ovina',
+  },
+  {
+    id: 'zootropolis-finnick',
+    name: 'Finnick',
+    short: 'Fi',
+    color: '#ffe4d8',
+    fileName: 'Finnick',
+  },
+]);
