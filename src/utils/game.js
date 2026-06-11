@@ -37,6 +37,9 @@ export const shuffle = (items) => {
 export const pickRandomItems = (items, count) =>
   shuffle(items).slice(0, Math.min(count, items.length));
 
+export const getPlayableLevels = (levels, availableCharacters) =>
+  levels.filter((pairsCount) => pairsCount <= availableCharacters.length);
+
 export const buildDeck = (pairsCount, availableCharacters) => {
   if (pairsCount <= 0 || availableCharacters.length === 0) return [];
 

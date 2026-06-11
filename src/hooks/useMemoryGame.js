@@ -3,13 +3,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   buildDeck,
   CARD_FLIP_MS,
-  FINAL_MESSAGES,
-  formatElapsed,
-  LEVEL_MESSAGES,
+  getPlayableLevels,
   LEVELS,
   MISMATCH_SHAKE_MS,
-  pickNextMessage,
 } from '../utils/game.js';
+import { useCompletionEffects } from './useCompletionEffects.js';
+import { useLevelTimer } from './useLevelTimer.js';
 
 export const useMemoryGame = (activeGroup) => {
   const [isWelcomeOpen, setIsWelcomeOpen] = useState(true);
@@ -22,13 +21,15 @@ export const useMemoryGame = (activeGroup) => {
   const [isLocked, setIsLocked] = useState(false);
   const [matches, setMatches] = useState(0);
   const [moves, setMoves] = useState(0);
-  const [elapsedMs, setElapsedMs] = useState(0);
-  const [completionMessage, setCompletionMessage] = useState(LEVEL_MESSAGES[0]);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const dialogRef = useRef(null);
-  const levelStartRef = useRef(0);
   const mismatchTimeoutsRef = useRef([]);
+
+  const playableLevels = useMemo(
+    () => getPlayableLevels(LEVELS, activeGroup.characters),
+    [activeGroup.characters],
+  );
 
   const cardsById = useMemo(
     () => new Map(deck.map((card) => [card.id, card])),
@@ -40,12 +41,22 @@ export const useMemoryGame = (activeGroup) => {
     [mismatchCardIds],
   );
 
-  const pairsCount = LEVELS[levelIndex];
+  const totalLevels = playableLevels.length;
+  const pairsCount = playableLevels[levelIndex] ?? playableLevels[0] ?? 0;
   const totalCards = pairsCount * 2;
   const isComplete = matches === pairsCount;
-  const isLastLevel = levelIndex === LEVELS.length - 1;
+  const isLastLevel = levelIndex === totalLevels - 1;
   const isInteractionDisabled = isLocked || isWelcomeOpen || isComplete;
-  const elapsedLabel = formatElapsed(elapsedMs);
+  const { elapsedLabel, finishTimer, resetTimer } = useLevelTimer(
+    !isWelcomeOpen && !isComplete,
+  );
+  const { completionMessage } = useCompletionEffects({
+    dialogRef,
+    isComplete,
+    isLastLevel,
+    onComplete: finishTimer,
+    soundEnabled,
+  });
 
   const clearMismatchTimeouts = useCallback(() => {
     mismatchTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
@@ -55,17 +66,16 @@ export const useMemoryGame = (activeGroup) => {
   const resetForLevel = useCallback(
     (nextLevelIndex, characterPool = activeGroup.characters) => {
       clearMismatchTimeouts();
-      const nextPairs = LEVELS[nextLevelIndex];
+      const nextPairs = playableLevels[nextLevelIndex] ?? playableLevels[0] ?? 0;
       setDeck(buildDeck(nextPairs, characterPool));
       setSelected([]);
       setMismatchCardIds([]);
       setMatches(0);
       setMoves(0);
-      setElapsedMs(0);
       setIsLocked(false);
-      levelStartRef.current = Date.now();
+      resetTimer();
     },
-    [activeGroup.characters, clearMismatchTimeouts],
+    [activeGroup.characters, clearMismatchTimeouts, playableLevels, resetTimer],
   );
 
   useEffect(
@@ -74,102 +84,6 @@ export const useMemoryGame = (activeGroup) => {
     },
     [clearMismatchTimeouts],
   );
-
-  useEffect(() => {
-    if (isWelcomeOpen || isComplete) return undefined;
-
-    if (!levelStartRef.current) {
-      levelStartRef.current = Date.now();
-    }
-
-    const interval = setInterval(() => {
-      setElapsedMs(Date.now() - levelStartRef.current);
-    }, 250);
-
-    return () => clearInterval(interval);
-  }, [isWelcomeOpen, isComplete, levelIndex]);
-
-  useEffect(() => {
-    if (!isComplete) return undefined;
-
-    if (levelStartRef.current) {
-      setElapsedMs(Date.now() - levelStartRef.current);
-    }
-
-    const nextMessagePool = isLastLevel ? FINAL_MESSAGES : LEVEL_MESSAGES;
-    setCompletionMessage((currentMessage) =>
-      pickNextMessage(nextMessagePool, currentMessage),
-    );
-
-    const timeout = setTimeout(() => {
-      dialogRef.current?.showModal();
-    }, 200);
-
-    return () => clearTimeout(timeout);
-  }, [isComplete, isLastLevel]);
-
-  useEffect(() => {
-    if (!isComplete || !isLastLevel) return;
-
-    let isCancelled = false;
-
-    const launchConfetti = async () => {
-      const { default: confetti } = await import('canvas-confetti');
-      if (isCancelled) return;
-
-      confetti({
-        particleCount: 90,
-        spread: 90,
-        origin: { x: 0.5, y: 0.45 },
-        colors: ['#ffb3c1', '#ffe0a3', '#bde9ff', '#c8f3d8', '#e6d1ff'],
-        startVelocity: 34,
-        gravity: 0.85,
-        ticks: 320,
-      });
-    };
-
-    launchConfetti();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [isComplete, isLastLevel]);
-
-  useEffect(() => {
-    if (!isComplete || !soundEnabled) return undefined;
-
-    let audioContext;
-
-    const playTone = (time, frequency, duration, gain) => {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      oscillator.type = 'triangle';
-      oscillator.frequency.setValueAtTime(frequency, time);
-      gainNode.gain.setValueAtTime(gain, time);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      oscillator.start(time);
-      oscillator.stop(time + duration);
-    };
-
-    const playChime = async () => {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      if (audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
-      const now = audioContext.currentTime;
-      playTone(now, 523.25, 0.2, 0.25);
-      playTone(now + 0.18, 659.25, 0.22, 0.22);
-      playTone(now + 0.36, 783.99, 0.26, 0.2);
-    };
-
-    playChime();
-
-    return () => {
-      if (audioContext) audioContext.close();
-    };
-  }, [isComplete, soundEnabled]);
 
   const handleCardClick = useCallback((id) => {
     if (isInteractionDisabled) return;
@@ -253,13 +167,13 @@ export const useMemoryGame = (activeGroup) => {
 
   const handleNextLevel = useCallback(() => {
     setLevelIndex((current) => {
-      const nextLevel = Math.min(current + 1, LEVELS.length - 1);
+      const nextLevel = Math.min(current + 1, totalLevels - 1);
       resetForLevel(nextLevel);
       return nextLevel;
     });
 
     dialogRef.current?.close();
-  }, [resetForLevel]);
+  }, [resetForLevel, totalLevels]);
 
   const handleToggleSound = useCallback(() => {
     setSoundEnabled((prev) => !prev);
@@ -286,6 +200,6 @@ export const useMemoryGame = (activeGroup) => {
     selectedIds,
     soundEnabled,
     totalCards,
-    totalLevels: LEVELS.length,
+    totalLevels,
   };
 };
