@@ -12,11 +12,11 @@ export default defineConfig({
       filename: 'sw.js',
       registerType: 'autoUpdate',
       includeAssets: [
-        'apple-touch-icon.png',
-        'brand/logo.png',
-        'pwa-192x192.png',
-        'pwa-512x512.png',
-        'maskable-icon-512x512.png',
+        'apple-touch-icon-kids.png',
+        'brand/logo-kids.png',
+        'pwa-kids-192x192.png',
+        'pwa-kids-512x512.png',
+        'maskable-icon-kids-512x512.png',
       ],
       devOptions: {
         enabled: true,
@@ -33,17 +33,17 @@ export default defineConfig({
         lang: 'es',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'pwa-kids-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'pwa-kids-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: 'maskable-icon-512x512.png',
+            src: 'maskable-icon-kids-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',

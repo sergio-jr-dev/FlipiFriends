@@ -1,0 +1,19 @@
+.board {
+  --columns: 4;
+  --card-size: 6.25rem;
+  --board-gap: 0.625rem;
+
+  display: grid;
+  grid-template-columns: repeat(var(--columns), var(--card-size));
+  gap: var(--board-gap);
+  justify-content: center;
+  align-content: center;
+  inline-size: max-content;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  background: transparent;
+
+  @media (width <= 35rem) {
+    background: transparent;
+  }
+}

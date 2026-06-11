@@ -1,0 +1,131 @@
+.card {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 56.25rem;
+  width: var(--card-size);
+  height: calc(var(--card-size) * 1.25);
+  transition: transform 0.15s ease;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.is-flipped,
+  &.is-matched {
+    .card-inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &.is-selected {
+    transform: translateY(-1px) scale(1.02);
+
+    .card-back {
+      box-shadow:
+        0 0 0 3px rgba(124, 124, 239, 0.35),
+        0 0 18px rgba(124, 124, 239, 0.22);
+    }
+  }
+
+  &.is-shaking {
+    animation: wrong-pair-shake 0.34s ease-in-out 1;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &.is-matched {
+    .card-back {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
+    }
+  }
+
+  .card-inner {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--border-radius);
+    backface-visibility: hidden;
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow);
+
+    @media (width <= 35rem) {
+      box-shadow: none;
+    }
+  }
+
+  .card-front {
+    background: linear-gradient(135deg, #ffffff, #eef7ff);
+    border: 2px dashed rgba(47, 43, 58, 0.12);
+  }
+
+  .card-mark {
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    color: rgba(47, 43, 58, 0.45);
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    border: 2px solid rgba(47, 43, 58, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .character-image {
+    inline-size: 100%;
+    max-block-size: calc(100% - 1.875rem);
+    object-fit: contain;
+    filter: drop-shadow(0 5px 8px rgba(47, 43, 58, 0.16));
+  }
+
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    max-inline-size: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@keyframes wrong-pair-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-4px);
+  }
+
+  40% {
+    transform: translateX(4px);
+  }
+
+  60% {
+    transform: translateX(-3px);
+  }
+
+  80% {
+    transform: translateX(3px);
+  }
+}

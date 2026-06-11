@@ -1,0 +1,18 @@
+.logo {
+  --logo-size: 5rem;
+
+  object-fit: contain;
+  inline-size: var(--logo-size);
+
+  &.is-large {
+    --logo-size: 12rem;
+  }
+
+  @media (width <= 35rem) {
+    --logo-size: 4rem;
+
+    &.is-large {
+      --logo-size: 8rem;
+    }
+  }
+}

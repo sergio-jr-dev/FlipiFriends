@@ -1,5 +1,7 @@
 import { memo, useCallback } from 'react';
 
+import './card.css';
+
 function Card({ card, onCardClick, disabled, isSelected, isMismatched }) {
   const isRevealed = card.flipped || card.matched;
 

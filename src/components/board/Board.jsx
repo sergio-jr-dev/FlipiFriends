@@ -1,6 +1,8 @@
 import { memo } from 'react';
 
-import Card from './Card.jsx';
+import Card from '../card/Card.jsx';
+
+import './board.css';
 
 function Board({
   deck,
@@ -18,8 +20,8 @@ function Board({
       aria-live="polite"
       style={{
         '--columns': columns,
-        '--card-size': `${cardSize}px`,
-        '--board-gap': `${gap}px`,
+        '--card-size': `${cardSize / 16}rem`,
+        '--board-gap': `${gap / 16}rem`,
       }}
     >
       {deck.map((card) => (
