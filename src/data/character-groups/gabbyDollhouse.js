@@ -1,6 +1,6 @@
 import { createCharacters } from './catalog.js';
 
-const GROUP_PATH = 'La-Casa-de-Muñecas-de-Gaby';
+const GROUP_PATH = 'La-Casa-de-Munecas-de-Gaby';
 
 export const gabbyDollhouseCharacters = createCharacters(GROUP_PATH, [
   {
