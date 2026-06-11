@@ -18,27 +18,27 @@ export const Dialog = ({
 
   return (
     <dialog ref={dialogRef} aria-live="polite" closedby="none">
-      <header className="dialog-header">
-        <h2 className="dialog-title">{title}</h2>
-        <p className="dialog-message">{message}</p>
+      <header className="header">
+        <h2>{title}</h2>
+        <p>{message}</p>
       </header>
 
-      <section className="dialog-stats" aria-label="Resumen del nivel">
-        <div className="dialog-stat level">
+      <section className="stats" aria-label="Resumen del nivel">
+        <div className="stat level">
           <span>Nivel</span>
           <strong>
             {level}/{totalLevels}
           </strong>
         </div>
-        <div className="dialog-stat pairs">
+        <div className="stat pairs">
           <span>Parejas</span>
           <strong>{pairs}</strong>
         </div>
-        <div className="dialog-stat time">
+        <div className="stat time">
           <span>Tiempo</span>
           <strong>{timeLabel}</strong>
         </div>
-        <div className="dialog-stat moves">
+        <div className="stat moves">
           <span>Movimientos</span>
           <strong>{moves}</strong>
         </div>
@@ -50,7 +50,11 @@ export const Dialog = ({
             Siguiente nivel
           </button>
         ) : (
-          <button className="secondary" onClick={handleGoToWelcome} type="button">
+          <button
+            className="secondary"
+            onClick={handleGoToWelcome}
+            type="button"
+          >
             Empezar de nuevo
           </button>
         )}
