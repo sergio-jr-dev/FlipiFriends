@@ -6,9 +6,16 @@ export const useLevelTimer = (isRunning) => {
   const [elapsedMs, setElapsedMs] = useState(0);
   const levelStartRef = useRef(0);
 
+  const startTimer = useCallback(() => {
+    if (!levelStartRef.current) {
+      levelStartRef.current = Date.now();
+      setElapsedMs(0);
+    }
+  }, []);
+
   const resetTimer = useCallback(() => {
     setElapsedMs(0);
-    levelStartRef.current = Date.now();
+    levelStartRef.current = 0;
   }, []);
 
   const finishTimer = useCallback(() => {
@@ -35,5 +42,6 @@ export const useLevelTimer = (isRunning) => {
     elapsedLabel: formatElapsed(elapsedMs),
     finishTimer,
     resetTimer,
+    startTimer,
   };
 };

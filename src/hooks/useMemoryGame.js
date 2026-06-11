@@ -21,6 +21,7 @@ export const useMemoryGame = (activeGroup) => {
   const [isLocked, setIsLocked] = useState(false);
   const [matches, setMatches] = useState(0);
   const [moves, setMoves] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const dialogRef = useRef(null);
@@ -47,8 +48,8 @@ export const useMemoryGame = (activeGroup) => {
   const isComplete = matches === pairsCount;
   const isLastLevel = levelIndex === totalLevels - 1;
   const isInteractionDisabled = isLocked || isWelcomeOpen || isComplete;
-  const { elapsedLabel, finishTimer, resetTimer } = useLevelTimer(
-    !isWelcomeOpen && !isComplete,
+  const { elapsedLabel, finishTimer, resetTimer, startTimer } = useLevelTimer(
+    hasStarted && !isWelcomeOpen && !isComplete,
   );
   const { completionMessage } = useCompletionEffects({
     dialogRef,
@@ -72,6 +73,7 @@ export const useMemoryGame = (activeGroup) => {
       setMismatchCardIds([]);
       setMatches(0);
       setMoves(0);
+      setHasStarted(false);
       setIsLocked(false);
       resetTimer();
     },
@@ -91,10 +93,13 @@ export const useMemoryGame = (activeGroup) => {
     const card = cardsById.get(id);
     if (!card || card.flipped || card.matched) return;
 
-    setMoves((current) => current + 1);
+    startTimer();
+    setHasStarted(true);
     setMismatchCardIds([]);
 
     if (selected.length === 1) {
+      setMoves((current) => current + 1);
+
       const firstId = selected[0];
       const firstCard = cardsById.get(firstId);
 
@@ -149,7 +154,7 @@ export const useMemoryGame = (activeGroup) => {
       prev.map((item) => (item.id === id ? { ...item, flipped: true } : item)),
     );
     setSelected([id]);
-  }, [cardsById, isInteractionDisabled, selected]);
+  }, [cardsById, isInteractionDisabled, selected, startTimer]);
 
   const handleStartGame = useCallback(() => {
     setLevelIndex(0);
