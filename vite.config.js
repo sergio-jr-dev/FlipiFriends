@@ -13,7 +13,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: [
         'apple-touch-icon-kids.png',
-        'brand/logo-kids.png',
+        'brand/logo-kids.webp',
         'pwa-kids-192x192.png',
         'pwa-kids-512x512.png',
         'maskable-icon-kids-512x512.png',
