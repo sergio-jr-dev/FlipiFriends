@@ -21,7 +21,7 @@ export const AppHeader = ({
     </div>
     <div className="controls">
       <button
-        className="sound-toggle"
+        className="sound-toggle is-reset"
         type="button"
         onClick={onRestart}
         aria-label="Volver a inicio"

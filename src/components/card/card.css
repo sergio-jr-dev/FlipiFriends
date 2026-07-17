@@ -14,7 +14,7 @@
 
   &:not(:disabled):hover {
     .card-front {
-      background: linear-gradient(145deg, #ffffff, #f3fbff);
+      background: var(--gradient-card-front-hover);
       border-color: var(--border-play);
     }
   }

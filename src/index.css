@@ -45,9 +45,13 @@
   --gradient-primary-hover: linear-gradient(135deg, #8fe0ff, #c8b5ff 52%, #ffd4e8);
   --logo-text-gradient: linear-gradient(90deg, #279ee8 0%, #f4bf2f 48%, #ef5f77 100%);
   --gradient-card-front:
-    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.95) 0 12%, transparent 13%),
-    radial-gradient(circle at 72% 72%, rgba(255, 234, 167, 0.8) 0 14%, transparent 15%),
+    radial-gradient(circle at 28% 24%, rgba(93, 196, 237, 0.78) 0 13%, transparent 14%),
+    radial-gradient(circle at 72% 72%, rgba(247, 187, 63, 0.82) 0 13%, transparent 14%),
     linear-gradient(145deg, #ffffff, #e9f7ff);
+  --gradient-card-front-hover:
+    radial-gradient(circle at 28% 24%, rgba(51, 173, 224, 0.9) 0 13%, transparent 14%),
+    radial-gradient(circle at 72% 72%, rgba(241, 161, 32, 0.92) 0 13%, transparent 14%),
+    linear-gradient(145deg, #ffffff, #e3f4ff);
   --gradient-level: linear-gradient(145deg, #e5f2ff, #cfe7ff);
   --gradient-pairs: linear-gradient(145deg, #e9f8e7, #d9f2d2);
   --gradient-time: linear-gradient(145deg, #fff0d9, #ffe4bf);
