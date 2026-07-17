@@ -1,0 +1,107 @@
+.welcome-footer {
+  inline-size: min(calc(100% - 1rem), 58rem);
+  flex: 0 0 auto;
+  margin: 0 auto max(0.45rem, env(safe-area-inset-bottom));
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem 0.85rem;
+  color: #44546a;
+  background: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  backdrop-filter: blur(0.5rem);
+}
+
+.welcome-footer .footer-message {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.welcome-footer .footer-heart {
+  inline-size: 1.45rem;
+  block-size: 1.45rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.welcome-footer .creator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.welcome-footer .social-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.welcome-footer a {
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  color: #4d6175;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.welcome-footer a svg {
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+}
+
+.welcome-footer a:hover {
+  color: #174f7c;
+  background: #d8f1ff;
+}
+
+.welcome-footer a:focus-visible {
+  outline: none;
+}
+
+.welcome-footer small {
+  grid-column: 1 / -1;
+  color: #5c6678;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+@media (width <= 43rem) {
+  .welcome-footer {
+    inline-size: calc(100% - 0.8rem);
+    margin-block-end: max(0.4rem, env(safe-area-inset-bottom));
+    padding: 0.5rem 0.625rem;
+    grid-template-columns: 1fr;
+    gap: 0.22rem;
+    border-radius: 1.2rem;
+  }
+
+  .welcome-footer .footer-message {
+    font-size: 0.76rem;
+  }
+
+  .welcome-footer .creator {
+    font-size: 0.76rem;
+  }
+
+  .welcome-footer small {
+    grid-column: auto;
+    max-inline-size: 31rem;
+    font-size: 0.66rem;
+  }
+}

@@ -1,0 +1,44 @@
+.start-button {
+  min-inline-size: min(22rem, 90vw);
+  min-block-size: clamp(3.55rem, 6.5vh, 4.25rem);
+  margin-block-start: 0.1rem;
+  border: 4px solid rgba(255, 255, 255, 0.96);
+  padding-inline: 2rem;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6866, #ed5eba 54%, #8b66eb);
+  font-size: clamp(1.08rem, 1.45vw, 1.3rem);
+  text-shadow: 0 2px 0 rgba(92, 45, 109, 0.3);
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #ff7a76, #f16bc2 54%, #9b77f0);
+}
+
+.start-button .button-icon {
+  inline-size: 2.2rem;
+  block-size: 2.2rem;
+  margin-inline-start: -0.25rem;
+  object-fit: contain;
+}
+
+@media (height <= 48rem) and (width > 43rem) {
+  .start-button {
+    min-block-size: 3.25rem;
+  }
+}
+
+@media (width <= 43rem) {
+  .start-button {
+    position: relative;
+    z-index: 2;
+    inline-size: min(24rem, calc(100% - 0.5rem));
+    min-inline-size: 0;
+    min-block-size: 3.65rem;
+    margin-block-start: -0.1rem;
+    font-size: 1.08rem;
+  }
+}

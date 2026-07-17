@@ -83,6 +83,12 @@ export const resolveBoardLayout = (totalCards, width, height) => {
   const safeHeight = Math.max(220, height);
   const gap = safeWidth < 720 ? 8 : 12;
   const maxColumns = Math.max(2, Math.min(totalCards, 10));
+  const maxCardSize =
+    safeWidth >= 720 && totalCards <= 4
+      ? 196
+      : safeWidth >= 720 && totalCards <= 6
+        ? 176
+        : 148;
 
   let best = {
     columns: Math.min(4, maxColumns),
@@ -99,7 +105,7 @@ export const resolveBoardLayout = (totalCards, width, height) => {
 
     const byWidth = freeWidth / columns;
     const byHeight = freeHeight / rows / CARD_RATIO;
-    const cardSize = Math.floor(Math.min(byWidth, byHeight, 148));
+    const cardSize = Math.floor(Math.min(byWidth, byHeight, maxCardSize));
 
     if (cardSize > best.cardSize) {
       best = {

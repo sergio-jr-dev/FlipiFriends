@@ -2,8 +2,20 @@ import { memo, useCallback } from 'react';
 
 import './card.css';
 
-function Card({ card, onCardClick, disabled, isSelected, isMismatched }) {
+function Card({
+  card,
+  position,
+  onCardClick,
+  disabled,
+  isSelected,
+  isMismatched,
+}) {
   const isRevealed = card.flipped || card.matched;
+  const accessibleLabel = card.matched
+    ? `Carta ${position}: ${card.character.name}, pareja encontrada`
+    : isRevealed
+      ? `Carta ${position} descubierta: ${card.character.name}`
+      : `Carta oculta ${position}`;
 
   const handleClick = useCallback(() => {
     onCardClick(card.id);
@@ -17,9 +29,9 @@ function Card({ card, onCardClick, disabled, isSelected, isMismatched }) {
       type="button"
       onClick={handleClick}
       disabled={disabled || isRevealed}
-      aria-label={`Carta ${card.character.name}`}
+      aria-label={accessibleLabel}
     >
-      <span className="card-inner">
+      <span className="card-inner" aria-hidden="true">
         <span className="card-face card-front">
           <span className="card-mark">?</span>
         </span>

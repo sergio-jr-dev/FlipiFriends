@@ -1,6 +1,6 @@
 import { useBoardLayout } from './hooks/useBoardLayout.js';
+import { useCharacterCarousel } from './hooks/useCharacterCarousel.js';
 import { useCharacterGroups } from './hooks/useCharacterGroups.js';
-import { useCharacterScrollHint } from './hooks/useCharacterScrollHint.js';
 import { useMemoryGame } from './hooks/useMemoryGame.js';
 import { AppHeader } from './components/app-header/AppHeader.jsx';
 import { Dialog } from './components/dialog/Dialog.jsx';
@@ -26,13 +26,16 @@ function App() {
     !game.isWelcomeOpen
   );
 
-  const { characterListRef, showCharacterScrollHint } = useCharacterScrollHint(
-    game.isWelcomeOpen,
-    characterGroups.length
-  );
+  const {
+    carouselRef,
+    canScrollNext,
+    canScrollPrevious,
+    scrollNext,
+    scrollPrevious,
+  } = useCharacterCarousel(game.isWelcomeOpen, characterGroups.length);
 
   return (
-    <div className="app">
+    <div className={`app ${game.isWelcomeOpen ? 'is-welcome-open' : ''}`}>
       {!game.isWelcomeOpen ? (
         <AppHeader
           activeGroupLabel={activeGroup.label}
@@ -47,13 +50,16 @@ function App() {
       >
         {game.isWelcomeOpen ? (
           <WelcomeScreen
+            canScrollNext={canScrollNext}
+            canScrollPrevious={canScrollPrevious}
+            carouselRef={carouselRef}
             characterGroups={characterGroups}
-            characterListRef={characterListRef}
             groupPreviews={groupPreviews}
+            onNextGroup={scrollNext}
             onGroupChange={setSelectedGroupId}
+            onPreviousGroup={scrollPrevious}
             onStart={game.handleStartGame}
             selectedGroupId={selectedGroupId}
-            showCharacterScrollHint={showCharacterScrollHint}
           />
         ) : (
           <GameBoard

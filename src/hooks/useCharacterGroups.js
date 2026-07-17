@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { characterGroups, defaultCharacterGroupId } from '../data/characters.js';
-import { pickRandomItems } from '../utils/game.js';
+import { groupPresentation } from '../data/groupPresentation.js';
 
 const characterGroupsById = new Map(
   characterGroups.map((group) => [group.id, group]),
@@ -29,10 +29,19 @@ export const useCharacterGroups = () => {
   const groupPreviews = useMemo(
     () =>
       new Map(
-        characterGroups.map((group) => [
-          group.id,
-          pickRandomItems(group.characters, 4),
-        ]),
+        characterGroups.map((group) => {
+          const charactersById = new Map(
+            group.characters.map((character) => [character.id, character]),
+          );
+          const previewIds = groupPresentation[group.id]?.previewIds ?? [];
+
+          return [
+            group.id,
+            previewIds
+              .map((characterId) => charactersById.get(characterId))
+              .filter(Boolean),
+          ];
+        }),
       ),
     [],
   );

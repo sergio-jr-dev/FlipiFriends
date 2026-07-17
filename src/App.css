@@ -8,6 +8,19 @@
   gap: 0.625rem;
   overflow: hidden;
 
+  &.is-welcome-open {
+    max-width: none;
+    padding: 0;
+    gap: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(226, 247, 255, 0.03),
+        rgba(255, 252, 225, 0.04)
+      ),
+      url('/backgrounds/welcome-playground.webp') center bottom / cover no-repeat;
+  }
+
   .main-content {
     flex: 1;
     min-height: 0;
@@ -15,8 +28,14 @@
     overflow: hidden;
 
     &.is-welcome {
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
+      justify-content: stretch;
+      overflow-y: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     &.is-game {
@@ -30,6 +49,12 @@
   }
 
   @media (width <= 35rem) {
+    &.is-welcome-open {
+      padding: 0;
+      background-position: 45% bottom;
+      background-size: auto 100%;
+    }
+
     .main-content.is-game {
       background: transparent;
     }

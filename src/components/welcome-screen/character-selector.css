@@ -1,0 +1,121 @@
+.character-selector {
+  inline-size: 100%;
+  min-inline-size: 0;
+  display: grid;
+  gap: clamp(0.25rem, 0.65vh, 0.5rem);
+}
+
+.carousel-stage {
+  min-inline-size: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.4rem, 0.8vw, 0.75rem);
+}
+
+.carousel-control {
+  position: relative;
+  z-index: 2;
+  inline-size: clamp(2.9rem, 4vw, 3.55rem);
+  block-size: clamp(2.9rem, 4vw, 3.55rem);
+  border: 3px solid rgba(255, 255, 255, 0.94);
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  color: #245b8c;
+  background: rgba(255, 255, 255, 0.94);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.carousel-control .carousel-icon {
+  inline-size: 2.35rem;
+  block-size: 2.35rem;
+  object-fit: contain;
+}
+
+.carousel-control .carousel-icon.is-left {
+  transform: rotate(180deg);
+}
+
+.carousel-control:hover:not(:disabled) {
+  border-color: #fff;
+  color: #124f80;
+  background: #dff4ff;
+}
+
+.carousel-control:focus-visible {
+  outline: none;
+}
+
+.carousel-control:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.character-list {
+  list-style: none;
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding-block: 2.05rem 1.2rem;
+  padding-inline: var(--carousel-peek);
+  display: flex;
+  gap: var(--carousel-gap);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-padding-inline: var(--carousel-peek);
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / 12%),
+    rgb(0 0 0 / 58%) var(--carousel-fade-soft),
+    #000 var(--carousel-fade),
+    #000 calc(100% - var(--carousel-fade)),
+    rgb(0 0 0 / 58%) calc(100% - var(--carousel-fade-soft)),
+    rgb(0 0 0 / 12%)
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / 12%),
+    rgb(0 0 0 / 58%) var(--carousel-fade-soft),
+    #000 var(--carousel-fade),
+    #000 calc(100% - var(--carousel-fade)),
+    rgb(0 0 0 / 58%) calc(100% - var(--carousel-fade-soft)),
+    rgb(0 0 0 / 12%)
+  );
+}
+
+.character-list::-webkit-scrollbar {
+  display: none;
+}
+
+@media (width <= 43rem) {
+  .carousel-stage {
+    display: block;
+  }
+
+  .carousel-control {
+    display: none;
+  }
+
+  .character-list {
+    padding-block: 2.05rem 1.1rem;
+    padding-inline: calc((100% - var(--mobile-card-width)) / 2);
+    scroll-padding-inline: calc((100% - var(--mobile-card-width)) / 2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-list {
+    scroll-behavior: auto;
+  }
+
+  .carousel-control {
+    transition: none;
+  }
+}

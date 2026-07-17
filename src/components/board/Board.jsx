@@ -17,17 +17,18 @@ function Board({
   return (
     <section
       className="board"
-      aria-live="polite"
+      aria-label="Tablero de cartas"
       style={{
         '--columns': columns,
         '--card-size': `${cardSize / 16}rem`,
         '--board-gap': `${gap / 16}rem`,
       }}
     >
-      {deck.map((card) => (
+      {deck.map((card, cardIndex) => (
         <Card
           key={card.id}
           card={card}
+          position={cardIndex + 1}
           onCardClick={onCardClick}
           disabled={isInteractionDisabled}
           isSelected={selectedIds.has(card.id)}

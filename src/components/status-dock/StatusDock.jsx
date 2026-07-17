@@ -13,7 +13,7 @@ export const StatusDock = ({
   timeLabel,
   totalLevels,
 }) => (
-  <section className="status-dock" aria-live="polite">
+  <section className="status-dock" aria-label="Estado de la partida">
     <div className="status-item level">
       <span className="status-label">Nivel</span>
       <LevelIcon className="status-icon" />
@@ -38,5 +38,8 @@ export const StatusDock = ({
       <MovesIcon className="status-icon" />
       <strong>{moves}</strong>
     </div>
+    <p className="status-announcement" role="status" aria-atomic="true">
+      Nivel {level} de {totalLevels}. {matches} de {pairs} parejas encontradas.
+    </p>
   </section>
 );

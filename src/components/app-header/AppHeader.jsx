@@ -1,7 +1,4 @@
 import { BrandLogo } from '../brand-logo/BrandLogo.jsx';
-import { RestartIcon } from '../icons/RestartIcon.jsx';
-import { SoundOffIcon } from '../icons/SoundOffIcon.jsx';
-import { SoundOnIcon } from '../icons/SoundOnIcon.jsx';
 
 import './app-header.css';
 
@@ -26,7 +23,12 @@ export const AppHeader = ({
         onClick={onRestart}
         aria-label="Volver a inicio"
       >
-        <RestartIcon />
+        <img
+          className="control-icon"
+          src="/ui-icons/reset-3d.webp"
+          alt=""
+          aria-hidden="true"
+        />
       </button>
       <button
         className={`sound-toggle ${soundEnabled ? 'is-on' : 'is-off'}`}
@@ -35,7 +37,16 @@ export const AppHeader = ({
         aria-pressed={soundEnabled}
         aria-label={soundEnabled ? 'Sonido activado' : 'Sonido desactivado'}
       >
-        {soundEnabled ? <SoundOnIcon /> : <SoundOffIcon />}
+        <img
+          className="control-icon"
+          src={
+            soundEnabled
+              ? '/ui-icons/sound-on-3d.webp'
+              : '/ui-icons/sound-off-3d.webp'
+          }
+          alt=""
+          aria-hidden="true"
+        />
       </button>
     </div>
   </header>

@@ -1,0 +1,156 @@
+.welcome-hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.welcome-hero .logo.is-large {
+  --logo-size: clamp(9rem, 20vh, 12.5rem);
+
+  margin-block-end: clamp(-0.1rem, -0.2vh, -0.25rem);
+  filter:
+    drop-shadow(0 0.65rem 0.75rem rgba(53, 95, 139, 0.2))
+    drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.68));
+}
+
+.welcome-hero h1 {
+  font-size: clamp(2.15rem, 3.8vw, 3.8rem);
+  font-weight: 700;
+  background: linear-gradient(
+    90deg,
+    #198fdf 0%,
+    #28aee7 19%,
+    #f0bd29 48%,
+    #f28e32 66%,
+    #ed5579 100%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(255, 255, 255, 0.72));
+}
+
+.welcome-hero > p {
+  margin-block-start: 0.15rem;
+  color: #3f485f;
+  font-size: clamp(0.88rem, 1.25vw, 1.08rem);
+  font-weight: 600;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.78);
+}
+
+.selector-prompt {
+  margin-block-start: clamp(0.45rem, 1vh, 0.8rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.45rem, 0.8vw, 0.7rem);
+}
+
+.selector-prompt h2 {
+  color: #2b314d;
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.82);
+}
+
+.prompt-rays {
+  position: relative;
+  inline-size: 1.7rem;
+  block-size: 1.65rem;
+  flex: 0 0 auto;
+}
+
+.prompt-rays i {
+  position: absolute;
+  inline-size: 0.28rem;
+  block-size: 0.82rem;
+  border-radius: var(--radius-pill);
+  display: block;
+  background: #f3b821;
+  transform-origin: 50% 100%;
+}
+
+.prompt-rays i:nth-child(1) {
+  inset-block-start: 0;
+  inset-inline-start: 0.78rem;
+}
+
+.prompt-rays i:nth-child(2) {
+  inset-block-start: 0.46rem;
+  inset-inline-start: 0.08rem;
+  transform: rotate(-58deg);
+}
+
+.prompt-rays i:nth-child(3) {
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.06rem;
+  transform: rotate(58deg);
+}
+
+.prompt-rays.is-left {
+  transform: rotate(-90deg);
+}
+
+.prompt-rays.is-right {
+  transform: rotate(90deg);
+}
+
+@media (width <= 64rem) {
+  .welcome-hero .logo.is-large {
+    --logo-size: clamp(8rem, 17vh, 10.5rem);
+  }
+}
+
+@media (height <= 48rem) and (width > 43rem) {
+  .welcome-hero .logo.is-large {
+    --logo-size: 6.4rem;
+  }
+
+  .welcome-hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .selector-prompt {
+    margin-block-start: 0.28rem;
+  }
+}
+
+@media (width <= 43rem) {
+  .welcome-hero {
+    inline-size: 100%;
+  }
+
+  .welcome-hero .logo.is-large {
+    --logo-size: clamp(9rem, 38vw, 10.5rem);
+
+    margin-block-end: -0.1rem;
+  }
+
+  .welcome-hero h1 {
+    font-size: clamp(1.75rem, 8.2vw, 2.45rem);
+  }
+
+  .welcome-hero > p {
+    max-inline-size: 27rem;
+    padding-inline: 0.45rem;
+    font-size: clamp(0.78rem, 3.4vw, 0.9rem);
+  }
+
+  .selector-prompt {
+    margin-block-start: 0.5rem;
+    gap: 0.34rem;
+  }
+
+  .selector-prompt h2 {
+    font-size: clamp(1.3rem, 6.2vw, 1.65rem);
+  }
+
+  .prompt-rays {
+    inline-size: 1.35rem;
+    block-size: 1.35rem;
+    scale: 0.82;
+  }
+}
