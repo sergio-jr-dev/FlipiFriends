@@ -1,0 +1,88 @@
+import { createCharacters } from './catalog.js';
+
+export const minionsCharacters = createCharacters('Los-Minions', [
+  {
+    id: 'minions-kevin',
+    name: 'Kevin',
+    short: 'Ke',
+    color: '#fff0a8',
+    fileName: 'kevin',
+  },
+  {
+    id: 'minions-bob',
+    name: 'Bob',
+    short: 'Bo',
+    color: '#dceaff',
+    fileName: 'bob',
+  },
+  {
+    id: 'minions-stuart',
+    name: 'Stuart',
+    short: 'St',
+    color: '#ffe9a8',
+    fileName: 'stuart',
+  },
+  {
+    id: 'minions-otto',
+    name: 'Otto',
+    short: 'Ot',
+    color: '#d8f0ff',
+    fileName: 'otto',
+  },
+  {
+    id: 'minions-dave',
+    name: 'Dave',
+    short: 'Da',
+    color: '#fff3b8',
+    fileName: 'dave',
+  },
+  {
+    id: 'minions-mel',
+    name: 'Mel',
+    short: 'Me',
+    color: '#dde8ff',
+    fileName: 'mel',
+  },
+  {
+    id: 'minions-tim',
+    name: 'Tim',
+    short: 'Ti',
+    color: '#ffefad',
+    fileName: 'tim',
+  },
+  {
+    id: 'minions-tom',
+    name: 'Tom',
+    short: 'To',
+    color: '#d9ecff',
+    fileName: 'tom',
+  },
+  {
+    id: 'minions-lance',
+    name: 'Lance',
+    short: 'La',
+    color: '#fff2bf',
+    fileName: 'lance',
+  },
+  {
+    id: 'minions-donny',
+    name: 'Donny',
+    short: 'Do',
+    color: '#d7e6ff',
+    fileName: 'donny',
+  },
+  {
+    id: 'minions-norbert',
+    name: 'Norbert',
+    short: 'No',
+    color: '#ffed9f',
+    fileName: 'norbert',
+  },
+  {
+    id: 'minions-steve',
+    name: 'Steve',
+    short: 'Sv',
+    color: '#dcecff',
+    fileName: 'steve',
+  },
+]);

@@ -109,6 +109,27 @@
   --group-chip-bg: #ffe2c2;
 }
 
+.character-item[data-group-id='toy-story'] {
+  --group-accent: #55a8dd;
+  --group-accent-dark: #246d9f;
+  --group-hero-bg: #dceeff;
+  --group-chip-bg: #fff0bd;
+}
+
+.character-item[data-group-id='minions'] {
+  --group-accent: #f0bd32;
+  --group-accent-dark: #9b6f09;
+  --group-hero-bg: #fff3b9;
+  --group-chip-bg: #dceaff;
+}
+
+.character-item[data-group-id='super-mario-bros'] {
+  --group-accent: #e6574f;
+  --group-accent-dark: #9f2e2a;
+  --group-hero-bg: #dceaff;
+  --group-chip-bg: #ffe0dc;
+}
+
 .character-option {
   --outline-width: 4px;
 
@@ -334,6 +355,23 @@
   block-size: 100%;
   padding: 0.12rem;
   object-fit: contain;
+}
+
+.character-item:is(
+    [data-group-id='minions'],
+    [data-group-id='toy-story']
+  )
+  .preview-avatar-image {
+  padding: 0;
+  mix-blend-mode: multiply;
+}
+
+.character-item[data-group-id='minions'] .preview-avatar-image {
+  object-fit: contain;
+}
+
+.character-item[data-group-id='toy-story'] .preview-avatar-image {
+  object-fit: cover;
 }
 
 .character-item[data-group-id='kpop-warriors'] .preview-avatar-image {

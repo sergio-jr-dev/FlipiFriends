@@ -117,6 +117,21 @@
     filter: drop-shadow(0 5px 8px rgba(47, 43, 58, 0.16));
   }
 
+  &[data-character-id^='minions-'] .character-image,
+  &[data-character-id^='toy-story-'] .character-image {
+    aspect-ratio: 1;
+    border-radius: calc(var(--border-radius) * 0.55);
+    mix-blend-mode: multiply;
+  }
+
+  &[data-character-id^='minions-'] .character-image {
+    object-fit: contain;
+  }
+
+  &[data-character-id^='toy-story-'] .character-image {
+    object-fit: cover;
+  }
+
   .name {
     font-size: 1rem;
     font-weight: 700;

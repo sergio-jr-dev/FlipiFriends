@@ -8,7 +8,7 @@ FlipiFriends es un juego de memoria de parejas pensado para niños y familias. L
 
 ## Características
 
-- Selección de familias de personajes: Bluey, Patrulla Canina, La Casa de Muñecas de Gabby, Pokemon, Las Guerreras K-pop, Doraemon, Zootropolis y mezcla completa.
+- Selección de familias de personajes: Bluey, Patrulla Canina, La Casa de Muñecas de Gabby, Pokemon, Las Guerreras K-pop, Doraemon, Zootropolis, Toy Story, Los Minions, Super Mario Bros y mezcla completa.
 - Niveles progresivos de 2 a 12 parejas, ajustados según los personajes disponibles.
 - Tablero responsive que recalcula columnas y tamaño de carta según el espacio disponible.
 - Indicadores de nivel, parejas encontradas, tiempo y movimientos.

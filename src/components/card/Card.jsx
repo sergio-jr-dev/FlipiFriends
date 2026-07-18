@@ -26,6 +26,7 @@ function Card({
       className={`card ${isRevealed ? 'is-flipped' : ''} ${
         card.matched ? 'is-matched' : ''
       } ${isSelected ? 'is-selected' : ''} ${isMismatched ? 'is-shaking' : ''}`}
+      data-character-id={card.character.id}
       type="button"
       onClick={handleClick}
       disabled={disabled || isRevealed}

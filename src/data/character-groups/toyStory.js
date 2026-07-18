@@ -1,0 +1,88 @@
+import { createCharacters } from './catalog.js';
+
+export const toyStoryCharacters = createCharacters('Toy-Story', [
+  {
+    id: 'toy-story-woody',
+    name: 'Woody',
+    short: 'Wo',
+    color: '#ffe3b8',
+    fileName: 'woody',
+  },
+  {
+    id: 'toy-story-buzz-lightyear',
+    name: 'Buzz Lightyear',
+    short: 'Bu',
+    color: '#dce5ff',
+    fileName: 'buzz-lightyear',
+  },
+  {
+    id: 'toy-story-jessie',
+    name: 'Jessie',
+    short: 'Je',
+    color: '#ffd9d2',
+    fileName: 'jessie',
+  },
+  {
+    id: 'toy-story-rex',
+    name: 'Rex',
+    short: 'Re',
+    color: '#d8f3d1',
+    fileName: 'rex',
+  },
+  {
+    id: 'toy-story-hamm',
+    name: 'Hamm',
+    short: 'Ha',
+    color: '#ffdceb',
+    fileName: 'hamm',
+  },
+  {
+    id: 'toy-story-slinky',
+    name: 'Slinky',
+    short: 'Sl',
+    color: '#f2ddc5',
+    fileName: 'slinky',
+  },
+  {
+    id: 'toy-story-bullseye',
+    name: 'Perdigón',
+    short: 'Pe',
+    color: '#ffe6c7',
+    fileName: 'bullseye',
+  },
+  {
+    id: 'toy-story-mr-potato',
+    name: 'Sr. Patata',
+    short: 'SP',
+    color: '#f6d5b7',
+    fileName: 'mr-potato',
+  },
+  {
+    id: 'toy-story-aliens',
+    name: 'Marcianitos',
+    short: 'Ma',
+    color: '#dcf7c8',
+    fileName: 'aliens',
+  },
+  {
+    id: 'toy-story-bo-peep',
+    name: 'Bo Peep',
+    short: 'BP',
+    color: '#e2dcff',
+    fileName: 'bo-peep',
+  },
+  {
+    id: 'toy-story-forky',
+    name: 'Forky',
+    short: 'Fo',
+    color: '#e4f3ff',
+    fileName: 'forky',
+  },
+  {
+    id: 'toy-story-ducky-and-bunny',
+    name: 'Patito y Conejito',
+    short: 'PC',
+    color: '#fff1b9',
+    fileName: 'ducky-and-bunny',
+  },
+]);

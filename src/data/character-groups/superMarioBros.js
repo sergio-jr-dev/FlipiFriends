@@ -1,0 +1,91 @@
+import { createCharacters } from './catalog.js';
+
+export const superMarioBrosCharacters = createCharacters(
+  'Super-Mario-Bros',
+  [
+    {
+      id: 'mario-mario',
+      name: 'Mario',
+      short: 'Ma',
+      color: '#ffd5d2',
+      fileName: 'mario',
+    },
+    {
+      id: 'mario-luigi',
+      name: 'Luigi',
+      short: 'Lu',
+      color: '#d8f1d5',
+      fileName: 'luigi',
+    },
+    {
+      id: 'mario-princess-peach',
+      name: 'Princesa Peach',
+      short: 'Pe',
+      color: '#ffdcec',
+      fileName: 'peach',
+    },
+    {
+      id: 'mario-bowser',
+      name: 'Bowser',
+      short: 'Bw',
+      color: '#ffe0bb',
+      fileName: 'bowser',
+    },
+    {
+      id: 'mario-toad',
+      name: 'Toad',
+      short: 'To',
+      color: '#dcecff',
+      fileName: 'toad',
+    },
+    {
+      id: 'mario-donkey-kong',
+      name: 'Donkey Kong',
+      short: 'DK',
+      color: '#eddbca',
+      fileName: 'donkey-kong',
+    },
+    {
+      id: 'mario-cranky-kong',
+      name: 'Cranky Kong',
+      short: 'CK',
+      color: '#eadfcf',
+      fileName: 'cranky-kong',
+    },
+    {
+      id: 'mario-kamek',
+      name: 'Kamek',
+      short: 'Ka',
+      color: '#d8e5ff',
+      fileName: 'kamek',
+    },
+    {
+      id: 'mario-lumalee',
+      name: 'Lumalee',
+      short: 'Lm',
+      color: '#d7f1ff',
+      fileName: 'lumalee',
+    },
+    {
+      id: 'mario-penguin-king',
+      name: 'Rey Pingüino',
+      short: 'RP',
+      color: '#e0e8ff',
+      fileName: 'penguin-king',
+    },
+    {
+      id: 'mario-foreman-spike',
+      name: 'Spike',
+      short: 'Sp',
+      color: '#e6d8ff',
+      fileName: 'foreman-spike',
+    },
+    {
+      id: 'mario-yoshi',
+      name: 'Yoshi',
+      short: 'Yo',
+      color: '#d9f4d5',
+      fileName: 'yoshi',
+    },
+  ],
+);

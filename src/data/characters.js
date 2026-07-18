@@ -6,8 +6,11 @@ import { blueyCharacters } from './character-groups/bluey.js';
 import { doraemonCharacters } from './character-groups/doraemon.js';
 import { gabbyDollhouseCharacters } from './character-groups/gabbyDollhouse.js';
 import { kpopWarriorsCharacters } from './character-groups/kpopWarriors.js';
+import { minionsCharacters } from './character-groups/minions.js';
 import { pawPatrolCharacters } from './character-groups/pawPatrol.js';
 import { pokemonCharacters } from './character-groups/pokemon.js';
+import { superMarioBrosCharacters } from './character-groups/superMarioBros.js';
+import { toyStoryCharacters } from './character-groups/toyStory.js';
 import { zootropolisCharacters } from './character-groups/zootropolis.js';
 
 const baseCharacterGroups = [
@@ -52,6 +55,24 @@ const baseCharacterGroups = [
     label: 'Zootropolis',
     description: 'Personajes de Zootropolis.',
     characters: zootropolisCharacters,
+  }),
+  createCharacterGroup({
+    id: 'toy-story',
+    label: 'Toy Story',
+    description: 'Los personajes más importantes de Toy Story en 7 niveles.',
+    characters: toyStoryCharacters,
+  }),
+  createCharacterGroup({
+    id: 'minions',
+    label: 'Los Minions',
+    description: 'Los Minions más conocidos en 7 niveles.',
+    characters: minionsCharacters,
+  }),
+  createCharacterGroup({
+    id: 'super-mario-bros',
+    label: 'Super Mario Bros',
+    description: 'Los protagonistas de Super Mario Bros. en 7 niveles.',
+    characters: superMarioBrosCharacters,
   }),
 ];
 

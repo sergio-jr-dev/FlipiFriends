@@ -51,6 +51,33 @@ export const groupPresentation = Object.freeze({
     ]),
     shortcutLabel: 'Zootropolis',
   }),
+  'toy-story': Object.freeze({
+    image: '/group-images/toy-story.webp',
+    previewIds: Object.freeze([
+      'toy-story-woody',
+      'toy-story-buzz-lightyear',
+      'toy-story-jessie',
+    ]),
+    shortcutLabel: 'Toy Story',
+  }),
+  minions: Object.freeze({
+    image: '/group-images/los-minions.webp',
+    previewIds: Object.freeze([
+      'minions-kevin',
+      'minions-bob',
+      'minions-stuart',
+    ]),
+    shortcutLabel: 'Minions',
+  }),
+  'super-mario-bros': Object.freeze({
+    image: '/group-images/super-mario-bros.webp',
+    previewIds: Object.freeze([
+      'mario-mario',
+      'mario-luigi',
+      'mario-princess-peach',
+    ]),
+    shortcutLabel: 'Super Mario',
+  }),
   mixed: Object.freeze({
     image: '/group-images/mixed.webp',
     previewIds: Object.freeze([
