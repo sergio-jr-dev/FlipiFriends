@@ -14,6 +14,19 @@
     padding: 0.5rem 0.625rem;
   }
 
+  @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+    --landscape-control-size: clamp(2.4rem, 11dvh, 2.65rem);
+
+    min-inline-size: 0;
+    block-size: 100%;
+    padding: var(--game-rail-padding);
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.35rem, 1.5dvh, 0.6rem);
+    border-radius: var(--radius-md);
+  }
+
   .logo-badge {
     inline-size: 5.25rem;
     block-size: 5.25rem;
@@ -34,10 +47,30 @@
     }
   }
 
+  .logo {
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      --logo-size: var(--landscape-control-size);
+    }
+  }
+
   .brand {
     display: flex;
     align-items: center;
     gap: 0.625rem;
+
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      min-inline-size: 0;
+      flex-direction: column;
+      gap: 0.15rem;
+      text-align: center;
+    }
+  }
+
+  .title {
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      min-inline-size: 0;
+      max-inline-size: 100%;
+    }
   }
 
   h1 {
@@ -47,6 +80,18 @@
     background: var(--logo-text-gradient);
     background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
   }
 
   .subtitle {
@@ -55,6 +100,13 @@
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      max-inline-size: 100%;
+      font-size: clamp(0.62rem, 2.7dvh, 0.74rem);
+      line-height: 1.1;
+      white-space: normal;
+    }
   }
 
   .controls {
@@ -62,6 +114,11 @@
     align-items: center;
     flex-shrink: 0;
     gap: 0.5rem;
+
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      flex-direction: column;
+      gap: clamp(0.3rem, 1.5dvh, 0.5rem);
+    }
   }
 
   .sound-toggle {
@@ -86,6 +143,11 @@
       block-size: 2.375rem;
     }
 
+    @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+      inline-size: var(--landscape-control-size);
+      block-size: var(--landscape-control-size);
+    }
+
     .control-icon {
       inline-size: 2rem;
       block-size: 2rem;
@@ -94,6 +156,11 @@
       @media (width <= 35rem) {
         inline-size: 1.8rem;
         block-size: 1.8rem;
+      }
+
+      @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+        inline-size: clamp(1.7rem, 8dvh, 1.9rem);
+        block-size: clamp(1.7rem, 8dvh, 1.9rem);
       }
     }
 

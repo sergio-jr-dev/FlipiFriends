@@ -12,6 +12,34 @@
   background: linear-gradient(135deg, #ff6866, #ed5eba 54%, #8b66eb);
   font-size: clamp(1.08rem, 1.45vw, 1.3rem);
   text-shadow: 0 2px 0 rgba(92, 45, 109, 0.3);
+
+  @media (height <= 48rem) and (width > 43rem) {
+    min-block-size: 3.25rem;
+  }
+
+  @media (width <= 43rem) {
+    position: relative;
+    z-index: 2;
+    inline-size: min(24rem, calc(100% - 0.5rem));
+    min-inline-size: 0;
+    min-block-size: 3.65rem;
+    margin-block-start: -0.1rem;
+    font-size: 1.08rem;
+  }
+
+  @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+    position: relative;
+    z-index: 2;
+    grid-column: 2;
+    grid-row: 2;
+    inline-size: min(22rem, 92%);
+    min-inline-size: 0;
+    min-block-size: clamp(2.85rem, 11dvh, 3.35rem);
+    margin: 0 auto;
+    border-width: 3px;
+    padding-inline: 1.25rem;
+    font-size: clamp(0.9rem, 3.6dvh, 1.08rem);
+  }
 }
 
 .start-button:hover {
@@ -23,22 +51,9 @@
   block-size: 2.2rem;
   margin-inline-start: -0.25rem;
   object-fit: contain;
-}
 
-@media (height <= 48rem) and (width > 43rem) {
-  .start-button {
-    min-block-size: 3.25rem;
-  }
-}
-
-@media (width <= 43rem) {
-  .start-button {
-    position: relative;
-    z-index: 2;
-    inline-size: min(24rem, calc(100% - 0.5rem));
-    min-inline-size: 0;
-    min-block-size: 3.65rem;
-    margin-block-start: -0.1rem;
-    font-size: 1.08rem;
+  @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+    inline-size: clamp(1.7rem, 7dvh, 2rem);
+    block-size: clamp(1.7rem, 7dvh, 2rem);
   }
 }

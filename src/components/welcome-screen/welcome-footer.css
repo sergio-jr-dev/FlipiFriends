@@ -14,6 +14,24 @@
   background: rgba(255, 255, 255, 0.7);
   text-align: center;
   backdrop-filter: blur(0.5rem);
+
+  @media (width <= 43rem) {
+    inline-size: calc(100% - 0.8rem);
+    margin:
+      clamp(1.15rem, 4dvh, 2rem) auto
+      max(1rem, calc(env(safe-area-inset-bottom) + 0.5rem));
+    padding: 0.5rem 0.625rem;
+    grid-template-columns: 1fr;
+    gap: 0.22rem;
+    border-radius: 1.2rem;
+  }
+
+  @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
+    inline-size: min(calc(100% - 1.5rem), 58rem);
+    margin:
+      clamp(1rem, 4dvh, 1.5rem) auto
+      max(0.85rem, calc(env(safe-area-inset-bottom) + 0.35rem));
+  }
 }
 
 .welcome-footer .footer-message {
@@ -23,6 +41,10 @@
   gap: 0.18rem;
   font-size: 0.82rem;
   font-weight: 700;
+
+  @media (width <= 43rem) {
+    font-size: 0.76rem;
+  }
 }
 
 .welcome-footer .footer-heart {
@@ -39,6 +61,10 @@
   gap: 0.4rem;
   font-size: 0.82rem;
   font-weight: 600;
+
+  @media (width <= 43rem) {
+    font-size: 0.76rem;
+  }
 }
 
 .welcome-footer .social-links {
@@ -79,27 +105,8 @@
   color: #5c6678;
   font-size: 0.72rem;
   line-height: 1.25;
-}
 
-@media (width <= 43rem) {
-  .welcome-footer {
-    inline-size: calc(100% - 0.8rem);
-    margin-block-end: max(0.4rem, env(safe-area-inset-bottom));
-    padding: 0.5rem 0.625rem;
-    grid-template-columns: 1fr;
-    gap: 0.22rem;
-    border-radius: 1.2rem;
-  }
-
-  .welcome-footer .footer-message {
-    font-size: 0.76rem;
-  }
-
-  .welcome-footer .creator {
-    font-size: 0.76rem;
-  }
-
-  .welcome-footer small {
+  @media (width <= 43rem) {
     grid-column: auto;
     max-inline-size: 31rem;
     font-size: 0.66rem;
