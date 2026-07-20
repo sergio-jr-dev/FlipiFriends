@@ -2,9 +2,9 @@
 
 FlipiFriends es un juego de memoria de parejas pensado para niños y familias. La app permite elegir entre varias colecciones de personajes, jugar niveles progresivos y seguir la partida con contador de parejas, tiempo y movimientos.
 
-![Pantalla de bienvenida de FlipiFriends](public/screenshots/flipi-friends-home.jpg)
+![Pantalla de bienvenida de FlipiFriends](public/screenshots/flipi-friends-home.webp)
 
-![Tablero de juego de FlipiFriends](public/screenshots/flipi-friends-game.jpg)
+![Tablero de juego de FlipiFriends](public/screenshots/flipi-friends-game.webp)
 
 ## Características
 
