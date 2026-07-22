@@ -16,10 +16,11 @@ export const WelcomeScreen = ({
   onPreviousGroup,
   onStart,
   selectedGroupId,
+  titleRef,
 }) => (
   <section className="welcome" aria-labelledby="welcome-title">
     <div className="welcome-content">
-      <WelcomeHero />
+      <WelcomeHero titleRef={titleRef} />
       <CharacterSelector
         canScrollNext={canScrollNext}
         canScrollPrevious={canScrollPrevious}

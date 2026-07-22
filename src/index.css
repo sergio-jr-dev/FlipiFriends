@@ -93,9 +93,13 @@ body {
   max-inline-size: 100%;
 }
 
-:where(a, button, input, select, textarea):focus-visible {
+:where(a, button, input, select, textarea, [tabindex='-1']):focus-visible {
   outline: 3px solid var(--focus-outline);
   outline-offset: 3px;
+}
+
+[tabindex='-1']:focus-visible {
+  outline-offset: 0;
 }
 
 .primary {

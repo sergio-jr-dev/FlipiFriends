@@ -10,10 +10,12 @@ const PromptRays = ({ side }) => (
   </span>
 );
 
-export const WelcomeHero = () => (
+export const WelcomeHero = ({ titleRef }) => (
   <header className="welcome-hero">
     <BrandLogo size="large" />
-    <h1 id="welcome-title">Bienvenido a FlipiFriends</h1>
+    <h1 id="welcome-title" ref={titleRef} tabIndex={-1}>
+      Bienvenido a FlipiFriends
+    </h1>
     <p>Un juego para descubrir parejas y divertirse aprendiendo</p>
 
     <div className="selector-prompt">

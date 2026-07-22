@@ -4,15 +4,23 @@ import './app-header.css';
 
 export const AppHeader = ({
   activeGroupLabel,
+  level,
   onRestart,
   onToggleSound,
   soundEnabled,
+  titleRef,
 }) => (
   <header className="top">
     <div className="brand">
       <BrandLogo />
       <div className="title">
-        <h1>FlipiFriends</h1>
+        <h1
+          ref={titleRef}
+          tabIndex={-1}
+          aria-label={`FlipiFriends. ${activeGroupLabel}, nivel ${level}`}
+        >
+          FlipiFriends
+        </h1>
         <p className="subtitle">{activeGroupLabel}</p>
       </div>
     </div>

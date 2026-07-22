@@ -2,6 +2,7 @@ import { useBoardLayout } from './hooks/useBoardLayout.js';
 import { useCharacterCarousel } from './hooks/useCharacterCarousel.js';
 import { useCharacterGroups } from './hooks/useCharacterGroups.js';
 import { useMemoryGame } from './hooks/useMemoryGame.js';
+import { useViewFocus } from './hooks/useViewFocus.js';
 import { AppHeader } from './components/app-header/AppHeader.jsx';
 import { Dialog } from './components/dialog/Dialog.jsx';
 import { GameBoard } from './components/game-board/GameBoard.jsx';
@@ -20,6 +21,10 @@ function App() {
   } = useCharacterGroups();
 
   const game = useMemoryGame(activeGroup);
+  const { gameTitleRef, welcomeTitleRef } = useViewFocus(
+    game.isWelcomeOpen,
+    game.levelIndex,
+  );
 
   const { boardAreaRef, boardLayout } = useBoardLayout(
     game.totalCards,
@@ -39,9 +44,11 @@ function App() {
       {!game.isWelcomeOpen ? (
         <AppHeader
           activeGroupLabel={activeGroup.label}
+          level={game.levelIndex + 1}
           onRestart={game.handleGoToWelcome}
           onToggleSound={game.handleToggleSound}
           soundEnabled={game.soundEnabled}
+          titleRef={gameTitleRef}
         />
       ) : null}
 
@@ -60,6 +67,7 @@ function App() {
             onPreviousGroup={scrollPrevious}
             onStart={game.handleStartGame}
             selectedGroupId={selectedGroupId}
+            titleRef={welcomeTitleRef}
           />
         ) : (
           <GameBoard
