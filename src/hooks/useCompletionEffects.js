@@ -13,7 +13,7 @@ export const useCompletionEffects = ({
   isComplete,
   isLastLevel,
   onComplete,
-  soundEnabled,
+  playCompletion,
 }) => {
   const [completionMessage, setCompletionMessage] = useState(LEVEL_MESSAGES[0]);
 
@@ -62,54 +62,8 @@ export const useCompletionEffects = ({
   }, [isComplete, isLastLevel]);
 
   useEffect(() => {
-    if (!isComplete || !soundEnabled) return undefined;
-
-    let audioContext;
-    let isCancelled = false;
-
-    const playTone = (time, frequency, duration, gain) => {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      oscillator.type = 'triangle';
-      oscillator.frequency.setValueAtTime(frequency, time);
-      gainNode.gain.setValueAtTime(gain, time);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      oscillator.start(time);
-      oscillator.stop(time + duration);
-    };
-
-    const playChime = async () => {
-      const AudioContextConstructor =
-        window.AudioContext || window.webkitAudioContext;
-
-      if (!AudioContextConstructor) return;
-
-      audioContext = new AudioContextConstructor();
-
-      if (audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
-
-      if (isCancelled) {
-        audioContext.close();
-        return;
-      }
-
-      const now = audioContext.currentTime;
-      playTone(now, 523.25, 0.2, 0.25);
-      playTone(now + 0.18, 659.25, 0.22, 0.22);
-      playTone(now + 0.36, 783.99, 0.26, 0.2);
-    };
-
-    playChime();
-
-    return () => {
-      isCancelled = true;
-      if (audioContext) audioContext.close();
-    };
-  }, [isComplete, soundEnabled]);
+    if (isComplete) playCompletion();
+  }, [isComplete, playCompletion]);
 
   return { completionMessage };
 };

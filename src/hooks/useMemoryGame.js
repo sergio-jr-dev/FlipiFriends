@@ -8,6 +8,7 @@ import {
   MISMATCH_SHAKE_MS,
 } from '../utils/game.js';
 import { useCompletionEffects } from './useCompletionEffects.js';
+import { useGameSounds } from './useGameSounds.js';
 import { useLevelTimer } from './useLevelTimer.js';
 
 export const useMemoryGame = (activeGroup) => {
@@ -48,6 +49,13 @@ export const useMemoryGame = (activeGroup) => {
   const isComplete = matches === pairsCount;
   const isLastLevel = levelIndex === totalLevels - 1;
   const isInteractionDisabled = isLocked || isWelcomeOpen || isComplete;
+  const {
+    playCompletion,
+    playFlip,
+    playMatch,
+    playMismatch,
+    playSoundEnabled,
+  } = useGameSounds(soundEnabled);
   const { elapsedLabel, finishTimer, resetTimer, startTimer } = useLevelTimer(
     hasStarted && !isWelcomeOpen && !isComplete,
   );
@@ -56,7 +64,7 @@ export const useMemoryGame = (activeGroup) => {
     isComplete,
     isLastLevel,
     onComplete: finishTimer,
-    soundEnabled,
+    playCompletion,
   });
 
   const clearMismatchTimeouts = useCallback(() => {
@@ -93,6 +101,7 @@ export const useMemoryGame = (activeGroup) => {
     const card = cardsById.get(id);
     if (!card || card.flipped || card.matched) return;
 
+    playFlip();
     startTimer();
     setHasStarted(true);
     setMismatchCardIds([]);
@@ -119,12 +128,14 @@ export const useMemoryGame = (activeGroup) => {
       );
 
       if (isMatch) {
+        playMatch();
         setSelected([]);
         setMatches((current) => current + 1);
         return;
       }
 
       setIsLocked(true);
+      playMismatch();
       setSelected([firstId, id]);
 
       const mismatchIdsNext = [firstId, id];
@@ -154,7 +165,15 @@ export const useMemoryGame = (activeGroup) => {
       prev.map((item) => (item.id === id ? { ...item, flipped: true } : item)),
     );
     setSelected([id]);
-  }, [cardsById, isInteractionDisabled, selected, startTimer]);
+  }, [
+    cardsById,
+    isInteractionDisabled,
+    playFlip,
+    playMatch,
+    playMismatch,
+    selected,
+    startTimer,
+  ]);
 
   const handleStartGame = useCallback(() => {
     setLevelIndex(0);
@@ -181,8 +200,9 @@ export const useMemoryGame = (activeGroup) => {
   }, [resetForLevel, totalLevels]);
 
   const handleToggleSound = useCallback(() => {
+    if (!soundEnabled) playSoundEnabled();
     setSoundEnabled((prev) => !prev);
-  }, []);
+  }, [playSoundEnabled, soundEnabled]);
 
   return {
     completionMessage,
