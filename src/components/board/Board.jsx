@@ -20,8 +20,8 @@ function Board({
       aria-label="Tablero de cartas"
       style={{
         '--columns': columns,
-        '--card-size': `${cardSize / 16}rem`,
-        '--board-gap': `${gap / 16}rem`,
+        '--card-size': `${cardSize}px`,
+        '--board-gap': `${gap}px`,
       }}
     >
       {deck.map((card, cardIndex) => (
