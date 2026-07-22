@@ -213,6 +213,11 @@
   transform: scale(1.018);
 }
 
+.character-option:has(.character-option-input:focus-visible) {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 3px;
+}
+
 .character-option-input {
   position: absolute;
   z-index: 2;

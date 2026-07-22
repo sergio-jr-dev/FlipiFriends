@@ -1,5 +1,6 @@
 .card {
   border: none;
+  border-radius: var(--border-radius);
   padding: 0;
   background: transparent;
   cursor: pointer;
@@ -16,14 +17,6 @@
     .card-front {
       background: var(--gradient-card-front-hover);
       border-color: var(--border-play);
-    }
-  }
-
-  &:focus-visible {
-    outline: none;
-
-    .card-face {
-      box-shadow: var(--focus-ring), var(--shadow);
     }
   }
 

@@ -96,10 +96,6 @@
   background: #d8f1ff;
 }
 
-.welcome-footer a:focus-visible {
-  outline: none;
-}
-
 .welcome-footer small {
   grid-column: 1 / -1;
   color: #5c6678;

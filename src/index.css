@@ -32,7 +32,7 @@
   --shadow-avatar: 0 5px 10px rgba(64, 44, 110, 0.08);
   --shadow-selected: 0 0 18px rgba(124, 124, 239, 0.22);
   --shadow-match: 0 10px 18px rgba(66, 168, 120, 0.16);
-  --focus-ring: 0 0 0 4px rgba(255, 212, 105, 0.66);
+  --focus-outline: #174ea6;
   --selected-ring: 0 0 0 3px rgba(255, 234, 167, 0.7);
 
   --radius-sm: 12px;
@@ -93,6 +93,11 @@ body {
   max-inline-size: 100%;
 }
 
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 3px;
+}
+
 .primary {
   border: none;
   border-radius: var(--radius-pill);
@@ -110,11 +115,6 @@ body {
   &:hover {
     background: var(--gradient-primary-hover);
     box-shadow: var(--shadow-primary-hover);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring), var(--shadow-primary-hover);
   }
 }
 
@@ -137,10 +137,5 @@ body {
     border-color: var(--border-play);
     background: var(--surface-tint);
     box-shadow: var(--shadow-lift);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring), var(--shadow-lift);
   }
 }

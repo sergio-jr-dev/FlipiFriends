@@ -203,10 +203,5 @@
       border-color: rgba(204, 64, 76, 0.68);
       color: #a93640;
     }
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring), var(--shadow-control);
-    }
   }
 }

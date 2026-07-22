@@ -82,10 +82,6 @@
   background: #dff4ff;
 }
 
-.carousel-control:focus-visible {
-  outline: none;
-}
-
 .carousel-control:disabled {
   opacity: 0.28;
   cursor: default;
