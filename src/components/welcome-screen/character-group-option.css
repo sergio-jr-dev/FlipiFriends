@@ -60,6 +60,13 @@
   --group-chip-bg: #e4f7ff;
 }
 
+.character-item[data-group-id='bob-esponja'] {
+  --group-accent: #efc232;
+  --group-accent-dark: #a66b16;
+  --group-hero-bg: #bcecf1;
+  --group-chip-bg: #fff0a8;
+}
+
 .character-item[data-group-id='doraemon'] {
   --group-accent: #49afe5;
   --group-accent-dark: #1b76ae;
@@ -314,6 +321,7 @@
 }
 
 .character-item:is(
+    [data-group-id='bob-esponja'],
     [data-group-id='paw-patrol'],
     [data-group-id='pocoyo'],
     [data-group-id='pokemon']

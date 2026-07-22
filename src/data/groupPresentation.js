@@ -1,4 +1,13 @@
 export const groupPresentation = Object.freeze({
+  'bob-esponja': Object.freeze({
+    image: '/group-images/bob-esponja.webp',
+    previewIds: Object.freeze([
+      'bob-esponja-bob-esponja',
+      'bob-esponja-patricio',
+      'bob-esponja-calamardo',
+    ]),
+    shortcutLabel: 'Bob Esponja',
+  }),
   bluey: Object.freeze({
     image: '/group-images/bluey.webp',
     previewImages: Object.freeze({

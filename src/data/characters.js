@@ -10,6 +10,7 @@ import { minionsCharacters } from './character-groups/minions.js';
 import { pawPatrolCharacters } from './character-groups/pawPatrol.js';
 import { pocoyoCharacters } from './character-groups/pocoyo.js';
 import { pokemonCharacters } from './character-groups/pokemon.js';
+import { spongeBobCharacters } from './character-groups/spongeBob.js';
 import { superMarioBrosCharacters } from './character-groups/superMarioBros.js';
 import { toyStoryCharacters } from './character-groups/toyStory.js';
 import { zootropolisCharacters } from './character-groups/zootropolis.js';
@@ -20,6 +21,12 @@ const baseCharacterGroups = [
     label: 'Bluey',
     description: 'Personajes de Bluey para peques desde el nivel 1.',
     characters: blueyCharacters,
+  }),
+  createCharacterGroup({
+    id: 'bob-esponja',
+    label: 'Bob Esponja',
+    description: 'Los personajes principales de Bob Esponja.',
+    characters: spongeBobCharacters,
   }),
   createCharacterGroup({
     id: 'paw-patrol',
