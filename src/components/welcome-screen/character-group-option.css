@@ -95,6 +95,13 @@
   --group-chip-bg: #ffe1d6;
 }
 
+.character-item[data-group-id='pocoyo'] {
+  --group-accent: #39a9e8;
+  --group-accent-dark: #1373ad;
+  --group-hero-bg: #e8f8ff;
+  --group-chip-bg: #fff2b8;
+}
+
 .character-item[data-group-id='pokemon'] {
   --group-accent: #e8b52e;
   --group-accent-dark: #9d6b0f;
@@ -308,6 +315,7 @@
 
 .character-item:is(
     [data-group-id='paw-patrol'],
+    [data-group-id='pocoyo'],
     [data-group-id='pokemon']
   )
   .group-main-image {

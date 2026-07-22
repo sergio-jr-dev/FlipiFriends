@@ -14,6 +14,15 @@ export const groupPresentation = Object.freeze({
     previewIds: Object.freeze(['chase', 'marshall', 'skye']),
     shortcutLabel: 'Patrulla Canina',
   }),
+  pocoyo: Object.freeze({
+    image: '/group-images/pocoyo.webp',
+    previewIds: Object.freeze([
+      'pocoyo-pocoyo',
+      'pocoyo-pato',
+      'pocoyo-elly',
+    ]),
+    shortcutLabel: 'Pocoyó',
+  }),
   'gabby-dollhouse': Object.freeze({
     image: '/group-images/gabby-dollhouse.webp',
     previewIds: Object.freeze(['gabby', 'pandy-patas', 'gatirena']),

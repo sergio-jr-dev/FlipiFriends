@@ -1,0 +1,88 @@
+import { createCharacters } from './catalog.js';
+
+export const pocoyoCharacters = createCharacters('Pocoyo', [
+  {
+    id: 'pocoyo-pocoyo',
+    name: 'Pocoyó',
+    short: 'P',
+    color: '#cdefff',
+    fileName: 'pocoyo',
+  },
+  {
+    id: 'pocoyo-bea',
+    name: 'Bea',
+    short: 'B',
+    color: '#fff0b8',
+    fileName: 'bea',
+  },
+  {
+    id: 'pocoyo-elly',
+    name: 'Elly',
+    short: 'E',
+    color: '#ffd6e8',
+    fileName: 'elly',
+  },
+  {
+    id: 'pocoyo-pato',
+    name: 'Pato',
+    short: 'Pa',
+    color: '#fff3b8',
+    fileName: 'pato',
+  },
+  {
+    id: 'pocoyo-loula',
+    name: 'Loula',
+    short: 'L',
+    color: '#ffe0c2',
+    fileName: 'loula',
+  },
+  {
+    id: 'pocoyo-pulpo',
+    name: 'Pulpo',
+    short: 'Pu',
+    color: '#ffd1d1',
+    fileName: 'pulpo',
+  },
+  {
+    id: 'pocoyo-pajaroto',
+    name: 'Pajaroto',
+    short: 'Pj',
+    color: '#cfedf3',
+    fileName: 'pajaroto',
+  },
+  {
+    id: 'pocoyo-pajarito',
+    name: 'Pajarito',
+    short: 'Pi',
+    color: '#ddf3f6',
+    fileName: 'pajarito',
+  },
+  {
+    id: 'pocoyo-valentina',
+    name: 'Valentina',
+    short: 'V',
+    color: '#fff0c4',
+    fileName: 'valentina',
+  },
+  {
+    id: 'pocoyo-nina',
+    name: 'Nina',
+    short: 'N',
+    color: '#d9f5c8',
+    fileName: 'nina',
+  },
+  {
+    id: 'pocoyo-marciano',
+    name: 'Marciano',
+    short: 'M',
+    color: '#dcf5c8',
+    fileName: 'marciano',
+  },
+  {
+    id: 'pocoyo-marciano-furioso',
+    name: 'Marciano furioso',
+    short: 'MF',
+    color: '#e4f7cc',
+    fileName: 'marciano-furioso',
+  },
+]);

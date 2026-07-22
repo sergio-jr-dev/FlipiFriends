@@ -8,6 +8,7 @@ import { gabbyDollhouseCharacters } from './character-groups/gabbyDollhouse.js';
 import { kpopWarriorsCharacters } from './character-groups/kpopWarriors.js';
 import { minionsCharacters } from './character-groups/minions.js';
 import { pawPatrolCharacters } from './character-groups/pawPatrol.js';
+import { pocoyoCharacters } from './character-groups/pocoyo.js';
 import { pokemonCharacters } from './character-groups/pokemon.js';
 import { superMarioBrosCharacters } from './character-groups/superMarioBros.js';
 import { toyStoryCharacters } from './character-groups/toyStory.js';
@@ -25,6 +26,12 @@ const baseCharacterGroups = [
     label: 'Patrulla Canina',
     description: 'Personajes de la Patrulla Canina en todos los niveles.',
     characters: pawPatrolCharacters,
+  }),
+  createCharacterGroup({
+    id: 'pocoyo',
+    label: 'Pocoyó',
+    description: 'Pocoyó y sus amigos con sus nombres de España.',
+    characters: pocoyoCharacters,
   }),
   createCharacterGroup({
     id: 'gabby-dollhouse',
