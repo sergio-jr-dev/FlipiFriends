@@ -43,7 +43,7 @@
 
   --gradient-primary: linear-gradient(135deg, #77d8ff, #bda5ff 52%, #ffcae0);
   --gradient-primary-hover: linear-gradient(135deg, #8fe0ff, #c8b5ff 52%, #ffd4e8);
-  --logo-text-gradient: linear-gradient(90deg, #279ee8 0%, #f4bf2f 48%, #ef5f77 100%);
+  --logo-text-gradient: linear-gradient(90deg, #005582 0%, #6f4b00 48%, #96204b 100%);
   --gradient-card-front:
     radial-gradient(circle at 28% 24%, rgba(93, 196, 237, 0.78) 0 13%, transparent 14%),
     radial-gradient(circle at 72% 72%, rgba(247, 187, 63, 0.82) 0 13%, transparent 14%),

@@ -81,6 +81,12 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
+    @media (forced-colors: active) {
+      background: none;
+      color: CanvasText;
+      -webkit-text-fill-color: currentColor;
+    }
+
     @media (orientation: landscape) and (height <= 35rem) and (width <= 64rem) {
       position: absolute;
       inline-size: 1px;
