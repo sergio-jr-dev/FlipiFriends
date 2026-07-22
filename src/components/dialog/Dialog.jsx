@@ -17,10 +17,15 @@ export const Dialog = ({
     : `Nivel ${level} completado`;
 
   return (
-    <dialog ref={dialogRef} aria-live="polite" closedby="none">
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="completion-dialog-title"
+      aria-describedby="completion-dialog-message"
+      closedby="none"
+    >
       <header className="header">
-        <h2>{title}</h2>
-        <p>{message}</p>
+        <h2 id="completion-dialog-title">{title}</h2>
+        <p id="completion-dialog-message">{message}</p>
       </header>
 
       <section className="stats" aria-label="Resumen del nivel">

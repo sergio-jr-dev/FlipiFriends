@@ -43,6 +43,7 @@ export const useCompletionEffects = ({
       if (isCancelled) return;
 
       confetti({
+        disableForReducedMotion: true,
         particleCount: 90,
         spread: 90,
         origin: { x: 0.5, y: 0.45 },
