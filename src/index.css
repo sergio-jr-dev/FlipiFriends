@@ -9,6 +9,7 @@
 
   --ink: #2f2b3a;
   --soft-ink: #5b5566;
+  --status-bar-color: #5f7ef5;
 
   --surface: rgba(255, 255, 255, 0.78);
   --surface-strong: rgba(255, 255, 255, 0.93);
@@ -65,6 +66,16 @@
 body {
   background: var(--bg-gradient);
   min-block-size: 100dvh;
+
+  &::before {
+    content: '';
+    position: fixed;
+    z-index: 1000;
+    inset: 0 0 auto;
+    block-size: env(safe-area-inset-top);
+    background: var(--status-bar-color);
+    pointer-events: none;
+  }
 }
 
 :where(body, h1, h2, h3, h4, h5, h6, p, ul) {

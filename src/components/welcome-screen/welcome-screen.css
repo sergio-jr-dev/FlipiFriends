@@ -63,10 +63,10 @@
     min-block-size: 100dvh;
     flex: 0 0 auto;
     padding:
-      max(0.65rem, env(safe-area-inset-top))
-      max(0.65rem, env(safe-area-inset-right))
-      max(0.85rem, env(safe-area-inset-bottom))
-      max(0.65rem, env(safe-area-inset-left));
+      calc(0.65rem + env(safe-area-inset-top))
+      calc(0.65rem + env(safe-area-inset-right))
+      calc(0.85rem + env(safe-area-inset-bottom))
+      calc(0.65rem + env(safe-area-inset-left));
     justify-content: space-between;
     gap: 0.42rem;
   }
@@ -76,10 +76,10 @@
     min-block-size: 100dvh;
     flex: 0 0 auto;
     padding:
-      max(0.45rem, env(safe-area-inset-top))
-      max(0.65rem, env(safe-area-inset-right))
-      max(0.45rem, env(safe-area-inset-bottom))
-      max(0.65rem, env(safe-area-inset-left));
+      calc(0.45rem + env(safe-area-inset-top))
+      calc(0.65rem + env(safe-area-inset-right))
+      calc(0.45rem + env(safe-area-inset-bottom))
+      calc(0.65rem + env(safe-area-inset-left));
     display: grid;
     grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1.45fr);
     grid-template-rows: minmax(0, 1fr) auto;

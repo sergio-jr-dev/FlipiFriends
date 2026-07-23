@@ -2,6 +2,7 @@ export const LEVELS = [2, 3, 4, 6, 8, 10, 12];
 export const CARD_RATIO = 1.25;
 export const CARD_FLIP_MS = 500;
 export const MISMATCH_SHAKE_MS = 340;
+export const BOARD_EFFECT_CLEARANCE = 6;
 
 export const LEVEL_MESSAGES = [
   'Buen trabajo, puedes continuar al siguiente nivel.',
@@ -81,6 +82,8 @@ export const formatElapsed = (milliseconds) => {
 export const resolveBoardLayout = (totalCards, width, height) => {
   const safeWidth = Math.max(260, width);
   const safeHeight = Math.max(220, height);
+  const availableWidth = safeWidth - BOARD_EFFECT_CLEARANCE * 2;
+  const availableHeight = safeHeight - BOARD_EFFECT_CLEARANCE * 2;
   const gap = safeWidth < 720 ? 8 : 12;
   const maxColumns = Math.max(2, Math.min(totalCards, 10));
   const maxCardSize =
@@ -98,8 +101,8 @@ export const resolveBoardLayout = (totalCards, width, height) => {
 
   for (let columns = 2; columns <= maxColumns; columns += 1) {
     const rows = Math.ceil(totalCards / columns);
-    const freeWidth = safeWidth - gap * (columns - 1);
-    const freeHeight = safeHeight - gap * (rows - 1);
+    const freeWidth = availableWidth - gap * (columns - 1);
+    const freeHeight = availableHeight - gap * (rows - 1);
 
     if (freeWidth <= 0 || freeHeight <= 0) continue;
 
